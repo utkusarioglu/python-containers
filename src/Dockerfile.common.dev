@@ -15,7 +15,7 @@ RUN apt update && apt install \
   vim \
   -y
 
-COPY "$ENVIRONMENT_CONFIG" /environment.yml
+COPY $ENVIRONMENT_CONFIG /environment.yml
 RUN conda env create --file /environment.yml
 
 RUN echo "root:$ROOT_PASS" | chpasswd
