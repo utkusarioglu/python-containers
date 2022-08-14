@@ -7,7 +7,7 @@ ARG ENVIRONMENT_CONFIG=
 
 RUN for arg in ROOT_PASS USERNAME ENVIRONMENT_NAME ENVIRONMENT_CONFIG; \
   do \
-  [ ! -z "${arg}" ] || { echo "$arg needs to be set"; exit 1; } \
+  [ ! -z "${arg}" ] || { echo "ARG \"$arg\" needs to be set"; exit 1; } \
   done;
 
 SHELL ["/bin/bash", "-c"]
