@@ -13,3 +13,4 @@ dependencies:
   - squarify
   - openpyxl
   - requests
+  - ipykernel
