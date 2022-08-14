@@ -21,36 +21,62 @@ jobs:
             username: econ
             environmentName: econ
             environmentConfigPath: src/econ/environment.econ.yml
+            additionalFilesToWatch: ""
           - dockerfile: src/Dockerfile.common.dev
             containerName: python-math-devcontainer
             containerTag: 1.0.0
             username: math
             environmentName: math
             environmentConfigPath: src/math/environment.math.yml
+            additionalFilesToWatch: ""
           - dockerfile: src/Dockerfile.common.dev
             containerName: python-music-devcontainer
             containerTag: 1.0.0
             username: music
             environmentName: music
             environmentConfigPath: src/music/environment.music.yml
+            additionalFilesToWatch: ""
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v25
+        with:
+          files: |
+            ${{ matrix.images.dockerfile }}
+            ${{ matrix.images.environmentConfigPath }}
+            ${{ matrix.images.additionalFilesToWatch }}
+
+      - name: Declare run state
+        run: |
+          if [ ${{ steps.changed-files.outputs.any_modified }} == true ];
+          then
+            echo "Docker build will carry out as expected."
+          else
+            echo "Docker build is cancelled as none of the watched files changed."
+          fi
 
       - name: Set up Docker Buildx
+        if: steps.changed-files.outputs.any_modified == 'true'
         id: buildx
         uses: docker/setup-buildx-action@v1
 
       - name: Login to DockerHub
+        if: steps.changed-files.outputs.any_modified == 'true'
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push ${{ matrix.images.containerName }}:${{ matrix.images.containerTag }}
+        if: steps.changed-files.outputs.any_modified == 'true'
         uses: docker/build-push-action@v2
-        id: docker_build
+        id: docker-build
         with:
           context: .
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.images.containerName }}:${{ matrix.images.containerTag }}
@@ -65,9 +91,15 @@ jobs:
             ENVIRONMENT_CONFIG=${{ matrix.images.environmentConfigPath }}
 
       - name: Image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
+        if: steps.changed-files.outputs.any_modified == 'true'
+        run: echo ${{ steps.docker-build.outputs.digest }}
 
       - name: Move cache
+        if: steps.changed-files.outputs.any_modified == 'true'
         run: |
-          rm -rf /tmp/.buildx-cache
-          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+          CACHE_PATH=/tmp/.buildx-cache
+          rm -rf $CACHE_PATH
+          if [ -d $CACHE_PATH ];
+          then
+            mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+          fi
