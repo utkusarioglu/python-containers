@@ -1,0 +1,15 @@
+name: music
+channel_priority: strict
+channels:
+  - anaconda
+  - conda-forge
+  - cogsci # pygame only
+  - defaults
+dependencies:
+  - jupyter
+  - music21
+  - matplotlib
+  - numpy
+  - scipy
+  # This one is dubious
+  - pygame

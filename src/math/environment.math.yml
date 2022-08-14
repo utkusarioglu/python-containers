@@ -1,0 +1,12 @@
+name: math
+channels: 
+  - anaconda
+dependencies:
+  - jupyter
+  - numpy
+  - pandas
+  - scipy
+  - xlsxwriter
+  - matplotlib
+  - scipy
+  - sympy
