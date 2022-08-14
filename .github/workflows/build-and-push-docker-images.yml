@@ -20,7 +20,7 @@ jobs:
             containerTag: 1.0.0
             username: econ
             environmentName: econ
-            environmentConfig: ./src/econ/environment.econ.yml
+            environmentConfigPath: src/econ/environment.econ.yml
 
     steps:
       - name: Checkout code
@@ -50,7 +50,7 @@ jobs:
             ROOT_PASS=${{ secrets.DOCKER_IMAGE_ROOT_PASS }}
             USERNAME=${{ matrix.images.username }}
             ENVIRONMENT_NAME=${{ matrix.images.environmentName }}
-            ENVIRONMENT_CONFIG=${{ matrix.images.environmentConfig }}
+            ENVIRONMENT_CONFIG=${{ matrix.images.environmentConfigPath }}
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
