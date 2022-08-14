@@ -20,7 +20,7 @@ jobs:
             containerTag: 1.0.0
             username: econ
             environmentName: econ
-            environmentConfig: econ/environment.econ.yml
+            environmentConfig: ./src/econ/environment.econ.yml
 
     steps:
       - name: Checkout code
