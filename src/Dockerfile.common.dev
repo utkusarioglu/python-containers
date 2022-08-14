@@ -31,6 +31,8 @@ ADD --chown=$USERNAME:$GROUP \
 ADD --chown=$USERNAME:$GROUP \
   https://gist.githubusercontent.com/utkusarioglu/3523b00578807d63b05399fe57a4b2a7/raw/7df99dbbeb8ee4d14396be043aef4fbf8fb42ce5/.bashrc \
   /home/$USERNAME/.bashrc
+# Pushing into `.bashrc` for environment selection
+# This line is unique for all containers
 RUN source activate $ENVIRONMENT_NAME >> /home/$USERNAME/.bashrc
 
 ADD --chown=$USERNAME:$GROUP \
