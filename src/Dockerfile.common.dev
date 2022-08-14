@@ -10,7 +10,7 @@ RUN for arg in ROOT_PASS USERNAME ENVIRONMENT_NAME ENVIRONMENT_CONFIG; \
   [ ! -z "${arg}" ] || { echo "$arg needs to be set"; exit 1; } \
   done;
 
-# SHELL ["/bin/bash", "-c"]
+SHELL ["/bin/bash", "-c"]
 RUN apt update && apt install \
   vim \
   -y
