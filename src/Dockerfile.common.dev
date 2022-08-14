@@ -10,7 +10,7 @@ RUN for arg in ROOT_PASS USERNAME ENVIRONMENT_NAME ENVIRONMENT_CONFIG; \
   [ ! -z "${arg}" ] || { echo "$arg needs to be set"; exit 1; } \
   done;
 
-SHELL ["/bin/bash", "-c"]
+# SHELL ["/bin/bash", "-c"]
 RUN apt update && apt install \
   vim \
   -y
@@ -31,7 +31,7 @@ ADD --chown=$USERNAME:$GROUP \
 ADD --chown=$USERNAME:$GROUP \
   https://gist.githubusercontent.com/utkusarioglu/3523b00578807d63b05399fe57a4b2a7/raw/7df99dbbeb8ee4d14396be043aef4fbf8fb42ce5/.bashrc \
   /home/$USERNAME/.bashrc
-RUN source activate $ENVIRONMENT_NAME >> .bashrc
+RUN "source activate $ENVIRONMENT_NAME >> .bashrc"
 
 ADD --chown=$USERNAME:$GROUP \
   https://gist.githubusercontent.com/utkusarioglu/d5c216c744460c45bf6260d0de4131b4/raw/d227102e3630a93f8eafcb4d2a5a053d2ae04415/.inputrc \
