@@ -21,6 +21,18 @@ jobs:
             username: econ
             environmentName: econ
             environmentConfigPath: src/econ/environment.econ.yml
+          - dockerfile: src/Dockerfile.common.dev
+            containerName: python-math-devcontainer
+            containerTag: 1.0.0
+            username: math
+            environmentName: math
+            environmentConfigPath: src/math/environment.math.yml
+          - dockerfile: src/Dockerfile.common.dev
+            containerName: python-music-devcontainer
+            containerTag: 1.0.0
+            username: music
+            environmentName: music
+            environmentConfigPath: src/music/environment.music.yml
 
     steps:
       - name: Checkout code
