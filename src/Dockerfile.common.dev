@@ -31,9 +31,6 @@ ADD --chown=$USERNAME:$GROUP \
 ADD --chown=$USERNAME:$GROUP \
   https://gist.githubusercontent.com/utkusarioglu/3523b00578807d63b05399fe57a4b2a7/raw/7df99dbbeb8ee4d14396be043aef4fbf8fb42ce5/.bashrc \
   /home/$USERNAME/.bashrc
-# Pushing into `.bashrc` for environment selection
-# This line is unique for all containers
-RUN source activate $ENVIRONMENT_NAME >> /home/$USERNAME/.bashrc
 
 ADD --chown=$USERNAME:$GROUP \
   https://gist.githubusercontent.com/utkusarioglu/d5c216c744460c45bf6260d0de4131b4/raw/d227102e3630a93f8eafcb4d2a5a053d2ae04415/.inputrc \
@@ -44,3 +41,7 @@ RUN chmod +x \
   /home/$USERNAME/.inputrc
 
 ENV PATH "/opt/conda/envs/$ENVIRONMENT_NAME/bin:$PATH"
+ENV SHELL /bin/bash
+# Pushing into `.bashrc` for environment selection
+# This line is unique for all containers
+RUN source activate $ENVIRONMENT_NAME >> /home/$USERNAME/.bashrc
