@@ -20,21 +20,21 @@ jobs:
       matrix:
         images:
           - dockerfile: src/Dockerfile.common.dev
-            containerName: python-econ-devcontainer
+            containerName: conda-econ-devcontainer
             containerTag: 1.0.0
             username: econ
             environmentName: econ
             environmentConfigPath: src/econ/environment.econ.yml
             additionalFilesToWatch: ""
           - dockerfile: src/Dockerfile.common.dev
-            containerName: python-math-devcontainer
+            containerName: conda-math-devcontainer
             containerTag: 1.0.0
             username: math
             environmentName: math
             environmentConfigPath: src/math/environment.math.yml
             additionalFilesToWatch: ""
           - dockerfile: src/Dockerfile.common.dev
-            containerName: python-music-devcontainer
+            containerName: conda-music-devcontainer
             containerTag: 1.0.0
             username: music
             environmentName: music
