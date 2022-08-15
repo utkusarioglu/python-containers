@@ -5,6 +5,7 @@ dependencies:
   - anaconda::jupyter
   - conda-forge::music21
   - conda-forge::matplotlib
-  # - anaconda::numpy
-  # - anaconda::scipy
-  # - cogsci::pygame
+# These may be enabled later, depending on need
+# - anaconda::numpy
+# - anaconda::scipy
+# - cogsci::pygame
