@@ -8,6 +8,10 @@ on:
       - src/**
   workflow_dispatch:
 
+env:
+  CACHE_TO_DEST: /tmp/.buildx-cache-new
+  CACHE_FROM_SRC: /tmp/.buildx-cache
+
 jobs:
   build-and-push-docker-images:
     name: Build Docker image and push to repositories
@@ -82,8 +86,8 @@ jobs:
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.images.containerName }}:${{ matrix.images.containerTag }}
           file: ${{ matrix.images.dockerfile }}
           push: ${{ github.ref == 'refs/heads/main' }}
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
+          cache-from: type=local,src=${{ env.CACHE_FROM_SRC }}
+          cache-to: type=local,mode=max,dest=${{ env.CACHE_TO_DEST }}
           build-args: |
             ROOT_PASS=${{ secrets.DOCKER_IMAGE_ROOT_PASS }}
             USERNAME=${{ matrix.images.username }}
@@ -95,11 +99,10 @@ jobs:
         run: echo ${{ steps.docker-build.outputs.digest }}
 
       - name: Move cache
-        if: steps.changed-files.outputs.any_modified == 'true'
+        # if: steps.changed-files.outputs.any_modified == 'true'
         run: |
-          CACHE_PATH=/tmp/.buildx-cache
-          rm -rf $CACHE_PATH
-          if [ -d $CACHE_PATH ];
+          rm -rf ${{ env.CACHE_FROM_SRC }}
+          if [ -d ${{ env.CACHE_FROM_SRC }} ];
           then
-            mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+            mv ${{ env.CACHE_TO_DEST }} ${{ env.CACHE_FROM_SRC }}
           fi
