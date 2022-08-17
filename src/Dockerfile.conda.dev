@@ -4,6 +4,7 @@ ARG ROOT_PASS=
 ARG USERNAME=
 ARG ENVIRONMENT_NAME= 
 ARG ENVIRONMENT_CONFIG=
+ARG ADDITIONAL_APT_PACKAGES=
 
 RUN for arg in ROOT_PASS USERNAME ENVIRONMENT_NAME ENVIRONMENT_CONFIG; \
   do \
@@ -11,8 +12,9 @@ RUN for arg in ROOT_PASS USERNAME ENVIRONMENT_NAME ENVIRONMENT_CONFIG; \
   done;
 
 SHELL ["/bin/bash", "-c"]
-RUN apt update && apt install \
+RUN apt update && apt upgade -y && apt install \
   vim \
+  $ADDITIONAL_APT_PACKAGES \
   -y
 
 RUN echo "root:$ROOT_PASS" | chpasswd

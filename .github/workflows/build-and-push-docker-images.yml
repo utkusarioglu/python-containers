@@ -25,18 +25,21 @@ jobs:
             environmentName: econ
             environmentConfigPath: src/econ/environment.econ.yml
             additionalFilesToWatch: ""
+            additionalAptPackages: ""
           - dockerfile: src/Dockerfile.conda.dev
             containerName: conda-math-devcontainer
             username: math
             environmentName: math
             environmentConfigPath: src/math/environment.math.yml
             additionalFilesToWatch: ""
+            additionalAptPackages: ""
           - dockerfile: src/Dockerfile.conda.dev
             containerName: conda-music-devcontainer
             username: music
             environmentName: music
             environmentConfigPath: src/music/environment.music.yml
             additionalFilesToWatch: ""
+            additionalAptPackages: "musescore3"
 
     steps:
       - name: Checkout code
@@ -106,6 +109,7 @@ jobs:
             USERNAME=${{ matrix.images.username }}
             ENVIRONMENT_NAME=${{ matrix.images.environmentName }}
             ENVIRONMENT_CONFIG=${{ matrix.images.environmentConfigPath }}
+            ADDITIONAL_APT_PACKAGES=${{ matrix.images.additionalAptPackages }}
 
       - name: Image digest
         if: steps.changed-files.outputs.any_modified == 'true'
