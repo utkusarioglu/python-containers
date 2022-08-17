@@ -20,6 +20,7 @@ RUN echo "root:$ROOT_PASS" | chpasswd
 RUN useradd -m $USERNAME
 USER $USERNAME
 
+# Conda is installed as $USERNAME
 COPY $ENVIRONMENT_CONFIG /environment.yml
 RUN conda env create --file /environment.yml
 
