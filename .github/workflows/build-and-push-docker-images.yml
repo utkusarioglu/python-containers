@@ -68,6 +68,10 @@ jobs:
         with:
           fallback: 1.0.0
 
+        # FIX this will cause issues with minor or major version changes
+        # The semver created will end up being `2.0.1` if the tag is `2.0.0`
+        # maybe the action needs an `if` statement to ensure that this only
+        # only works if the patch version is `0`
       - name: Get next minor version
         id: semver
         uses: WyriHaximus/github-action-next-semvers@v1
