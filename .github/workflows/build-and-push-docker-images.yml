@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - src/**
+      - .github/workflows/build-and-push-docker-images.yml
   workflow_dispatch:
 
 env:
