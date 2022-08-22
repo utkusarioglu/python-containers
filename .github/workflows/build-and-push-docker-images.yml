@@ -25,7 +25,7 @@ jobs:
             username: econ
             environmentName: econ
             environmentConfigPath: src/econ/environment.econ.yml
-            dockerReadme: src/econ/DOCKER_README.econ.md
+            dockerReadmePath: src/econ/DOCKER_README.econ.md
             dockerShortDescription: Devcontainer for economics workloads
             additionalFilesToWatch: src/econ/**
             additionalAptPackages: ""
@@ -35,7 +35,7 @@ jobs:
             username: math
             environmentName: math
             environmentConfigPath: src/math/environment.math.yml
-            dockerReadme: src/math/DOCKER_README.math.md
+            dockerReadmePath: src/math/DOCKER_README.math.md
             dockerShortDescription: Devcontainer for mathematics workloads
             additionalFilesToWatch: src/math/**
             additionalAptPackages: ""
@@ -45,7 +45,7 @@ jobs:
             username: music
             environmentName: music
             environmentConfigPath: src/music/environment.music.yml
-            dockerReadme: src/music/DOCKER_README.music.md
+            dockerReadmePath: src/music/DOCKER_README.music.md
             dockerShortDescription: Devcontainer for music workloads
             additionalFilesToWatch: src/music/**
             additionalAptPackages: musescore3
@@ -136,9 +136,9 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-          repository: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.CONTAINER_NAME }}
+          repository: ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.images.containerName }}
           short-description: ${{ matrix.images.dockerShortDescription }}
-          readme-filepath: ${{ matrix.images.dockerReadme }}
+          readme-filepath: ${{ matrix.images.dockerReadmePath }}
 
       - name: Move cache
         run: |
