@@ -2,16 +2,18 @@ name: build-and-push
 
 on:
   push:
-    branches:
-      - main
+    tags:
+      - "**.**.**"
+      - feature/**/**
+      - experiment/**/**/**
     paths:
       - src/**
       - .github/workflows/build-and-push.yml
   workflow_dispatch:
 
 env:
-  CACHE_TO_DEST: /tmp/.buildx-cache-new
   CACHE_FROM_SRC: /tmp/.buildx-cache
+  CACHE_TO_DEST: /tmp/.buildx-cache-new
 
 jobs:
   build-and-push:
@@ -63,90 +65,56 @@ jobs:
           files: |
             ${{ matrix.images.dockerfile }}
             ${{ matrix.images.additionalFilesToWatch }}
+            .github/workflows/build-and-push.yml
+
+      - name: Get latest tag
+        id: latest_tag
+        uses: WyriHaximus/github-action-get-previous-tag@v1
+        with:
+          fallback: tag-unavailable
 
       - name: Declare run state
         id: run_state
         run: |
           if [ ${{ steps.changed_files.outputs.any_modified }} == true ] || \
-            [ ${{ github.event_name }} == workflow_dispatch ];
+            [ ${{ github.event_name }} == workflow_dispatch ] || \
+            [ ${{ steps.latest_tag.outputs.tag }} != tag-unavailable ];
           then
             echo "::set-output name=run_docker_build::true"
             echo "::debug::Docker build will carry out as expected."
           else
             echo "::set-output name=run_docker_build::false"
-            echo "::debug::Docker build is cancelled as none of the watched files have been changed."
-            echo "Docker build is cancelled as none of the watched files have been changed."
+            echo "Docker build is cancelled as the required conditions for a run haven't been met"
           fi
 
-      - name: Get latest tag
+      - name: Variables
         if: steps.run_state.outputs.run_docker_build == 'true'
-        id: latest_tag
-        uses: WyriHaximus/github-action-get-previous-tag@v1
-        with:
-          fallback: 1.0.0
+        id: variables
+        run: |
+          repo_tag=${{ steps.latest_tag.outputs.tag }}
+          image_tag=${repo_tag//\//-}
+          image_ref=${{ matrix.images.containerName }}:$image_tag
+          echo "::set-output name=image_tag::$image_tag"
 
-        # FIX this will cause issues with minor or major version changes
-        # The semver created will end up being `2.0.1` if the tag is `2.0.0`
-        # maybe the action needs an `if` statement to ensure that this only
-        # only works if the patch version is `0`
-      - name: Get next minor version
+      - name: Build and push ${{ steps.variables.outputs.image_ref }}
         if: steps.run_state.outputs.run_docker_build == 'true'
-        id: semver
-        uses: WyriHaximus/github-action-next-semvers@v1
+        uses: utkusarioglu/devcontainer-build@main
         with:
-          version: ${{ steps.latest_tag.outputs.tag }}
-
-      - name: Set up Docker Buildx
-        if: steps.run_state.outputs.run_docker_build == 'true'
-        id: buildx
-        uses: docker/setup-buildx-action@v1
-
-      - name: Login to DockerHub
-        if: steps.run_state.outputs.run_docker_build == 'true'
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Build and push ${{ matrix.images.containerName }}:${{ steps.semver.outputs.patch }}
-        if: steps.run_state.outputs.run_docker_build == 'true'
-        uses: docker/build-push-action@v2
-        id: docker-build
-        with:
-          context: .
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.images.containerName }}:${{ steps.semver.outputs.patch }}
-          file: ${{ matrix.images.dockerfile }}
-          push: ${{ github.ref == 'refs/heads/main' }}
-          cache-from: type=local,src=${{ env.CACHE_FROM_SRC }}
-          cache-to: type=local,mode=max,dest=${{ env.CACHE_TO_DEST }}
-          build-args: |
+          docker_hub_username: ${{ secrets.DOCKERHUB_USERNAME }}
+          docker_hub_token: ${{ secrets.DOCKERHUB_TOKEN }}
+          image_name: ${{ matrix.images.containerName }}
+          image_tag: ${{ steps.variables.outputs.image_tag }}
+          dockerfile_path: ${{ matrix.images.dockerfile }}
+          build_args: |
             ROOT_PASS=${{ secrets.DOCKER_IMAGE_ROOT_PASS }}
             USERNAME=${{ matrix.images.username }}
             ENVIRONMENT_NAME=${{ matrix.images.environmentName }}
             ENVIRONMENT_CONFIG=${{ matrix.images.environmentConfigPath }}
             ADDITIONAL_APT_PACKAGES=${{ matrix.images.additionalAptPackages }}
-
-      - name: Image digest
-        if: steps.run_state.outputs.run_docker_build == 'true'
-        run: echo ${{ steps.docker-build.outputs.digest }}
-
-      - name: Set Docker Hub description
-        if: steps.run_state.outputs.run_docker_build == 'true'
-        uses: peter-evans/dockerhub-description@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-          repository: ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.images.containerName }}
-          short-description: ${{ matrix.images.dockerShortDescription }}
-          readme-filepath: ${{ matrix.images.dockerReadmePath }}
-
-      - name: Move cache
-        run: |
-          rm -rf ${{ env.CACHE_FROM_SRC }}
-          if [ -d ${{ env.CACHE_FROM_SRC }} ];
-          then
-            mv ${{ env.CACHE_TO_DEST }} ${{ env.CACHE_FROM_SRC }}
-          fi
+          devcontainer_subfolder: src/${{ matrix.images.environmentName }}
+          devcontainer_run_cmd_path: /scripts/devcontainer-check.sh
+          docker_hub_repo_short_description: ${{ matrix.images.dockerShortDescription }}
+          docker_hub_repo_readme_file_path: ${{ matrix.images.dockerReadmePath }}
 
       - name: Telegram notifications
         if: always()
