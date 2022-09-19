@@ -23,22 +23,22 @@ RUN echo "root:$ROOT_PASS" | chpasswd
 RUN useradd -m $USERNAME
 USER $USERNAME
 
-# Conda is installed as $USERNAME
+# Conda is deliberately installed as user: $USERNAME
 COPY $ENVIRONMENT_CONFIG /environment.yml
 RUN conda env create --file /environment.yml
 
 
 # Gists
 ADD --chown=$USERNAME:$GROUP \
-  https://gist.githubusercontent.com/utkusarioglu/2d4be44dc7707afccd540ad99ba385e6/raw/3eb6693a91b1aa5b3863d087de1d189b72eeeec8/create-env-example.sh \
+  https://gist.githubusercontent.com/utkusarioglu/2d4be44dc7707afccd540ad99ba385e6/raw/create-env-example.sh \
   /scripts/create-env-example.sh
 
 ADD --chown=$USERNAME:$GROUP \
-  https://gist.githubusercontent.com/utkusarioglu/3523b00578807d63b05399fe57a4b2a7/raw/7df99dbbeb8ee4d14396be043aef4fbf8fb42ce5/.bashrc \
+  https://gist.githubusercontent.com/utkusarioglu/3523b00578807d63b05399fe57a4b2a7/raw/.bashrc \
   /home/$USERNAME/.bashrc
 
 ADD --chown=$USERNAME:$GROUP \
-  https://gist.githubusercontent.com/utkusarioglu/d5c216c744460c45bf6260d0de4131b4/raw/d227102e3630a93f8eafcb4d2a5a053d2ae04415/.inputrc \
+  https://gist.githubusercontent.com/utkusarioglu/d5c216c744460c45bf6260d0de4131b4/raw/.inputrc \
   /home/$USERNAME/.inputrc
 RUN chmod +x \
   /scripts/create-env-example.sh \
@@ -50,3 +50,5 @@ ENV SHELL /bin/bash
 # Pushing into `.bashrc` for environment selection
 # This line is unique for all containers
 RUN echo "source activate $ENVIRONMENT_NAME" >> /home/$USERNAME/.bashrc
+
+COPY src/${ENVIRONMENT_NAME}/scripts /scripts
