@@ -1,6 +1,6 @@
 #!/bin/bash
 
-required_packages="gh python vim git"
+required_packages="gh python nvim git"
 
 for exec in $required_packages;
 do
