@@ -4,7 +4,6 @@ on:
   push:
     tags:
       - "**.**.**"
-      - feature/**/**
       - experiment/**/**/**
     paths:
       - src/**
@@ -67,23 +66,17 @@ jobs:
             ${{ matrix.images.additionalFilesToWatch }}
             .github/workflows/build-and-push.yml
 
-      - name: Get latest tag
-        id: latest_tag
-        uses: WyriHaximus/github-action-get-previous-tag@v1
-        with:
-          fallback: tag-unavailable
-
       - name: Declare run state
         id: run_state
         run: |
           if [ ${{ steps.changed_files.outputs.any_modified }} == true ] || \
             [ ${{ github.event_name }} == workflow_dispatch ] || \
-            [ ${{ steps.latest_tag.outputs.tag }} != tag-unavailable ];
+            [ ${{ github.ref_type }} != tag ];
           then
-            echo "::set-output name=run_docker_build::true"
+            echo "run_docker_build=true" >> $GITHUB_OUTPUT
             echo "::debug::Docker build will carry out as expected."
           else
-            echo "::set-output name=run_docker_build::false"
+            echo "run_docker_build=false" >> $GITHUB_OUTPUT
             echo "Docker build is cancelled as the required conditions for a run haven't been met"
           fi
 
@@ -91,10 +84,10 @@ jobs:
         if: steps.run_state.outputs.run_docker_build == 'true'
         id: variables
         run: |
-          repo_tag=${{ steps.latest_tag.outputs.tag }}
+          repo_tag=${{ github.ref_name }}
           image_tag=${repo_tag//\//-}
           image_ref=${{ matrix.images.containerName }}:$image_tag
-          echo "::set-output name=image_tag::$image_tag"
+          echo "image_tag=$image_tag" >> $GITHUB_OUTPUT
 
       - name: Build and push ${{ steps.variables.outputs.image_ref }}
         if: steps.run_state.outputs.run_docker_build == 'true'
