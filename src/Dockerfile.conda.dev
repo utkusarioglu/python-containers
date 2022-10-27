@@ -1,10 +1,10 @@
 FROM continuumio/miniconda3
 
-ARG ROOT_PASS=
-ARG USERNAME=
-ARG ENVIRONMENT_NAME= 
-ARG ENVIRONMENT_CONFIG=
-ARG ADDITIONAL_APT_PACKAGES=
+ARG ROOT_PASS
+ARG USERNAME
+ARG ENVIRONMENT_NAME 
+ARG ENVIRONMENT_CONFIG
+ARG ADDITIONAL_APT_PACKAGES
 
 RUN for arg in ROOT_PASS USERNAME ENVIRONMENT_NAME ENVIRONMENT_CONFIG; \
   do \
@@ -15,8 +15,15 @@ SHELL ["/bin/bash", "-c"]
 RUN apt-get update && \
   apt-get upgrade -y && \
   apt-get install -y \
-  vim \
   $ADDITIONAL_APT_PACKAGES
+
+# Neovim requires manual retrieval of the latest version
+# as the apt package is quite old
+RUN wget https://github.com/neovim/neovim/releases/download/v0.8.0/nvim-linux64.deb \
+  -O /neovim.deb
+RUN apt install -y /neovim.deb 
+RUN rm /neovim.deb
+ENV EDITOR=nvim
 
 RUN echo "root:$ROOT_PASS" | chpasswd
 
