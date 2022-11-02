@@ -21,6 +21,15 @@ jobs:
     strategy:
       matrix:
         images:
+          - dockerfile: src/Dockerfile.python.dev
+            containerName: python-devcontainer
+            username: python
+            environmentName: python
+            dockerReadmePath: src/python/DOCKER_README.python.md
+            dockerShortDescription: Devcontainer for python workloads
+            additionalFilesToWatch: src/python/**
+            additionalAptPackages: ""
+
           - dockerfile: src/Dockerfile.conda.dev
             containerName: conda-econ-devcontainer
             username: econ
