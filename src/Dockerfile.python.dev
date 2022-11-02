@@ -1,0 +1,57 @@
+FROM bitnami/python
+
+ARG ROOT_PASS
+ARG USERNAME
+ARG ENVIRONMENT_NAME 
+# ARG ENVIRONMENT_CONFIG
+ARG ADDITIONAL_APT_PACKAGES
+ARG HOME=/home/$USERNAME
+
+RUN for arg in ROOT_PASS USERNAME ENVIRONMENT_NAME ENVIRONMENT_CONFIG; \
+  do \
+  [ ! -z "${arg}" ] || { echo "ARG \"$arg\" needs to be set"; exit 1; } \
+  done;
+
+SHELL ["/bin/bash", "-c"]
+RUN apt-get update && \
+  apt-get upgrade -y && \
+  apt-get install -y \
+  $ADDITIONAL_APT_PACKAGES
+
+# Neovim requires manual retrieval of the latest version
+# as the apt package is quite old
+RUN wget https://github.com/neovim/neovim/releases/download/v0.8.0/nvim-linux64.deb \
+  -O /neovim.deb
+RUN apt install -y /neovim.deb 
+RUN rm /neovim.deb
+ENV EDITOR=nvim
+
+RUN echo "root:$ROOT_PASS" | chpasswd
+
+# This doesn't exist in conda containers
+ENV SHELL=/bin/bash
+
+RUN useradd -m $USERNAME
+USER $USERNAME
+
+# Gists
+ADD --chown=$USERNAME:$GROUP \
+  https://gist.githubusercontent.com/utkusarioglu/2d4be44dc7707afccd540ad99ba385e6/raw/create-env-example.sh \
+  /scripts/create-env-example.sh
+
+ADD --chown=$USERNAME:$GROUP \
+  https://gist.githubusercontent.com/utkusarioglu/3523b00578807d63b05399fe57a4b2a7/raw/.bashrc \
+  $HOME/.bashrc
+
+ADD --chown=$USERNAME:$GROUP \
+  https://gist.githubusercontent.com/utkusarioglu/d5c216c744460c45bf6260d0de4131b4/raw/.inputrc \
+  $HOME/.inputrc
+RUN chmod +x \
+  /scripts/create-env-example.sh \
+  $HOME/.bashrc \
+  $HOME/.inputrc
+
+RUN mkdir -p $HOME/.vscode-server/extensions
+RUN mkdir -p $HOME/.vscode-server-insiders/extensions
+
+COPY src/${ENVIRONMENT_NAME}/scripts /scripts

@@ -1,0 +1,9 @@
+{
+  "image": "${localEnv:IMAGE_NAME}:${localEnv:IMAGE_TAG}",
+  "features": {
+    "github-cli": "latest",
+    "ghcr.io/devcontainers/features/sshd:1": {
+      "version": "latest"
+    }
+  }
+}
