@@ -78,9 +78,11 @@ jobs:
       - name: Declare run state
         id: run_state
         run: |
-          if [ ${{ steps.changed_files.outputs.any_modified }} == true ] || \
-            [ ${{ github.event_name }} == workflow_dispatch ] || \
-            [ ${{ github.ref_type }} != tag ];
+          if [ ${{ github.ref_type }} == tag ] && \
+            ( \
+              [ ${{ steps.changed_files.outputs.any_modified }} == true ] || \
+              [ ${{ github.event_name }} == workflow_dispatch ] \
+            );
           then
             echo "run_docker_build=true" >> $GITHUB_OUTPUT
             echo "::debug::Docker build will carry out as expected."
