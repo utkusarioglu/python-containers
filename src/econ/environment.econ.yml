@@ -1,15 +1,16 @@
 name: econ
 channels:
-  - conda-forge
-  - anaconda
+  - defaults
 dependencies:
-  - jupyter
-  - numpy
-  - pandas
-  - scipy
-  - xlsxwriter
-  - python-dotenv
-  - matplotlib
-  - squarify
-  - openpyxl
-  - requests
+  - anaconda::jupyter
+  - anaconda::numpy
+
+  - conda-forge::matplotlib
+  - conda-forge::openpyxl
+  - conda-forge::pandas
+  - conda-forge::pytest
+  - conda-forge::python-dotenv
+  - conda-forge::requests
+  - conda-forge::scipy
+  - conda-forge::squarify
+  - conda-forge::xlsxwriter

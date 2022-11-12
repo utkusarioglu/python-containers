@@ -1,12 +1,14 @@
 name: math
-channels: 
-  - anaconda
+channels:
+  - default
 dependencies:
-  - jupyter
-  - numpy
-  - pandas
-  - scipy
-  - xlsxwriter
-  - matplotlib
-  - scipy
-  - sympy
+  - anaconda::jupyter
+  - anaconda::numpy
+
+  - conda-forge::matplotlib
+  - conda-forge::pandas
+  - conda-forge::pytest
+  - conda-forge::scipy
+  - conda-forge::scipy
+  - conda-forge::sympy
+  - conda-forge::xlsxwriter
