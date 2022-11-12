@@ -13,4 +13,5 @@ dependencies:
   - conda-forge::requests
   - conda-forge::scipy
   - conda-forge::squarify
+  - conda-forge::watchdog
   - conda-forge::xlsxwriter

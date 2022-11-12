@@ -4,9 +4,10 @@ channels:
 dependencies:
   - anaconda::jupyter
 
-  - conda-forge::music21
   - conda-forge::matplotlib
+  - conda-forge::music21
   - conda-forge::pytest
+  - conda-forge::watchdog
 # These may be enabled later, depending on need
 # - anaconda::numpy
 # - anaconda::scipy

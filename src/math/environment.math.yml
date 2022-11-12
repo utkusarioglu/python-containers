@@ -11,4 +11,5 @@ dependencies:
   - conda-forge::scipy
   - conda-forge::scipy
   - conda-forge::sympy
+  - conda-forge::watchdog
   - conda-forge::xlsxwriter
