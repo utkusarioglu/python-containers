@@ -58,7 +58,6 @@ RUN mkdir -p $HOME/.vscode-server-insiders/extensions
 COPY src/${ENVIRONMENT_NAME}/scripts /scripts
 
 RUN python -m venv ~/venv/main
-RUN pip install watchdog
 RUN echo "source ~/venv/main/bin/activate" >> ~/.bashrc
 
-RUN pip install pytest
+RUN pip install watchdog pytest
