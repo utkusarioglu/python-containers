@@ -3,8 +3,10 @@ channels:
   - defaults
 dependencies:
   - anaconda::jupyter
+
   - conda-forge::music21
   - conda-forge::matplotlib
+  - conda-forge::pytest
 # These may be enabled later, depending on need
 # - anaconda::numpy
 # - anaconda::scipy
