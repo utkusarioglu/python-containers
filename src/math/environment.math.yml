@@ -1,15 +1,6 @@
-name: math
-channels:
-  - default
+name: default
 dependencies:
-  - anaconda::jupyter
-  - anaconda::numpy
-
-  - conda-forge::matplotlib
-  - conda-forge::pandas
-  - conda-forge::pytest
-  - conda-forge::scipy
-  - conda-forge::scipy
-  - conda-forge::sympy
-  - conda-forge::watchdog
-  - conda-forge::xlsxwriter
+  # These are in common between econ and math
+  - conda-forge::pandas=2.0.0
+  - conda-forge::xlsxwriter=3.0.9
+  - conda-forge::sympy=1.11.1

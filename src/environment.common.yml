@@ -1,0 +1,14 @@
+channels:
+  - defaults
+dependencies:
+  - anaconda::jupyter=1.0.0
+  - anaconda::numpy=1.23.5
+  - anaconda::flake8=6.0.0
+
+  - conda-forge::black=22.12.0
+  - conda-forge::black-jupyter=22.12.0
+  - conda-forge::python-dotenv=1.0.0 
+  - conda-forge::scipy=1.10.1
+  - conda-forge::matplotlib=3.7.1
+  - conda-forge::pytest=7.2.2
+  - conda-forge::watchdog=3.0.0

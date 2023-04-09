@@ -1,17 +1,14 @@
-name: econ
-channels:
-  - defaults
+name: default
 dependencies:
-  - anaconda::jupyter
-  - anaconda::numpy
+  # These are in common between econ and math
+  - conda-forge::pandas=2.0.0
+  - conda-forge::xlsxwriter=3.0.9
+  - conda-forge::sympy=1.11.1
 
-  - conda-forge::matplotlib
-  - conda-forge::openpyxl
-  - conda-forge::pandas
-  - conda-forge::pytest
-  - conda-forge::python-dotenv
-  - conda-forge::requests
-  - conda-forge::scipy
-  - conda-forge::squarify
-  - conda-forge::watchdog
-  - conda-forge::xlsxwriter
+  # These are unique to econ
+  - conda-forge::squarify=0.4.3
+  - conda-forge::openpyxl=3.1.1
+  - conda-forge::requests=2.28.2
+  - anaconda::psycopg2=2.9.3
+  - conda-forge::sqlalchemy=1.4.46
+  - conda-forge::cmasher=1.6.3

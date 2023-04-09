@@ -2,12 +2,15 @@ FROM bitnami/python
 
 ARG ROOT_PASS
 ARG USERNAME
+ARG GROUP
 ARG ENVIRONMENT_NAME 
+ARG SCRIPTS_PATH
 # ARG ENVIRONMENT_CONFIG
 ARG ADDITIONAL_APT_PACKAGES
 ARG HOME=/home/$USERNAME
+ARG NVIM_VERSION=v0.8.3
 
-RUN for arg in ROOT_PASS USERNAME ENVIRONMENT_NAME ENVIRONMENT_CONFIG; \
+RUN for arg in ROOT_PASS USERNAME GROUP ENVIRONMENT_NAME ENVIRONMENT_CONFIG; \
   do \
   [ ! -z "${arg}" ] || { echo "ARG \"$arg\" needs to be set"; exit 1; } \
   done;
@@ -21,7 +24,7 @@ RUN apt-get update && \
 
 # Neovim requires manual retrieval of the latest version
 # as the apt package is quite old
-RUN wget https://github.com/neovim/neovim/releases/download/v0.8.0/nvim-linux64.deb \
+RUN wget https://github.com/neovim/neovim/releases/download/$NVIM_VERSION/nvim-linux64.deb \
   -O /neovim.deb
 RUN apt install -y /neovim.deb 
 RUN rm /neovim.deb
@@ -55,9 +58,10 @@ RUN chmod +x \
 RUN mkdir -p $HOME/.vscode-server/extensions
 RUN mkdir -p $HOME/.vscode-server-insiders/extensions
 
-COPY src/${ENVIRONMENT_NAME}/scripts /scripts
+COPY "${SCRIPTS_PATH}" /scripts
 
 RUN python -m venv ~/venv/main
 RUN echo "source ~/venv/main/bin/activate" >> ~/.bashrc
 
-RUN pip install watchdog pytest
+COPY "src/python/requirements.txt" "/requirements.txt"
+RUN pip install -r "/requirements.txt"

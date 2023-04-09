@@ -26,44 +26,60 @@ jobs:
     strategy:
       matrix:
         images:
+            # Vanilla python
           - dockerfile: src/Dockerfile.python.dev
             containerName: python-devcontainer
             username: python
+            group: 1000
             environmentName: python
+            scriptsPath: src/python/scripts
+            devcontainerSubfolder: python
             dockerReadmePath: src/python/DOCKER_README.python.md
             dockerShortDescription: Devcontainer for python workloads
             additionalFilesToWatch: src/python/**
             additionalAptPackages: ""
 
+            # econ
           - dockerfile: src/Dockerfile.conda.dev
             containerName: conda-econ-devcontainer
             username: econ
-            environmentName: econ
+            group: 1000
+            environmentName: default
+            scriptsPath: src/econ/scripts
+            devcontainerSubfolder: econ
             environmentConfigPath: src/econ/environment.econ.yml
             dockerReadmePath: src/econ/DOCKER_README.econ.md
             dockerShortDescription: Devcontainer for economics workloads
             additionalFilesToWatch: src/econ/**
             additionalAptPackages: ""
 
+            # math
           - dockerfile: src/Dockerfile.conda.dev
             containerName: conda-math-devcontainer
             username: math
-            environmentName: math
+            group: 1000
+            environmentName: default
+            scriptsPath: src/math/scripts
+            devcontainerSubfolder: math
             environmentConfigPath: src/math/environment.math.yml
             dockerReadmePath: src/math/DOCKER_README.math.md
             dockerShortDescription: Devcontainer for mathematics workloads
             additionalFilesToWatch: src/math/**
             additionalAptPackages: ""
 
+            # music
           - dockerfile: src/Dockerfile.conda.dev
             containerName: conda-music-devcontainer
             username: music
-            environmentName: music
+            group: 1000
+            environmentName: default
+            scriptsPath: src/music/scripts
+            devcontainerSubfolder: music
             environmentConfigPath: src/music/environment.music.yml
             dockerReadmePath: src/music/DOCKER_README.music.md
             dockerShortDescription: Devcontainer for music workloads
             additionalFilesToWatch: src/music/**
-            additionalAptPackages: musescore3
+            additionalAptPackages: ""
 
     steps:
       - name: Checkout code
@@ -117,10 +133,12 @@ jobs:
           build_args: |
             ROOT_PASS=${{ secrets.DOCKER_IMAGE_ROOT_PASS }}
             USERNAME=${{ matrix.images.username }}
+            GROUP=${{ matrix.images.group }}
             ENVIRONMENT_NAME=${{ matrix.images.environmentName }}
+            SCRIPTS_PATH=${{matrix.images.scriptsPath}}
             ENVIRONMENT_CONFIG=${{ matrix.images.environmentConfigPath }}
             ADDITIONAL_APT_PACKAGES=${{ matrix.images.additionalAptPackages }}
-          devcontainer_subfolder: src/${{ matrix.images.environmentName }}
+          devcontainer_subfolder: src/${{ matrix.images.devcontainerSubfolder }}
           devcontainer_run_cmd_path: /scripts/devcontainer-check.sh
           docker_hub_repo_short_description: ${{ matrix.images.dockerShortDescription }}
           docker_hub_repo_readme_file_path: ${{ matrix.images.dockerReadmePath }}
