@@ -1,14 +1,5 @@
-name: music
-channels:
-  - defaults
+name: default
 dependencies:
-  - anaconda::jupyter
-
-  - conda-forge::matplotlib
-  - conda-forge::music21
-  - conda-forge::pytest
-  - conda-forge::watchdog
+  - conda-forge::music21=8.1.0
 # These may be enabled later, depending on need
-# - anaconda::numpy
-# - anaconda::scipy
 # - cogsci::pygame

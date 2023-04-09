@@ -2,12 +2,15 @@ FROM continuumio/miniconda3
 
 ARG ROOT_PASS
 ARG USERNAME
+ARG GROUP
 ARG ENVIRONMENT_NAME 
+ARG SCRIPTS_PATH
 ARG ENVIRONMENT_CONFIG
 ARG ADDITIONAL_APT_PACKAGES
 ARG HOME=/home/$USERNAME
+ARG NVIM_VERSION=v0.8.3
 
-RUN for arg in ROOT_PASS USERNAME ENVIRONMENT_NAME ENVIRONMENT_CONFIG; \
+RUN for arg in ROOT_PASS USERNAME GROUP ENVIRONMENT_NAME ENVIRONMENT_CONFIG; \
   do \
   [ ! -z "${arg}" ] || { echo "ARG \"$arg\" needs to be set"; exit 1; } \
   done;
@@ -16,26 +19,47 @@ SHELL ["/bin/bash", "-c"]
 RUN apt-get update && \
   apt-get upgrade -y && \
   apt-get install -y \
-  jq \
+  jq \ 
   $ADDITIONAL_APT_PACKAGES
 
 # Neovim requires manual retrieval of the latest version
 # as the apt package is quite old
-RUN wget https://github.com/neovim/neovim/releases/download/v0.8.0/nvim-linux64.deb \
+RUN wget https://github.com/neovim/neovim/releases/download/$NVIM_VERSION/nvim-linux64.deb \
   -O /neovim.deb
 RUN apt install -y /neovim.deb 
 RUN rm /neovim.deb
 ENV EDITOR=nvim
 
+# yq
+RUN wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq &&\
+  chmod +x /usr/bin/yq
+
 RUN echo "root:$ROOT_PASS" | chpasswd
 
-RUN useradd -m $USERNAME
-USER $USERNAME
-
 # Conda is deliberately installed as user: $USERNAME
-COPY $ENVIRONMENT_CONFIG /environment.yml
-RUN conda env create --file /environment.yml
+COPY "src/environment.common.yml" /environment.common.yml
+COPY $ENVIRONMENT_CONFIG /environment.repo.yml
+RUN yq eval-all \
+  '. as $item ireduce ({}; . *+ $item)' \
+  "/environment.common.yml" \
+  "/environment.repo.yml" \
+  > "/environment.merged.yml"
 
+RUN echo "common:\n" && cat "/environment.common.yml"
+RUN echo "repo:\n" && cat "/environment.repo.yml"
+RUN echo "merged:\n" && cat "/environment.merged.yml"
+
+RUN conda env create --file "/environment.merged.yml"
+
+RUN useradd -m "$USERNAME"
+RUN mkdir -p "$HOME/.vscode-server/extensions"
+RUN mkdir -p "$HOME/.vscode-server-insiders/extensions"
+
+RUN chown -R "$USERNAME:$GROUP" /environment.*.yml
+RUN chown -R "$USERNAME:$GROUP" "$HOME"
+RUN chown -R "$USERNAME:$GROUP" "/opt/conda/envs"
+
+USER $USERNAME
 
 # Gists
 ADD --chown=$USERNAME:$GROUP \
@@ -54,8 +78,6 @@ RUN chmod +x \
   $HOME/.bashrc \
   $HOME/.inputrc
 
-RUN mkdir -p $HOME/.vscode-server/extensions
-RUN mkdir -p $HOME/.vscode-server-insiders/extensions
 
 ENV PATH "/opt/conda/envs/$ENVIRONMENT_NAME/bin:$PATH"
 ENV SHELL /bin/bash
@@ -63,4 +85,4 @@ ENV SHELL /bin/bash
 # This line is unique for all containers
 RUN echo "source activate $ENVIRONMENT_NAME" >> /home/$USERNAME/.bashrc
 
-COPY src/${ENVIRONMENT_NAME}/scripts /scripts
+COPY "${SCRIPTS_PATH}" /scripts
