@@ -1,4 +1,3 @@
-name: default
 dependencies:
   - conda-forge::music21=8.1.0
 # These may be enabled later, depending on need
