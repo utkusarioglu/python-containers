@@ -63,5 +63,5 @@ COPY "${SCRIPTS_PATH}" /scripts
 RUN python -m venv ~/venv/main
 RUN echo "source ~/venv/main/bin/activate" >> ~/.bashrc
 
-COPY "src/python/requirements.txt" "/requirements.txt"
+COPY "src/$ENVIRONMENT_NAME/requirements.txt" "/requirements.txt"
 RUN pip install -r "/requirements.txt"

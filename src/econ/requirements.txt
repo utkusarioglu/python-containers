@@ -1,0 +1,2 @@
+talipp==1.9.1
+tradingview-ta==3.3.0

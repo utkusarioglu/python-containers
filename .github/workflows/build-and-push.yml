@@ -27,59 +27,76 @@ jobs:
       matrix:
         images:
             # Vanilla python
-          - dockerfile: src/Dockerfile.python.dev
+          - enabled: false
+            dockerfile: src/Dockerfile.python.dev
             containerName: python-devcontainer
             username: python
-            group: 1000
+            group: python
             environmentName: python
             scriptsPath: src/python/scripts
             devcontainerSubfolder: python
             dockerReadmePath: src/python/DOCKER_README.python.md
             dockerShortDescription: Devcontainer for python workloads
-            additionalFilesToWatch: src/python/**
+            additionalFilesToWatch: |
+              src/Dockerfile.python.dev
+              src/python/**
             additionalAptPackages: ""
 
             # econ
-          - dockerfile: src/Dockerfile.conda.dev
+          - enabled: false
+            dockerfile: src/Dockerfile.conda.dev
             containerName: conda-econ-devcontainer
             username: econ
-            group: 1000
+            group: micromamba
             environmentName: default
             scriptsPath: src/econ/scripts
             devcontainerSubfolder: econ
             environmentConfigPath: src/econ/environment.econ.yml
             dockerReadmePath: src/econ/DOCKER_README.econ.md
             dockerShortDescription: Devcontainer for economics workloads
-            additionalFilesToWatch: src/econ/**
+            additionalFilesToWatch: |
+              src/environment.common.yml
+              src/Dockerfile.conda.dev
+              src/econ/**
             additionalAptPackages: ""
 
             # math
-          - dockerfile: src/Dockerfile.conda.dev
+          - enabled: true
+            dockerfile: src/Dockerfile.conda.dev
             containerName: conda-math-devcontainer
             username: math
-            group: 1000
+            group: micromamba
             environmentName: default
             scriptsPath: src/math/scripts
             devcontainerSubfolder: math
             environmentConfigPath: src/math/environment.math.yml
             dockerReadmePath: src/math/DOCKER_README.math.md
             dockerShortDescription: Devcontainer for mathematics workloads
-            additionalFilesToWatch: src/math/**
-            additionalAptPackages: ""
+            additionalFilesToWatch: |
+              src/environment.common.yml
+              src/Dockerfile.conda.dev
+              src/math/**
+            # These are required for matplotlib
+            additionalAptPackages: "libsm6 libxrender1"
 
             # music
-          - dockerfile: src/Dockerfile.conda.dev
+          - enabled: false
+            dockerfile: src/Dockerfile.conda.dev
             containerName: conda-music-devcontainer
             username: music
-            group: 1000
+            group: micromamba
             environmentName: default
             scriptsPath: src/music/scripts
             devcontainerSubfolder: music
             environmentConfigPath: src/music/environment.music.yml
             dockerReadmePath: src/music/DOCKER_README.music.md
             dockerShortDescription: Devcontainer for music workloads
-            additionalFilesToWatch: src/music/**
-            additionalAptPackages: ""
+            additionalFilesToWatch: |
+              src/environment.common.yml
+              src/Dockerfile.conda.dev
+              src/music/**
+            additionalAptPackages: build-essential pkg-config libjack-dev alsa-utils
+            # libasound2-dev libjack-jackd2-dev alsa-base alsa-utils libsndfile1-dev
 
     steps:
       - name: Checkout code
@@ -99,11 +116,17 @@ jobs:
       - name: Declare run state
         id: run_state
         run: |
-          if [ ${{ github.ref_type }} == tag ] && \
-            ( \
-              [ ${{ steps.changed_files.outputs.any_modified }} == true ] || \
-              [ ${{ github.event_name }} == workflow_dispatch ] \
-            );
+          ref_type="${{ github.ref_type }}"
+          enabled="${{ matrix.images.enabled }}"
+          any_modified="${{ steps.changed_files.outputs.any_modified }}"
+          event_name="${{ github.event_name }}"
+
+          if [ "$ref_type" == tag ] && \
+             [ "$enabled" == true ] && \
+             ( \
+               [ "$any_modified" == true ] || \
+               [ "$event_name" == workflow_dispatch ] \
+             );
           then
             echo "run_docker_build=true" >> $GITHUB_OUTPUT
             echo "::debug::Docker build will carry out as expected."
@@ -111,6 +134,11 @@ jobs:
             echo "run_docker_build=false" >> $GITHUB_OUTPUT
             echo "Docker build is cancelled as the required conditions for a run haven't been met"
           fi
+
+          echo "Ref type: $ref_type"
+          echo "Enabled: $enabled"
+          echo "Any modified: $any_modified"
+          echo "Event name: $event_name" 
 
       - name: Variables
         if: steps.run_state.outputs.run_docker_build == 'true'
@@ -138,6 +166,7 @@ jobs:
             SCRIPTS_PATH=${{matrix.images.scriptsPath}}
             ENVIRONMENT_CONFIG=${{ matrix.images.environmentConfigPath }}
             ADDITIONAL_APT_PACKAGES=${{ matrix.images.additionalAptPackages }}
+            DEVCONTAINER_SUBFOLDER=${{ matrix.images.devcontainerSubfolder }}
           devcontainer_subfolder: src/${{ matrix.images.devcontainerSubfolder }}
           devcontainer_run_cmd_path: /scripts/devcontainer-check.sh
           docker_hub_repo_short_description: ${{ matrix.images.dockerShortDescription }}

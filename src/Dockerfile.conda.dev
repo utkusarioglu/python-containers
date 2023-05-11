@@ -1,4 +1,5 @@
-FROM continuumio/miniconda3
+# FROM continuumio/miniconda3
+FROM mambaorg/micromamba:1.4.2-jammy
 
 ARG ROOT_PASS
 ARG USERNAME
@@ -6,32 +7,46 @@ ARG GROUP
 ARG ENVIRONMENT_NAME 
 ARG SCRIPTS_PATH
 ARG ENVIRONMENT_CONFIG
+ARG DEVCONTAINER_SUBFOLDER
 ARG ADDITIONAL_APT_PACKAGES
-ARG HOME=/home/$USERNAME
-ARG NVIM_VERSION=v0.8.3
 
-RUN for arg in ROOT_PASS USERNAME GROUP ENVIRONMENT_NAME ENVIRONMENT_CONFIG; \
-  do \
-  [ ! -z "${arg}" ] || { echo "ARG \"$arg\" needs to be set"; exit 1; } \
-  done;
+ARG HOME="/home/$USERNAME"
+ARG NVIM_VERSION=v0.8.3
+ARG MAMBA_ROOT_PREFIX=/opt/conda
+
+USER root
+
+RUN usermod -l $USERNAME mambauser
+RUN usermod -d $HOME -m $USERNAME 
+RUN groupmod -n $GROUP mambauser
+RUN ls -al "/home"
+RUN echo "home: $HOME"
+ENV HOME="/home/$USERNAME"
+RUN echo "home 2: $HOME"
+RUN rm -rf "/home/mambauser"
 
 SHELL ["/bin/bash", "-c"]
 RUN apt-get update && \
   apt-get upgrade -y && \
-  apt-get install -y \
+  apt-get install -y --no-install-recommends \
+  wget \
   jq \ 
-  $ADDITIONAL_APT_PACKAGES
+  ${ADDITIONAL_APT_PACKAGES//[$'\t\r\n']}
+RUN apt-get clean
 
 # Neovim requires manual retrieval of the latest version
 # as the apt package is quite old
 RUN wget https://github.com/neovim/neovim/releases/download/$NVIM_VERSION/nvim-linux64.deb \
-  -O /neovim.deb
+  -O /neovim.deb \
+  --no-check-certificate
 RUN apt install -y /neovim.deb 
 RUN rm /neovim.deb
 ENV EDITOR=nvim
 
 # yq
-RUN wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq &&\
+RUN wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 \
+  -O /usr/bin/yq \
+  --no-check-certificate && \
   chmod +x /usr/bin/yq
 
 RUN echo "root:$ROOT_PASS" | chpasswd
@@ -49,9 +64,13 @@ RUN echo "common:\n" && cat "/environment.common.yml"
 RUN echo "repo:\n" && cat "/environment.repo.yml"
 RUN echo "merged:\n" && cat "/environment.merged.yml"
 
-RUN conda env create --file "/environment.merged.yml"
+# RUN conda env create --file "/environment.merged.yml"
+RUN micromamba env create --file "/environment.merged.yml" 
 
-RUN useradd -m "$USERNAME"
+# RUN mamba install -n "$ENVIRONMENT_NAME" conda-libmamba-solver
+# RUN conda config --set solver libmamba
+
+# RUN useradd -m "$USERNAME"
 RUN mkdir -p "$HOME/.vscode-server/extensions"
 RUN mkdir -p "$HOME/.vscode-server-insiders/extensions"
 
@@ -79,10 +98,15 @@ RUN chmod +x \
   $HOME/.inputrc
 
 
-ENV PATH "/opt/conda/envs/$ENVIRONMENT_NAME/bin:$PATH"
+ENV PATH "$MAMBA_ROOT_PREFIX/envs/$ENVIRONMENT_NAME/bin:$PATH"
 ENV SHELL /bin/bash
 # Pushing into `.bashrc` for environment selection
 # This line is unique for all containers
 RUN echo "source activate $ENVIRONMENT_NAME" >> /home/$USERNAME/.bashrc
 
+COPY "src/$DEVCONTAINER_SUBFOLDER/requirements.txt" "/requirements.txt"
+RUN pip install -r "/requirements.txt"
+
 COPY "${SCRIPTS_PATH}" /scripts
+
+RUN echo "micromamba activate $ENVIRONMENT_NAME" >> ~/.bashrc
