@@ -100,13 +100,11 @@ RUN chmod +x \
 
 ENV PATH "$MAMBA_ROOT_PREFIX/envs/$ENVIRONMENT_NAME/bin:$PATH"
 ENV SHELL /bin/bash
-# Pushing into `.bashrc` for environment selection
-# This line is unique for all containers
-RUN echo "source activate $ENVIRONMENT_NAME" >> /home/$USERNAME/.bashrc
 
 COPY "src/$DEVCONTAINER_SUBFOLDER/requirements.txt" "/requirements.txt"
 RUN pip install -r "/requirements.txt"
 
 COPY "${SCRIPTS_PATH}" /scripts
 
-RUN echo "micromamba activate $ENVIRONMENT_NAME" >> ~/.bashrc
+# Pushing into `.bashrc` for environment selection
+RUN echo "eval \"\$(micromamba shell hook --shell=bash)\" && micromamba activate $ENVIRONMENT_NAME" >> ~/.bashrc
