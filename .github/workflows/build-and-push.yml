@@ -27,7 +27,7 @@ jobs:
       matrix:
         images:
             # Vanilla python
-          - enabled: true
+          - enabled: false
             dockerfile: src/Dockerfile.python.dev
             containerName: python-devcontainer
             username: python

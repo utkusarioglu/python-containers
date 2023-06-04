@@ -32,6 +32,7 @@ RUN apt-get update && \
   apt-get install -y --no-install-recommends \
   wget \
   jq \ 
+  git \
   ${ADDITIONAL_APT_PACKAGES//[$'\t\r\n']}
 RUN apt-get clean
 
