@@ -9,6 +9,7 @@ ARG SCRIPTS_PATH
 ARG ADDITIONAL_APT_PACKAGES
 ARG HOME=/home/$USERNAME
 ARG NVIM_VERSION=v0.8.3
+ARG ELAM_ABSPATH="$HOME/elam"
 
 RUN for arg in ROOT_PASS USERNAME GROUP ENVIRONMENT_NAME ENVIRONMENT_CONFIG; \
   do \
@@ -54,6 +55,10 @@ RUN chmod +x \
   /scripts/create-env-example.sh \
   $HOME/.bashrc \
   $HOME/.inputrc
+
+# Elam
+RUN git clone https://github.com/utkusarioglu/elam.git $ELAM_ABSPATH
+RUN echo "alias elam=$ELAM_ABSPATH/elam.sh" >> $HOME/.bash_aliases
 
 RUN mkdir -p $HOME/.vscode-server/extensions
 RUN mkdir -p $HOME/.vscode-server-insiders/extensions
