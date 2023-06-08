@@ -171,12 +171,3 @@ jobs:
           devcontainer_run_cmd_path: /scripts/devcontainer-check.sh
           docker_hub_repo_short_description: ${{ matrix.images.dockerShortDescription }}
           docker_hub_repo_readme_file_path: ${{ matrix.images.dockerReadmePath }}
-
-      - name: Telegram notifications
-        if: always()
-        uses: utkusarioglu/telegram-notifications@main
-        with:
-          telegram_id: ${{ secrets.TELEGRAM_ID }}
-          telegram_token: ${{ secrets.TELEGRAM_TOKEN }}
-          job_status: ${{ job.status }}
-          github_context: ${{ toJson(github) }}
