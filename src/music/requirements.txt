@@ -1,0 +1,2 @@
+scamp==0.9.1.post9
+python-rtmidi==1.4.9
