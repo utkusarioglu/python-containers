@@ -27,7 +27,7 @@ jobs:
       matrix:
         images:
             # Vanilla python
-          - enabled: false
+          - enabled: true
             dockerfile: src/Dockerfile.python.dev
             containerName: python-devcontainer
             username: python
@@ -43,7 +43,7 @@ jobs:
             additionalAptPackages: ""
 
             # econ
-          - enabled: false
+          - enabled: true
             dockerfile: src/Dockerfile.conda.dev
             containerName: conda-econ-devcontainer
             username: econ
@@ -80,7 +80,7 @@ jobs:
             additionalAptPackages: "libsm6 libxrender1"
 
             # music
-          - enabled: false
+          - enabled: true
             dockerfile: src/Dockerfile.conda.dev
             containerName: conda-music-devcontainer
             username: music
