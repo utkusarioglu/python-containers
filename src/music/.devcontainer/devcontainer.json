@@ -5,9 +5,6 @@
     "ghcr.io/devcontainers/features/git:1": {},
     "ghcr.io/devcontainers/features/sshd:1": {
       "version": "latest"
-    },
-    "ghcr.io/devcontainers-contrib/features/apt-get-packages:1": {
-      "packages": "musescore3"
     }
   }
 }

@@ -3,6 +3,7 @@ dependencies:
   - conda-forge::pandas=2.0.0
   - conda-forge::xlsxwriter=3.0.9
   - conda-forge::sympy=1.11.1
+  - conda-forge::scipy=1.10.1
 
   # These are unique to econ
   - conda-forge::squarify=0.4.3
@@ -11,3 +12,7 @@ dependencies:
   - anaconda::psycopg2=2.9.3
   - conda-forge::sqlalchemy=1.4.46
   - conda-forge::cmasher=1.6.3
+  - conda-forge::quantecon=0.5.2
+  - conda-forge::scikit-learn=1.2.2
+  - conda-forge::statsmodels=0.13.5
+  - conda-forge::wbgapi=1.0.12
