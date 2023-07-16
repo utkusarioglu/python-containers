@@ -95,7 +95,7 @@ jobs:
               src/environment.common.yml
               src/Dockerfile.conda.dev
               src/music/**
-            additionalAptPackages: build-essential pkg-config libjack-dev alsa-utils
+            additionalAptPackages: build-essential pkg-config libjack-dev alsa-utils musescore3
             # libasound2-dev libjack-jackd2-dev alsa-base alsa-utils libsndfile1-dev
 
     steps:
