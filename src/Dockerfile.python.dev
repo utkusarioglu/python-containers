@@ -11,6 +11,9 @@ ARG HOME=/home/$USERNAME
 ARG NVIM_VERSION=v0.8.3
 ARG ELAM_ABSPATH="$HOME/elam"
 
+ARG VENV_NAME=main
+ARG VENV_PATH="${HOME}/venv/${VENV_NAME}"
+
 RUN for arg in ROOT_PASS USERNAME GROUP ENVIRONMENT_NAME ENVIRONMENT_CONFIG; \
   do \
   [ ! -z "${arg}" ] || { echo "ARG \"$arg\" needs to be set"; exit 1; } \
@@ -65,8 +68,9 @@ RUN mkdir -p $HOME/.vscode-server-insiders/extensions
 
 COPY "${SCRIPTS_PATH}" /scripts
 
-RUN python -m venv ~/venv/main
-RUN echo "source ~/venv/main/bin/activate" >> ~/.bashrc
+RUN python -m venv ${VENV_PATH}
+RUN echo "source ${VENV_PATH}/bin/activate" >> ~/.bashrc
 
 COPY "src/$ENVIRONMENT_NAME/requirements.txt" "/requirements.txt"
-RUN pip install -r "/requirements.txt"
+RUN source ${VENV_PATH}/bin/activate && \
+  pip install --require-virtualenv -r "/requirements.txt"
