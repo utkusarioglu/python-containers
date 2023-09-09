@@ -66,6 +66,7 @@ RUN mkdir -p $HOME/.vscode-server-insiders/extensions
 COPY "${SCRIPTS_PATH}" /scripts
 
 RUN python -m venv ~/venv/main
+RUN source ~/venv/main/bin/activate
 RUN echo "source ~/venv/main/bin/activate" >> ~/.bashrc
 
 COPY "src/$ENVIRONMENT_NAME/requirements.txt" "/requirements.txt"
