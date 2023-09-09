@@ -66,8 +66,9 @@ RUN mkdir -p $HOME/.vscode-server-insiders/extensions
 COPY "${SCRIPTS_PATH}" /scripts
 
 RUN python -m venv ~/venv/main
-RUN source ~/venv/main/bin/activate
+RUN ls -al /home/python/.local/bin
 RUN echo "source ~/venv/main/bin/activate" >> ~/.bashrc
 
 COPY "src/$ENVIRONMENT_NAME/requirements.txt" "/requirements.txt"
-RUN pip install -r "/requirements.txt"
+RUN source ~/venv/main/bin/activate && \
+  pip install --require-virtualenv -r "/requirements.txt"
