@@ -151,8 +151,8 @@ jobs:
 
       - name: Build and push ${{ steps.variables.outputs.image_ref }}
         if: steps.run_state.outputs.run_docker_build == 'true'
-        # uses: utkusarioglu/devcontainer-build@main
-        uses: utkusarioglu/devcontainer-build@new-push
+        uses: utkusarioglu/devcontainer-build@main
+        # uses: utkusarioglu/devcontainer-build@new-push
         with:
           docker_hub_username: ${{ secrets.DOCKERHUB_USERNAME }}
           docker_hub_token: ${{ secrets.DOCKERHUB_TOKEN }}
