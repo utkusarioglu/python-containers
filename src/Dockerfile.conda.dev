@@ -114,7 +114,6 @@ RUN echo "source ${VENV_PATH}/bin/activate" >> ~/.bashrc
 COPY "src/$DEVCONTAINER_SUBFOLDER/requirements.txt" "/requirements.txt"
 RUN source ${VENV_PATH}/bin/activate && \
   pip install --require-virtualenv -r "/requirements.txt"
-# RUN pip install -r "/requirements.txt"
 
 COPY "${SCRIPTS_PATH}" /scripts
 
