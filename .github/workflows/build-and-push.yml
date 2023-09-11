@@ -27,7 +27,7 @@ jobs:
       matrix:
         images:
             # Vanilla python
-          - enabled: true
+          - enabled: false
             dockerfile: src/Dockerfile.python.dev
             containerName: python-devcontainer
             username: python
@@ -80,7 +80,7 @@ jobs:
             additionalAptPackages: "libsm6 libxrender1"
 
             # music
-          - enabled: true
+          - enabled: false
             dockerfile: src/Dockerfile.conda.dev
             containerName: conda-music-devcontainer
             username: music
@@ -151,7 +151,8 @@ jobs:
 
       - name: Build and push ${{ steps.variables.outputs.image_ref }}
         if: steps.run_state.outputs.run_docker_build == 'true'
-        uses: utkusarioglu/devcontainer-build@main
+        # uses: utkusarioglu/devcontainer-build@main
+        uses: utkusarioglu/devcontainer-build@new-push
         with:
           docker_hub_username: ${{ secrets.DOCKERHUB_USERNAME }}
           docker_hub_token: ${{ secrets.DOCKERHUB_TOKEN }}
