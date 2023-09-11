@@ -24,6 +24,7 @@ RUN apt-get update && \
   apt-get upgrade -y && \
   apt-get install -y \
   jq \
+  ncurses-bin \
   $ADDITIONAL_APT_PACKAGES
 
 # Neovim requires manual retrieval of the latest version

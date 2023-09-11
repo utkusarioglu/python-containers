@@ -15,6 +15,9 @@ ARG NVIM_VERSION=v0.8.3
 ARG MAMBA_ROOT_PREFIX=/opt/conda
 ARG ELAM_ABSPATH="$HOME/elam"
 
+ARG VENV_NAME=main
+ARG VENV_PATH="${HOME}/venv/${VENV_NAME}"
+
 USER root
 
 RUN usermod -l $USERNAME mambauser
@@ -107,7 +110,9 @@ ENV PATH "$MAMBA_ROOT_PREFIX/envs/$ENVIRONMENT_NAME/bin:$PATH"
 ENV SHELL /bin/bash
 
 COPY "src/$DEVCONTAINER_SUBFOLDER/requirements.txt" "/requirements.txt"
-RUN pip install -r "/requirements.txt"
+RUN source ${VENV_PATH}/bin/activate && \
+  pip install --require-virtualenv -r "/requirements.txt"
+# RUN pip install -r "/requirements.txt"
 
 COPY "${SCRIPTS_PATH}" /scripts
 
