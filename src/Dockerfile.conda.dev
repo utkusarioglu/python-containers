@@ -123,5 +123,5 @@ COPY "${SCRIPTS_PATH}" /scripts
 RUN echo "eval \"\$(micromamba shell hook --shell=bash)\" && micromamba activate $ENVIRONMENT_NAME" >> ~/.bashrc
 
 COPY "src/$DEVCONTAINER_SUBFOLDER/requirements.txt" "/requirements.txt"
-RUN micromamba activate ${ENVIRONMENT_NAME} && \
+RUN eval $(micromamba shell hook --shell=bash) && micromamba activate $ENVIRONMENT_NAME && \
   pip install --require-virtualenv -r "/requirements.txt"
