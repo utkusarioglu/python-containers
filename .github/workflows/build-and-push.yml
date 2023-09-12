@@ -80,7 +80,7 @@ jobs:
             additionalAptPackages: "libsm6 libxrender1"
 
             # music
-          - enabled: true
+          - enabled: false
             dockerfile: src/Dockerfile.conda.dev
             containerName: conda-music-devcontainer
             username: music
