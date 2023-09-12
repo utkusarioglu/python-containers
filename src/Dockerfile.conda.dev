@@ -15,8 +15,8 @@ ARG NVIM_VERSION=v0.8.3
 ARG MAMBA_ROOT_PREFIX=/opt/conda
 ARG ELAM_ABSPATH="$HOME/elam"
 
-ARG VENV_NAME=main
-ARG VENV_PATH="${HOME}/venv/${VENV_NAME}"
+# ARG VENV_NAME=main
+# ARG VENV_PATH="${HOME}/venv/${VENV_NAME}"
 
 USER root
 
@@ -26,7 +26,6 @@ RUN groupmod -n $GROUP mambauser
 RUN ls -al "/home"
 RUN echo "home: $HOME"
 ENV HOME="/home/$USERNAME"
-RUN echo "home 2: $HOME"
 RUN rm -rf "/home/mambauser"
 
 SHELL ["/bin/bash", "-c"]
@@ -106,19 +105,23 @@ RUN chmod +x \
 RUN git clone https://github.com/utkusarioglu/elam.git $ELAM_ABSPATH
 RUN echo "alias elam=$ELAM_ABSPATH/elam.sh" >> "${HOME}/.bash_aliases"
 
-# Micromamba
+# Micromamba Alias
 RUN echo 'mm=micromamba' >> "${HOME}/.bash_aliases"
 
 ENV PATH "$MAMBA_ROOT_PREFIX/envs/$ENVIRONMENT_NAME/bin:$PATH"
 ENV SHELL /bin/bash
 
-RUN python -m venv ${VENV_PATH}
-RUN echo "source ${VENV_PATH}/bin/activate" >> ~/.bashrc
-COPY "src/$DEVCONTAINER_SUBFOLDER/requirements.txt" "/requirements.txt"
-RUN source ${VENV_PATH}/bin/activate && \
-  pip install --require-virtualenv -r "/requirements.txt"
+# RUN python -m venv ${VENV_PATH}
+# RUN echo "source ${VENV_PATH}/bin/activate" >> ~/.bashrc
+# COPY "src/$DEVCONTAINER_SUBFOLDER/requirements.txt" "/requirements.txt"
+# RUN source ${VENV_PATH}/bin/activate && \
+#   pip install --require-virtualenv -r "/requirements.txt"
 
 COPY "${SCRIPTS_PATH}" /scripts
 
 # Pushing into `.bashrc` for environment selection
 RUN echo "eval \"\$(micromamba shell hook --shell=bash)\" && micromamba activate $ENVIRONMENT_NAME" >> ~/.bashrc
+
+COPY "src/$DEVCONTAINER_SUBFOLDER/requirements.txt" "/requirements.txt"
+RUN micromamba activate ${ENVIRONMENT_NAME} && \
+  pip install --require-virtualenv -r "/requirements.txt"
