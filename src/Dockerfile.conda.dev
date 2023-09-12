@@ -122,6 +122,6 @@ COPY "${SCRIPTS_PATH}" /scripts
 # Pushing into `.bashrc` for environment selection
 RUN echo "eval \"\$(micromamba shell hook --shell=bash)\" && micromamba activate $ENVIRONMENT_NAME" >> ~/.bashrc
 
+SHELL ["/bin/bash", "--login", "-c"]
 COPY "src/$DEVCONTAINER_SUBFOLDER/requirements.txt" "/requirements.txt"
-RUN eval $(micromamba shell hook --shell=bash) && micromamba activate $ENVIRONMENT_NAME && \
-  pip install --require-virtualenv -r "/requirements.txt"
+RUN pip install --require-virtualenv -r "/requirements.txt"

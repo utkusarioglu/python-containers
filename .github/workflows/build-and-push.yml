@@ -61,7 +61,7 @@ jobs:
             additionalAptPackages: ""
 
             # math
-          - enabled: true
+          - enabled: false
             dockerfile: src/Dockerfile.conda.dev
             containerName: conda-math-devcontainer
             username: math
