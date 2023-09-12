@@ -125,5 +125,5 @@ RUN echo "eval \"\$(micromamba shell hook --shell=bash)\" && micromamba activate
 SHELL ["/bin/bash", "--login", "-c"]
 COPY "src/$DEVCONTAINER_SUBFOLDER/requirements.txt" "/requirements.txt"
 RUN pip install -r "/requirements.txt"
+
 RUN pip list -v 
-RUN mm list
