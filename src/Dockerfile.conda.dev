@@ -111,12 +111,6 @@ RUN echo 'mm=micromamba' >> "${HOME}/.bash_aliases"
 ENV PATH "$MAMBA_ROOT_PREFIX/envs/$ENVIRONMENT_NAME/bin:$PATH"
 ENV SHELL /bin/bash
 
-# RUN python -m venv ${VENV_PATH}
-# RUN echo "source ${VENV_PATH}/bin/activate" >> ~/.bashrc
-# COPY "src/$DEVCONTAINER_SUBFOLDER/requirements.txt" "/requirements.txt"
-# RUN source ${VENV_PATH}/bin/activate && \
-#   pip install --require-virtualenv -r "/requirements.txt"
-
 COPY "${SCRIPTS_PATH}" /scripts
 
 # Pushing into `.bashrc` for environment selection
