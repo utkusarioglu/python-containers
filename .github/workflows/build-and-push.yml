@@ -16,8 +16,10 @@ on:
   workflow_dispatch:
 
 env:
-  CACHE_FROM_SRC: /tmp/.buildx-cache
-  CACHE_TO_DEST: /tmp/.buildx-cache-new
+  CACHE_FROM_SRC: /dev/mapper/buildvg-buildlv
+  CACHE_TO_DEST: /dev/mapper/buildvg-buildlv
+  # CACHE_FROM_SRC: /tmp/.buildx-cache
+  # CACHE_TO_DEST: /tmp/.buildx-cache-new
 
 jobs:
   build-and-push:
@@ -80,7 +82,7 @@ jobs:
             additionalAptPackages: "libsm6 libxrender1"
 
             # music
-          - enabled: false
+          - enabled: true
             dockerfile: src/Dockerfile.conda.dev
             containerName: conda-music-devcontainer
             username: music
