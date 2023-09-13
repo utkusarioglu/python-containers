@@ -29,7 +29,7 @@ jobs:
       matrix:
         images:
             # Vanilla python
-          - enabled: false
+          - enabled: true
             dockerfile: src/Dockerfile.python.dev
             containerName: python-devcontainer
             username: python
@@ -45,7 +45,7 @@ jobs:
             additionalAptPackages: ""
 
             # econ
-          - enabled: false
+          - enabled: true
             dockerfile: src/Dockerfile.conda.dev
             containerName: conda-econ-devcontainer
             username: econ
@@ -63,7 +63,7 @@ jobs:
             additionalAptPackages: ""
 
             # math
-          - enabled: false
+          - enabled: true
             dockerfile: src/Dockerfile.conda.dev
             containerName: conda-math-devcontainer
             username: math
@@ -101,23 +101,10 @@ jobs:
             # libasound2-dev libjack-jackd2-dev alsa-base alsa-utils libsndfile1-dev
 
     steps:
-      # - name: Maximize build disk space
-      #   uses: easimon/maximize-build-space@v8
-      #   with:
-      #     remove-dotnet: true
-      #     remove-android: true
-      #     remove-haskell: true
-      #     remove-codeql: true
-
       - name: Free Disk Space (Ubuntu)
         uses: jlumbroso/free-disk-space@main
         with:
-          # this might remove tools that are actually needed,
-          # if set to "true" but frees about 6 GB
           tool-cache: false
-          
-          # all of these default to true, but feel free to set to
-          # "false" if necessary for your workflow
           android: true
           dotnet: true
           haskell: true
@@ -197,12 +184,3 @@ jobs:
           devcontainer_run_cmd_path: /scripts/devcontainer-check.sh
           docker_hub_repo_short_description: ${{ matrix.images.dockerShortDescription }}
           docker_hub_repo_readme_file_path: ${{ matrix.images.dockerReadmePath }}
-
-      # - name: Maximize build disk space
-      #   if: ${{ always() }}
-      #   uses: easimon/maximize-build-space@v8
-      #   with:
-      #     remove-dotnet: true
-      #     remove-android: true
-      #     remove-haskell: true
-      #     remove-codeql: true

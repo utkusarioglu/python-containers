@@ -12,4 +12,4 @@ Devcontainer image for handling mathematics workloads.
 - matplotlib
 - scipy
 - sympy
-- vim
+- nvim
