@@ -45,7 +45,7 @@ jobs:
             additionalAptPackages: ""
 
             # econ
-          - enabled: false
+          - enabled: true
             dockerfile: src/Dockerfile.conda.dev
             containerName: conda-econ-devcontainer
             username: econ
@@ -63,7 +63,7 @@ jobs:
             additionalAptPackages: ""
 
             # math
-          - enabled: false
+          - enabled: true
             dockerfile: src/Dockerfile.conda.dev
             containerName: conda-math-devcontainer
             username: math
@@ -82,7 +82,7 @@ jobs:
             additionalAptPackages: "libsm6 libxrender1"
 
             # music
-          - enabled: false
+          - enabled: true
             dockerfile: src/Dockerfile.conda.dev
             containerName: conda-music-devcontainer
             username: music
