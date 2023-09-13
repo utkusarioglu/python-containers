@@ -27,7 +27,7 @@ jobs:
       matrix:
         images:
             # Vanilla python
-          - enabled: true
+          - enabled: false
             dockerfile: src/Dockerfile.python.dev
             containerName: python-devcontainer
             username: python
@@ -43,7 +43,7 @@ jobs:
             additionalAptPackages: ""
 
             # econ
-          - enabled: true
+          - enabled: false
             dockerfile: src/Dockerfile.conda.dev
             containerName: conda-econ-devcontainer
             username: econ
@@ -61,7 +61,7 @@ jobs:
             additionalAptPackages: ""
 
             # math
-          - enabled: true
+          - enabled: false
             dockerfile: src/Dockerfile.conda.dev
             containerName: conda-math-devcontainer
             username: math
