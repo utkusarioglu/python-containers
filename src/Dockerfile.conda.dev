@@ -106,7 +106,7 @@ RUN git clone https://github.com/utkusarioglu/elam.git $ELAM_ABSPATH
 RUN echo "alias elam=$ELAM_ABSPATH/elam.sh" >> "${HOME}/.bash_aliases"
 
 # Micromamba Alias
-RUN echo 'mm=micromamba' >> "${HOME}/.bash_aliases"
+RUN echo 'alias mm=micromamba' >> "${HOME}/.bash_aliases"
 
 ENV PATH "$MAMBA_ROOT_PREFIX/envs/$ENVIRONMENT_NAME/bin:$PATH"
 ENV SHELL /bin/bash
@@ -120,4 +120,5 @@ SHELL ["/bin/bash", "--login", "-c"]
 COPY "src/$DEVCONTAINER_SUBFOLDER/requirements.txt" "/requirements.txt"
 RUN pip install -r "/requirements.txt"
 
-RUN pip list -v 
+RUN pip list -v
+RUN mm list
