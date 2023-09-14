@@ -143,7 +143,7 @@ jobs:
           echo "Event name: $event_name" 
 
       - name: Free Disk Space (Ubuntu)
-        if: steps.run_state.outputs.run_docker_build == 'true'
+        # if: steps.run_state.outputs.run_docker_build == 'true'
         uses: jlumbroso/free-disk-space@main
         with:
           tool-cache: false
@@ -155,7 +155,7 @@ jobs:
           swap-storage: true
 
       - name: Variables
-        if: steps.run_state.outputs.run_docker_build == 'true'
+        # if: steps.run_state.outputs.run_docker_build == 'true'
         id: variables
         run: |
           repo_tag=${{ github.ref_name }}
@@ -164,7 +164,7 @@ jobs:
           echo "image_tag=$image_tag" >> $GITHUB_OUTPUT
 
       - name: Build and push ${{ steps.variables.outputs.image_ref }}
-        if: steps.run_state.outputs.run_docker_build == 'true'
+        # if: steps.run_state.outputs.run_docker_build == 'true'
         uses: utkusarioglu/devcontainer-build@main
         with:
           docker_hub_username: ${{ secrets.DOCKERHUB_USERNAME }}
