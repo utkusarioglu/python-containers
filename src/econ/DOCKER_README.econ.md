@@ -14,4 +14,5 @@ Devcontainer image for handling economics workloads.
 - squarify
 - openpyxl
 - requests
+
 - nvim
