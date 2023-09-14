@@ -101,17 +101,6 @@ jobs:
             # libasound2-dev libjack-jackd2-dev alsa-base alsa-utils libsndfile1-dev
 
     steps:
-      - name: Free Disk Space (Ubuntu)
-        uses: jlumbroso/free-disk-space@main
-        with:
-          tool-cache: false
-          android: true
-          dotnet: true
-          haskell: true
-          large-packages: true
-          docker-images: true
-          swap-storage: true
-
       - name: Checkout code
         uses: actions/checkout@v4
         with:
@@ -152,6 +141,18 @@ jobs:
           echo "Enabled: $enabled"
           echo "Any modified: $any_modified"
           echo "Event name: $event_name" 
+
+      - name: Free Disk Space (Ubuntu)
+        if: steps.run_state.outputs.run_docker_build == 'true'
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: false
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: true
 
       - name: Variables
         if: steps.run_state.outputs.run_docker_build == 'true'
