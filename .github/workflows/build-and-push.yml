@@ -63,7 +63,7 @@ jobs:
             additionalAptPackages: ""
 
             # math
-          - enabled: false
+          - enabled: true
             dockerfile: src/Dockerfile.conda.dev
             containerName: conda-math-devcontainer
             username: default
@@ -82,7 +82,7 @@ jobs:
             additionalAptPackages: "libsm6 libxrender1"
 
             # music
-          - enabled: false
+          - enabled: true
             dockerfile: src/Dockerfile.conda.dev
             containerName: conda-music-devcontainer
             username: default
@@ -142,17 +142,17 @@ jobs:
           echo "Any modified: $any_modified"
           echo "Event name: $event_name" 
 
-      # - name: Free Disk Space (Ubuntu)
-      #   # if: steps.run_state.outputs.run_docker_build == 'true'
-      #   uses: jlumbroso/free-disk-space@main
-      #   with:
-      #     tool-cache: false
-      #     android: true
-      #     dotnet: true
-      #     haskell: true
-      #     large-packages: true
-      #     docker-images: true
-      #     swap-storage: true
+      - name: Free Disk Space (Ubuntu)
+        # if: steps.run_state.outputs.run_docker_build == 'true'
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: false
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: true
 
       - name: Variables
         # if: steps.run_state.outputs.run_docker_build == 'true'
