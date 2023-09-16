@@ -8,4 +8,4 @@ Devcontainer image for handling music workloads.
 - music21
 - matplotlib
 - musescore 3
-- vim
+- nvim
