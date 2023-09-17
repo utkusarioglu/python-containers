@@ -95,7 +95,7 @@ jobs:
               src/environment.common.yml
               src/Dockerfile.conda.dev
               src/music/**
-            additionalAptPackages: |-
+            additionalAptPackages: >-
               build-essential 
               pkg-config 
               libjack-dev 
