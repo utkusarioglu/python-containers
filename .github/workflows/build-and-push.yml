@@ -27,7 +27,7 @@ jobs:
       matrix:
         images:
             # Vanilla python
-          - enabled: true
+          - enabled: false
             dockerfile: src/Dockerfile.python.dev
             containerName: python-devcontainer
             username: python
@@ -43,7 +43,7 @@ jobs:
             additionalAptPackages: ""
 
             # econ
-          - enabled: true
+          - enabled: false
             dockerfile: src/Dockerfile.conda.dev
             containerName: conda-econ-devcontainer
             username: default
@@ -61,7 +61,7 @@ jobs:
             additionalAptPackages: ""
 
             # math
-          - enabled: true
+          - enabled: false
             dockerfile: src/Dockerfile.conda.dev
             containerName: conda-math-devcontainer
             username: default
@@ -95,8 +95,15 @@ jobs:
               src/environment.common.yml
               src/Dockerfile.conda.dev
               src/music/**
-            additionalAptPackages: build-essential pkg-config libjack-dev alsa-utils musescore3
-            # libasound2-dev libjack-jackd2-dev alsa-base alsa-utils libsndfile1-dev
+            additionalAptPackages: |-
+              build-essential 
+              pkg-config 
+              libjack-dev 
+              alsa-utils 
+              musescore3 
+              libsdl2-dev 
+              pulseaudio 
+              lilypond
 
     steps:
       - name: Checkout code
