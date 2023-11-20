@@ -9,10 +9,10 @@ dependencies:
   # - conda-forge::conda=23.3.1
   - conda-forge::notebook=7.0.6
   - conda-forge::pip=23.1
-  - conda-forge::black=23.11.0
+  - conda-forge::black=23.10.1
   - conda-forge::black-jupyter=23.10.1
   - conda-forge::python-dotenv=1.0.0 
-  - conda-forge::scipy=1.11.3
+  - conda-forge::scipy=1.10.1
   - conda-forge::matplotlib=3.7.1
   - conda-forge::pytest=7.2.2
   - conda-forge::watchdog=3.0.0
