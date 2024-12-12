@@ -172,12 +172,12 @@ jobs:
 
       - name: Build and push ${{ steps.variables.outputs.image_ref }}
         # if: steps.run_state.outputs.run_docker_build == 'true'
-        uses: utkusarioglu/devcontainer-build@main
+        uses: utkusarioglu/devcontainer-build-action@main
         with:
           docker_hub_username: ${{ secrets.DOCKERHUB_USERNAME }}
           docker_hub_token: ${{ secrets.DOCKERHUB_TOKEN }}
           image_name: ${{ matrix.images.containerName }}
-          image_tag: ${{ steps.variables.outputs.image_tag }}
+          image_tag: 10-ubuntu-test-3
           dockerfile_path: ${{ matrix.images.dockerfile }}
           build_args: |
             BASE_TAG=${{ matrix.images.base_tag }}
