@@ -110,7 +110,7 @@ RUN ${BOOTSTRAP_ABSPATH}/python/install-requirements.sh \
   ${HOME_ABSPATH} \
   ${VENV_PATH}
 
-RUN ${BOOTSTRAP_ABSPATH}/linux/set-permissions \
+RUN ${BOOTSTRAP_ABSPATH}/linux/set-permissions.sh \
   ${USER_ID} \
   ${GROUP_ID} \
   ${HOME_ABSPATH}
