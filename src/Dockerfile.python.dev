@@ -11,9 +11,9 @@ ARG GROUP=g
 ARG GROUP_ID=1000
 ARG ADDITIONAL_APT_PACKAGES
 ARG HOME_ABSPATH=/home/$USERNAME
-ARG BOOTSTRAP_ABSPATH=${HOME}/scripts/bootstrap
+ARG BOOTSTRAP_ABSPATH=${HOME_ABSPATH}/scripts/bootstrap
 ARG VENV_NAME=main
-ARG VENV_PATH="${HOME}/venv/${VENV_NAME}"
+ARG VENV_PATH=${HOME_ABSPATH}/venv/${VENV_NAME}
 
 USER root
 
@@ -86,8 +86,7 @@ RUN ${BOOTSTRAP_ABSPATH}/linux/clean-apt.sh
 # RUN echo "source ${VENV_PATH}/bin/activate" >> ~/.bashrc
 RUN ${BOOTSTRAP_ABSPATH}/pyhon/set-venv.sh ${VENV_PATH}
 
-COPY src/${ENVIRONMENT_NAME}/requirements.txt \
-  ${HOME_ABSPATH}/requirements.txt
+COPY ${ENVIRONMENT_NAME}/requirements.txt ${HOME_ABSPATH}/requirements.txt
 
 RUN ${BOOTSTRAP_ABSPATH}/pyhton/install-requirements.sh \
   ${HOME_ABSPATH} \
