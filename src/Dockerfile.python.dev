@@ -54,7 +54,9 @@ RUN ${BOOTSTRAP_ABSPATH}/linux/install-apt.sh "${APT_PACKAGES}"
 
 RUN ${BOOTSTRAP_ABSPATH}/linux/clean-apt.sh
 
+RUN ${BOOTSTRAP_ABSPATH}/python/set-aliases.sh ${HOME_ABSPATH}
 RUN echo "alias python=python3.13" >> ${HOME_ABSPATH}/.bash_aliases
+RUN . ${HOME_ABSPATH}/.bash_aliases
 
 # # Neovim requires manual retrieval of the latest version
 # # as the apt package is quite old
