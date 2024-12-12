@@ -40,7 +40,7 @@ RUN ls -alR ${HOME_ABSPATH}
 
 RUN ${BOOTSTRAP_ABSPATH}/linux/update-apt.sh
 
-RUN ${BOOTSTRAP_ABSPATH}/python/install-apt.sh "${ADDITIONAL_APT_PACKAGES}"
+RUN [ ! -z "$ADDITIONAL_APT_PACKAGES" ] && ${BOOTSTRAP_ABSPATH}/python/install-apt.sh "${ADDITIONAL_APT_PACKAGES}"
 
 RUN ${BOOTSTRAP_ABSPATH}/linux/clean-apt.sh
 
