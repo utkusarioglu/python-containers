@@ -1,0 +1,195 @@
+name: build-and-push
+
+on:
+  push:
+  #   tags:
+  #     - "**.**.**"
+  #     - experiment/**/**/**
+  #   paths:
+  #     - src/**
+  #     - .github/workflows/build-and-push.yml
+  # pull_request:
+  #   types:
+  #     - opened
+  #   branches:
+  #     - main
+  # workflow_dispatch:
+
+env:
+  CACHE_FROM_SRC: /tmp/.buildx-cache
+  CACHE_TO_DEST: /tmp/.buildx-cache-new
+
+jobs:
+  build-and-push:
+    name: build-and-push
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        images:
+            # Vanilla python
+          - enabled: true
+            dockerfile: src/Dockerfile.python.dev
+            containerName: python-devcontainer
+            username: python
+            group: python
+            base_image: ubuntu-devcontainer
+            image_tag: 10-ubuntu-test-8
+            base_tag: noble-test-8
+            python_version: "3.13"
+            environmentName: python
+            scriptsPath: src/python/scripts
+            devcontainerSubfolder: python
+            dockerReadmePath: src/python/DOCKER_README.python.md
+            dockerShortDescription: Devcontainer for python workloads
+            additionalFilesToWatch: |
+              src/Dockerfile.python.dev
+              src/python/**
+            aptPackages: ""
+            aptPackagesSilent: ncurses-bin
+
+          #   # econ
+          # - enabled: true
+          #   dockerfile: src/Dockerfile.conda.dev
+          #   containerName: conda-econ-devcontainer
+          #   username: default
+          #   group: micromamba
+          #   environmentName: default
+          #   scriptsPath: src/econ/scripts
+          #   devcontainerSubfolder: econ
+          #   environmentConfigPath: src/econ/environment.econ.yml
+          #   dockerReadmePath: src/econ/DOCKER_README.econ.md
+          #   dockerShortDescription: Devcontainer for economics workloads
+          #   additionalFilesToWatch: |
+          #     src/environment.common.yml
+          #     src/Dockerfile.conda.dev
+          #     src/econ/**
+          #   additionalAptPackages: ""
+
+          #   # math
+          # - enabled: true
+          #   dockerfile: src/Dockerfile.conda.dev
+          #   containerName: conda-math-devcontainer
+          #   username: default
+          #   group: micromamba
+          #   environmentName: default
+          #   scriptsPath: src/math/scripts
+          #   devcontainerSubfolder: math
+          #   environmentConfigPath: src/math/environment.math.yml
+          #   dockerReadmePath: src/math/DOCKER_README.math.md
+          #   dockerShortDescription: Devcontainer for mathematics workloads
+          #   additionalFilesToWatch: |
+          #     src/environment.common.yml
+          #     src/Dockerfile.conda.dev
+          #     src/math/**
+          #   # These are required for matplotlib
+          #   additionalAptPackages: "libsm6 libxrender1"
+
+          #   # music
+          # - enabled: true
+          #   dockerfile: src/Dockerfile.conda.dev
+          #   containerName: conda-music-devcontainer
+          #   username: default
+          #   group: micromamba
+          #   environmentName: default
+          #   scriptsPath: src/music/scripts
+          #   devcontainerSubfolder: music
+          #   environmentConfigPath: src/music/environment.music.yml
+          #   dockerReadmePath: src/music/DOCKER_README.music.md
+          #   dockerShortDescription: Devcontainer for music workloads
+          #   additionalFilesToWatch: |
+          #     src/environment.common.yml
+          #     src/Dockerfile.conda.dev
+          #     src/music/**
+          #   additionalAptPackages: >-
+          #     build-essential 
+          #     pkg-config 
+          #     libjack-dev 
+          #     alsa-utils 
+          #     musescore3 
+          #     libsdl2-dev 
+          #     pulseaudio 
+          #     lilypond
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      # - name: Get changed files
+      #   id: changed_files
+      #   uses: tj-actions/changed-files@v39.0.2
+      #   with:
+      #     files: |
+      #       ${{ matrix.images.dockerfile }}
+      #       ${{ matrix.images.additionalFilesToWatch }}
+      #       .github/workflows/build-and-push.yml
+
+      # - name: Declare run state
+      #   id: run_state
+      #   run: |
+      #     ref_type="${{ github.ref_type }}"
+      #     enabled="${{ matrix.images.enabled }}"
+      #     any_modified="${{ steps.changed_files.outputs.any_modified }}"
+      #     event_name="${{ github.event_name }}"
+
+      #     if [ "$ref_type" == tag ] && \
+      #        [ "$enabled" == true ] && \
+      #        ( \
+      #          [ "$any_modified" == true ] || \
+      #          [ "$event_name" == workflow_dispatch ] \
+      #        );
+      #     then
+      #       echo "run_docker_build=true" >> $GITHUB_OUTPUT
+      #       echo "::debug::Docker build will carry out as expected."
+      #     else
+      #       echo "run_docker_build=false" >> $GITHUB_OUTPUT
+      #       echo "Docker build is cancelled as the required conditions for a run haven't been met"
+      #     fi
+
+      #     echo "Ref type: $ref_type"
+      #     echo "Enabled: $enabled"
+      #     echo "Any modified: $any_modified"
+      #     echo "Event name: $event_name" 
+
+      # - name: Free Disk Space (Ubuntu)
+      #   # if: steps.run_state.outputs.run_docker_build == 'true'
+      #   uses: jlumbroso/free-disk-space@main
+      #   with:
+      #     tool-cache: false
+      #     android: true
+      #     dotnet: true
+      #     haskell: true
+      #     large-packages: true
+      #     docker-images: true
+      #     swap-storage: true
+
+      # - name: Variables
+      #   id: variables
+      #   run: |
+      #     repo_tag=${{ github.ref_name }}
+      #     image_tag=${repo_tag//\//-}
+      #     image_ref=${{ matrix.images.containerName }}:$image_tag
+      #     echo "image_tag=$image_tag" >> $GITHUB_OUTPUT
+
+      - name: Build and push ${{ steps.variables.outputs.image_ref }}
+        uses: utkusarioglu/devcontainer-build-action@main
+        with:
+          docker_context: src
+          dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
+          dockerhub_token: ${{ secrets.DOCKERHUB_TOKEN }}
+          image_name: ${{ matrix.images.containerName }}
+          image_tag: ${{ matrix.images.image_tag }}
+          dockerfile_path: ${{ matrix.images.dockerfile }}
+          build_args: |
+            BASE_TAG=${{ matrix.images.base_tag }}
+            BASE_IMAGE=${{ matrix.images.base_image }}
+            ENVIRONMENT_NAME=${{ matrix.images.environmentName }}
+            PYTHON_VERSION=${{ matrix.images.python_version }}
+            APT_PACKAGES=${{ matrix.images.aptPackages }}
+            APT_PACKAGES_SILENT=${{ matrix.images.aptPackagesSilent }}
+          devcontainer_enabled: "false"
+          devcontainer_subfolder: src/${{ matrix.images.devcontainerSubfolder }}
+          devcontainer_run_cmd_path: /home/dev/scripts/bootstrap/python/check-devcontainer.sh
+          dockerhub_repo_short_description: ${{ matrix.images.dockerShortDescription }}
+          dockerhub_repo_readme_file_path: ${{ matrix.images.dockerReadmePath }}

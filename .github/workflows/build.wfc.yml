@@ -1,23 +1,25 @@
 name: build-and-push
 
 on:
-  push:
-  #   tags:
-  #     - "**.**.**"
-  #     - experiment/**/**/**
-  #   paths:
-  #     - src/**
-  #     - .github/workflows/build-and-push.yml
-  # pull_request:
-  #   types:
-  #     - opened
-  #   branches:
-  #     - main
-  # workflow_dispatch:
+  workflow_call:
+    inputs: 
+      image_tag:
+        description: Tag of the final docker image
+        type: string
+        required: true
+      base_tag:
+        description: Ubuntu base image tag
+        type: string
+        required: true
+    secrets:
+      dockerhub_username: 
+        required: true
+      dockerhub_token: 
+        required: true 
 
-env:
-  CACHE_FROM_SRC: /tmp/.buildx-cache
-  CACHE_TO_DEST: /tmp/.buildx-cache-new
+# env:
+#   CACHE_FROM_SRC: /tmp/.buildx-cache
+#   CACHE_TO_DEST: /tmp/.buildx-cache-new
 
 jobs:
   build-and-push:
@@ -25,6 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
+        fail-fast: false
         images:
             # Vanilla python
           - enabled: true
@@ -33,18 +36,19 @@ jobs:
             username: python
             group: python
             base_image: ubuntu-devcontainer
-            image_tag: 10-ubuntu-test-8
-            base_tag: noble-test-8
+            image_tag: ${{ inputs.image_tag }}
+            base_tag: ${{ inputs.base_tag }}
+            # image_tag: 10-ubuntu-test-8
+            # base_tag: noble-test-8
             python_version: "3.13"
             environmentName: python
-            scriptsPath: src/python/scripts
+            # scriptsPath: src/python/scripts
             devcontainerSubfolder: python
             dockerReadmePath: src/python/DOCKER_README.python.md
             dockerShortDescription: Devcontainer for python workloads
             additionalFilesToWatch: |
               src/Dockerfile.python.dev
               src/python/**
-            # aptPackages: python3.13
             aptPackages: ""
             aptPackagesSilent: ncurses-bin
 
@@ -117,41 +121,41 @@ jobs:
         with:
           fetch-depth: 2
 
-      - name: Get changed files
-        id: changed_files
-        uses: tj-actions/changed-files@v39.0.2
-        with:
-          files: |
-            ${{ matrix.images.dockerfile }}
-            ${{ matrix.images.additionalFilesToWatch }}
-            .github/workflows/build-and-push.yml
+      # - name: Get changed files
+      #   id: changed_files
+      #   uses: tj-actions/changed-files@v39.0.2
+      #   with:
+      #     files: |
+      #       ${{ matrix.images.dockerfile }}
+      #       ${{ matrix.images.additionalFilesToWatch }}
+      #       .github/workflows/build-and-push.yml
 
-      - name: Declare run state
-        id: run_state
-        run: |
-          ref_type="${{ github.ref_type }}"
-          enabled="${{ matrix.images.enabled }}"
-          any_modified="${{ steps.changed_files.outputs.any_modified }}"
-          event_name="${{ github.event_name }}"
+      # - name: Declare run state
+      #   id: run_state
+      #   run: |
+      #     ref_type="${{ github.ref_type }}"
+      #     enabled="${{ matrix.images.enabled }}"
+      #     any_modified="${{ steps.changed_files.outputs.any_modified }}"
+      #     event_name="${{ github.event_name }}"
 
-          if [ "$ref_type" == tag ] && \
-             [ "$enabled" == true ] && \
-             ( \
-               [ "$any_modified" == true ] || \
-               [ "$event_name" == workflow_dispatch ] \
-             );
-          then
-            echo "run_docker_build=true" >> $GITHUB_OUTPUT
-            echo "::debug::Docker build will carry out as expected."
-          else
-            echo "run_docker_build=false" >> $GITHUB_OUTPUT
-            echo "Docker build is cancelled as the required conditions for a run haven't been met"
-          fi
+      #     if [ "$ref_type" == tag ] && \
+      #        [ "$enabled" == true ] && \
+      #        ( \
+      #          [ "$any_modified" == true ] || \
+      #          [ "$event_name" == workflow_dispatch ] \
+      #        );
+      #     then
+      #       echo "run_docker_build=true" >> $GITHUB_OUTPUT
+      #       echo "::debug::Docker build will carry out as expected."
+      #     else
+      #       echo "run_docker_build=false" >> $GITHUB_OUTPUT
+      #       echo "Docker build is cancelled as the required conditions for a run haven't been met"
+      #     fi
 
-          echo "Ref type: $ref_type"
-          echo "Enabled: $enabled"
-          echo "Any modified: $any_modified"
-          echo "Event name: $event_name" 
+      #     echo "Ref type: $ref_type"
+      #     echo "Enabled: $enabled"
+      #     echo "Any modified: $any_modified"
+      #     echo "Event name: $event_name" 
 
       # - name: Free Disk Space (Ubuntu)
       #   # if: steps.run_state.outputs.run_docker_build == 'true'
@@ -165,38 +169,30 @@ jobs:
       #     docker-images: true
       #     swap-storage: true
 
-      - name: Variables
-        # if: steps.run_state.outputs.run_docker_build == 'true'
-        id: variables
-        run: |
-          repo_tag=${{ github.ref_name }}
-          image_tag=${repo_tag//\//-}
-          image_ref=${{ matrix.images.containerName }}:$image_tag
-          echo "image_tag=$image_tag" >> $GITHUB_OUTPUT
+      # - name: Variables
+      #   id: variables
+      #   run: |
+      #     repo_tag=${{ github.ref_name }}
+      #     image_tag=${repo_tag//\//-}
+      #     image_ref=${{ matrix.images.containerName }}:$image_tag
+      #     echo "image_tag=$image_tag" >> $GITHUB_OUTPUT
 
       - name: Build and push ${{ steps.variables.outputs.image_ref }}
-        # if: steps.run_state.outputs.run_docker_build == 'true'
         uses: utkusarioglu/devcontainer-build-action@main
         with:
           docker_context: src
-          dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
-          dockerhub_token: ${{ secrets.DOCKERHUB_TOKEN }}
+          dockerhub_username: ${{ secrets.dockerhub_username }}
+          dockerhub_token: ${{ secrets.dockerhub_token }}
           image_name: ${{ matrix.images.containerName }}
           image_tag: ${{ matrix.images.image_tag }}
           dockerfile_path: ${{ matrix.images.dockerfile }}
           build_args: |
             BASE_TAG=${{ matrix.images.base_tag }}
             BASE_IMAGE=${{ matrix.images.base_image }}
-            # ROOT_PASS=${{ secrets.DOCKER_IMAGE_ROOT_PASS }}
-            # USERNAME=${{ matrix.images.username }}
-            # GROUP=${{ matrix.images.group }}
             ENVIRONMENT_NAME=${{ matrix.images.environmentName }}
             PYTHON_VERSION=${{ matrix.images.python_version }}
-            # SCRIPTS_PATH=${{matrix.images.scriptsPath}}
-            # ENVIRONMENT_CONFIG=${{ matrix.images.environmentConfigPath }}
             APT_PACKAGES=${{ matrix.images.aptPackages }}
             APT_PACKAGES_SILENT=${{ matrix.images.aptPackagesSilent }}
-            # DEVCONTAINER_SUBFOLDER=${{ matrix.images.devcontainerSubfolder }}
           devcontainer_enabled: "false"
           devcontainer_subfolder: src/${{ matrix.images.devcontainerSubfolder }}
           devcontainer_run_cmd_path: /home/dev/scripts/bootstrap/python/check-devcontainer.sh

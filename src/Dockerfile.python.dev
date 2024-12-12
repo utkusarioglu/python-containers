@@ -3,7 +3,6 @@ ARG BASE_TAG
 
 FROM utkusarioglu/${BASE_IMAGE}:${BASE_TAG}
 
-# ARG SCRIPTS_PATH
 ARG ENVIRONMENT_NAME 
 ARG APT_PACKAGES
 ARG APT_PACKAGES_SILENT
@@ -41,21 +40,9 @@ RUN ${BOOTSTRAP_ABSPATH}/linux/install-apt.sh "${APT_PACKAGES}"
 
 RUN ${BOOTSTRAP_ABSPATH}/linux/clean-apt.sh
 
-# RUN ${BOOTSTRAP_ABSPATH}/python/set-symlinks.sh 
-
-# RUN ${BOOTSTRAP_ABSPATH}/python/set-venv.sh ${HOME_ABSPATH} ${VENV_PATH}
-
-
-# RUN ${BOOTSTRAP_ABSPATH}/python/install-requirements.sh \
-#   ${HOME_ABSPATH} \
-#   ${VENV_PATH}
-
 RUN ${BOOTSTRAP_ABSPATH}/linux/set-permissions.sh \
   ${USER_ID} \
   ${GROUP_ID} \
   ${HOME_ABSPATH}
 
 USER ${USER_ID}
-# COPY "src/$/requirements.txt" "/requirements.txt"
-# RUN source ${VENV_PATH}/bin/activate && \
-#   pip install --require-virtualenv -r "/requirements.txt"

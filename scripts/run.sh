@@ -3,4 +3,4 @@ im=utkusarioglu/python-devcontainer:$image_tag
 
 docker image rm $im
 docker pull $im
-docker run -it --rm $im 
+docker run -it -p 5000:5000 --rm $im 
