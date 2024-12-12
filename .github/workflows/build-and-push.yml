@@ -42,7 +42,7 @@ jobs:
             additionalFilesToWatch: |
               src/Dockerfile.python.dev
               src/python/**
-            additionalAptPackages: ""
+            aptPackages: python ncurses-bin
 
           #   # econ
           # - enabled: true
@@ -189,7 +189,7 @@ jobs:
             ENVIRONMENT_NAME=${{ matrix.images.environmentName }}
             # SCRIPTS_PATH=${{matrix.images.scriptsPath}}
             # ENVIRONMENT_CONFIG=${{ matrix.images.environmentConfigPath }}
-            ADDITIONAL_APT_PACKAGES=${{ matrix.images.additionalAptPackages }}
+            APT_PACKAGES=${{ matrix.images.aptPackages }}
             # DEVCONTAINER_SUBFOLDER=${{ matrix.images.devcontainerSubfolder }}
           devcontainer_enabled: "false"
           devcontainer_subfolder: src/${{ matrix.images.devcontainerSubfolder }}
