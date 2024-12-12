@@ -42,7 +42,7 @@ jobs:
             additionalFilesToWatch: |
               src/Dockerfile.python.dev
               src/python/**
-            aptPackages: python3.13 
+            aptPackages: python3.13
             aptPackagesSilent: ncurses-bin
 
           #   # econ
