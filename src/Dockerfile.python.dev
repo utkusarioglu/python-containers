@@ -1,9 +1,10 @@
-FROM bitnami/python
+ARG BASE_IMAGE
+ARG BASE_TAG
 
-# ARG ROOT_PASS
+FROM utkusarioglu/${BASE_IMAGE}:${BASE_TAG}
+
 ARG ENVIRONMENT_NAME 
 ARG SCRIPTS_PATH
-# ARG ENVIRONMENT_CONFIG
 ARG USERNAME=dev
 ARG USER_ID=1000
 ARG GROUP=g
@@ -11,11 +12,10 @@ ARG GROUP_ID=1000
 ARG ADDITIONAL_APT_PACKAGES
 ARG HOME_ABSPATH=/home/$USERNAME
 ARG BOOTSTRAP_ABSPATH=${HOME}/scripts/bootstrap
-# ARG NVIM_VERSION=v0.8.3
-# ARG ELAM_ABSPATH="$HOME/elam"
-
 ARG VENV_NAME=main
 ARG VENV_PATH="${HOME}/venv/${VENV_NAME}"
+
+USER root
 
 # RUN for arg in ROOT_PASS USERNAME GROUP ENVIRONMENT_NAME ENVIRONMENT_CONFIG; \
 #   do \
@@ -98,7 +98,7 @@ RUN ${BOOTSTRAP_ABSPATH}/linux/set-permissions \
   ${GROUP_ID} \
   ${HOME_ABSPATH}
 
-
+USER ${USER_ID}
 # COPY "src/$/requirements.txt" "/requirements.txt"
 # RUN source ${VENV_PATH}/bin/activate && \
 #   pip install --require-virtualenv -r "/requirements.txt"

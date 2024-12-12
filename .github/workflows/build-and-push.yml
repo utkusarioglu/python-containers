@@ -32,6 +32,8 @@ jobs:
             containerName: python-devcontainer
             username: python
             group: python
+            base_image: ubuntu-devcontainer
+            base_tag: noble-test-3
             environmentName: python
             scriptsPath: src/python/scripts
             devcontainerSubfolder: python
@@ -178,6 +180,8 @@ jobs:
           image_tag: ${{ steps.variables.outputs.image_tag }}
           dockerfile_path: ${{ matrix.images.dockerfile }}
           build_args: |
+            BASE_TAG=${{ matrix.images.base_tag }}
+            BASE_IMAGE=${{ matrix.images.base_image }}
             ROOT_PASS=${{ secrets.DOCKER_IMAGE_ROOT_PASS }}
             USERNAME=${{ matrix.images.username }}
             GROUP=${{ matrix.images.group }}
