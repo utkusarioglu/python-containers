@@ -11,7 +11,7 @@ ARGS=(
 python -m venv --without-pip ${venv_path}
 echo "source ${venv_path}/bin/activate" >> ${home_abspath}/.bashrc
 
-${venv_path}/bin/activate
+source ${venv_path}/bin/activate
 
 wget -O - https://bootstrap.pypa.io/get-pip.py | python
 pip --version
