@@ -102,7 +102,7 @@ RUN ${BOOTSTRAP_ABSPATH}/python/set-symlinks.sh
 
 # RUN python -m venv ${VENV_PATH}
 # RUN echo "source ${VENV_PATH}/bin/activate" >> ~/.bashrc
-RUN ${BOOTSTRAP_ABSPATH}/python/set-venv.sh ${VENV_PATH}
+RUN ${BOOTSTRAP_ABSPATH}/python/set-venv.sh ${HOME_ABSPATH} ${VENV_PATH}
 
 COPY ${ENVIRONMENT_NAME}/requirements.txt ${HOME_ABSPATH}/requirements.txt
 
