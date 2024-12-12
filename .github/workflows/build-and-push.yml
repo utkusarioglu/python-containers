@@ -42,68 +42,68 @@ jobs:
               src/python/**
             additionalAptPackages: ""
 
-            # econ
-          - enabled: true
-            dockerfile: src/Dockerfile.conda.dev
-            containerName: conda-econ-devcontainer
-            username: default
-            group: micromamba
-            environmentName: default
-            scriptsPath: src/econ/scripts
-            devcontainerSubfolder: econ
-            environmentConfigPath: src/econ/environment.econ.yml
-            dockerReadmePath: src/econ/DOCKER_README.econ.md
-            dockerShortDescription: Devcontainer for economics workloads
-            additionalFilesToWatch: |
-              src/environment.common.yml
-              src/Dockerfile.conda.dev
-              src/econ/**
-            additionalAptPackages: ""
+          #   # econ
+          # - enabled: true
+          #   dockerfile: src/Dockerfile.conda.dev
+          #   containerName: conda-econ-devcontainer
+          #   username: default
+          #   group: micromamba
+          #   environmentName: default
+          #   scriptsPath: src/econ/scripts
+          #   devcontainerSubfolder: econ
+          #   environmentConfigPath: src/econ/environment.econ.yml
+          #   dockerReadmePath: src/econ/DOCKER_README.econ.md
+          #   dockerShortDescription: Devcontainer for economics workloads
+          #   additionalFilesToWatch: |
+          #     src/environment.common.yml
+          #     src/Dockerfile.conda.dev
+          #     src/econ/**
+          #   additionalAptPackages: ""
 
-            # math
-          - enabled: true
-            dockerfile: src/Dockerfile.conda.dev
-            containerName: conda-math-devcontainer
-            username: default
-            group: micromamba
-            environmentName: default
-            scriptsPath: src/math/scripts
-            devcontainerSubfolder: math
-            environmentConfigPath: src/math/environment.math.yml
-            dockerReadmePath: src/math/DOCKER_README.math.md
-            dockerShortDescription: Devcontainer for mathematics workloads
-            additionalFilesToWatch: |
-              src/environment.common.yml
-              src/Dockerfile.conda.dev
-              src/math/**
-            # These are required for matplotlib
-            additionalAptPackages: "libsm6 libxrender1"
+          #   # math
+          # - enabled: true
+          #   dockerfile: src/Dockerfile.conda.dev
+          #   containerName: conda-math-devcontainer
+          #   username: default
+          #   group: micromamba
+          #   environmentName: default
+          #   scriptsPath: src/math/scripts
+          #   devcontainerSubfolder: math
+          #   environmentConfigPath: src/math/environment.math.yml
+          #   dockerReadmePath: src/math/DOCKER_README.math.md
+          #   dockerShortDescription: Devcontainer for mathematics workloads
+          #   additionalFilesToWatch: |
+          #     src/environment.common.yml
+          #     src/Dockerfile.conda.dev
+          #     src/math/**
+          #   # These are required for matplotlib
+          #   additionalAptPackages: "libsm6 libxrender1"
 
-            # music
-          - enabled: true
-            dockerfile: src/Dockerfile.conda.dev
-            containerName: conda-music-devcontainer
-            username: default
-            group: micromamba
-            environmentName: default
-            scriptsPath: src/music/scripts
-            devcontainerSubfolder: music
-            environmentConfigPath: src/music/environment.music.yml
-            dockerReadmePath: src/music/DOCKER_README.music.md
-            dockerShortDescription: Devcontainer for music workloads
-            additionalFilesToWatch: |
-              src/environment.common.yml
-              src/Dockerfile.conda.dev
-              src/music/**
-            additionalAptPackages: >-
-              build-essential 
-              pkg-config 
-              libjack-dev 
-              alsa-utils 
-              musescore3 
-              libsdl2-dev 
-              pulseaudio 
-              lilypond
+          #   # music
+          # - enabled: true
+          #   dockerfile: src/Dockerfile.conda.dev
+          #   containerName: conda-music-devcontainer
+          #   username: default
+          #   group: micromamba
+          #   environmentName: default
+          #   scriptsPath: src/music/scripts
+          #   devcontainerSubfolder: music
+          #   environmentConfigPath: src/music/environment.music.yml
+          #   dockerReadmePath: src/music/DOCKER_README.music.md
+          #   dockerShortDescription: Devcontainer for music workloads
+          #   additionalFilesToWatch: |
+          #     src/environment.common.yml
+          #     src/Dockerfile.conda.dev
+          #     src/music/**
+          #   additionalAptPackages: >-
+          #     build-essential 
+          #     pkg-config 
+          #     libjack-dev 
+          #     alsa-utils 
+          #     musescore3 
+          #     libsdl2-dev 
+          #     pulseaudio 
+          #     lilypond
 
     steps:
       - name: Checkout code
