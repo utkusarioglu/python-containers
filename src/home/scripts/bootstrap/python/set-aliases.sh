@@ -4,7 +4,6 @@ set -eux
 
 ARGS=(
   home_abspath
-  venv_path
 )
 . ${0%/*}/../linux/parse-args.sh
 
