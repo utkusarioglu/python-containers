@@ -84,7 +84,7 @@ RUN ${BOOTSTRAP_ABSPATH}/linux/clean-apt.sh
 
 # RUN python -m venv ${VENV_PATH}
 # RUN echo "source ${VENV_PATH}/bin/activate" >> ~/.bashrc
-RUN ${BOOTSTRAP_ABSPATH}/pyhon-set-venv.sh ${VENV_PATH}
+RUN ${BOOTSTRAP_ABSPATH}/pyhon/set-venv.sh ${VENV_PATH}
 
 COPY src/${ENVIRONMENT_NAME}/requirements.txt \
   ${HOME_ABSPATH}/requirements.txt
