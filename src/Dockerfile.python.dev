@@ -32,8 +32,8 @@ RUN ls -alR ${HOME_ABSPATH}
 RUN ${BOOTSTRAP_ABSPATH}/linux/update-apt.sh
 
 RUN ${BOOTSTRAP_ABSPATH}/python/install-python.sh \
-  ${HOME_ABSPATH}
-  ${PYTHON_VERSION}
+  ${HOME_ABSPATH} \
+  ${PYTHON_VERSION} \
   ${VENV_PATH}
 
 RUN ${BOOTSTRAP_ABSPATH}/linux/install-apt.sh --no-check "${APT_PACKAGES_SILENT}"
