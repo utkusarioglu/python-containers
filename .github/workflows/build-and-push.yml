@@ -2,18 +2,18 @@ name: build-and-push
 
 on:
   push:
-    tags:
-      - "**.**.**"
-      - experiment/**/**/**
-    paths:
-      - src/**
-      - .github/workflows/build-and-push.yml
-  pull_request:
-    types:
-      - opened
-    branches:
-      - main
-  workflow_dispatch:
+  #   tags:
+  #     - "**.**.**"
+  #     - experiment/**/**/**
+  #   paths:
+  #     - src/**
+  #     - .github/workflows/build-and-push.yml
+  # pull_request:
+  #   types:
+  #     - opened
+  #   branches:
+  #     - main
+  # workflow_dispatch:
 
 env:
   CACHE_FROM_SRC: /tmp/.buildx-cache
