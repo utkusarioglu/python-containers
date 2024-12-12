@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -eux
+
 ARGS=(
   venv_path
 )

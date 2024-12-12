@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -eux
+
 ARGS=(
   home_abspath
   venv_path

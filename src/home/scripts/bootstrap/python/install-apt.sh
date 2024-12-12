@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -eux
+
 ARGS=(
   additional_apt_packages
 )
