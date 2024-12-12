@@ -183,14 +183,14 @@ jobs:
           build_args: |
             BASE_TAG=${{ matrix.images.base_tag }}
             BASE_IMAGE=${{ matrix.images.base_image }}
-            ROOT_PASS=${{ secrets.DOCKER_IMAGE_ROOT_PASS }}
-            USERNAME=${{ matrix.images.username }}
-            GROUP=${{ matrix.images.group }}
-            ENVIRONMENT_NAME=${{ matrix.images.environmentName }}
-            SCRIPTS_PATH=${{matrix.images.scriptsPath}}
-            ENVIRONMENT_CONFIG=${{ matrix.images.environmentConfigPath }}
+            # ROOT_PASS=${{ secrets.DOCKER_IMAGE_ROOT_PASS }}
+            # USERNAME=${{ matrix.images.username }}
+            # GROUP=${{ matrix.images.group }}
+            # ENVIRONMENT_NAME=${{ matrix.images.environmentName }}
+            # SCRIPTS_PATH=${{matrix.images.scriptsPath}}
+            # ENVIRONMENT_CONFIG=${{ matrix.images.environmentConfigPath }}
             ADDITIONAL_APT_PACKAGES=${{ matrix.images.additionalAptPackages }}
-            DEVCONTAINER_SUBFOLDER=${{ matrix.images.devcontainerSubfolder }}
+            # DEVCONTAINER_SUBFOLDER=${{ matrix.images.devcontainerSubfolder }}
           devcontainer_enabled: "false"
           devcontainer_subfolder: src/${{ matrix.images.devcontainerSubfolder }}
           devcontainer_run_cmd_path: /home/dev/scripts/bootstrap/python/check-devcontainer.sh
