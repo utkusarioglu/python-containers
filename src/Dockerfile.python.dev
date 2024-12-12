@@ -7,6 +7,7 @@ FROM utkusarioglu/${BASE_IMAGE}:${BASE_TAG}
 ARG ENVIRONMENT_NAME 
 ARG APT_PACKAGES
 ARG APT_PACKAGES_SILENT
+ARG PYTHON_VERSION
 
 ARG USERNAME=dev
 ARG USER_ID=1000
@@ -19,96 +20,35 @@ ARG VENV_PATH=${HOME_ABSPATH}/venv/${VENV_NAME}
 
 USER root
 
-# RUN for arg in ROOT_PASS USERNAME GROUP ENVIRONMENT_NAME ENVIRONMENT_CONFIG; \
-#   do \
-#   [ ! -z "${arg}" ] || { echo "ARG \"$arg\" needs to be set"; exit 1; } \
-#   done;
-
-# SHELL ["/bin/bash", "-c"]
-# RUN apt-get update && \
-#   apt-get upgrade -y && \
-#   apt-get install -y \
-#   jq \
-#   ncurses-bin \
-#   $ADDITIONAL_APT_PACKAGES
 WORKDIR ${HOME_ABSPATH}
 
 RUN ls -alR ${HOME_ABSPATH}
 
 COPY home/scripts/ scripts/
+COPY ${ENVIRONMENT_NAME}/requirements.txt ${HOME_ABSPATH}/requirements.txt
 
 RUN ls -alR ${HOME_ABSPATH}
 
-
 RUN ${BOOTSTRAP_ABSPATH}/linux/update-apt.sh
 
-RUN ${BOOTSTRAP_ABSPATH}/linux/install-apt.sh --no-check "software-properties-common"
-
-RUN add-apt-repository ppa:deadsnakes/ppa
-
-RUN ${BOOTSTRAP_ABSPATH}/linux/update-apt.sh
+RUN ${BOOTSTRAP_ABSPATH}/python/install-python.sh \
+  ${HOME_ABSPATH}
+  ${PYTHON_VERSION}
+  ${VENV_PATH}
 
 RUN ${BOOTSTRAP_ABSPATH}/linux/install-apt.sh --no-check "${APT_PACKAGES_SILENT}"
-
 RUN ${BOOTSTRAP_ABSPATH}/linux/install-apt.sh "${APT_PACKAGES}"
 
 RUN ${BOOTSTRAP_ABSPATH}/linux/clean-apt.sh
 
-RUN ${BOOTSTRAP_ABSPATH}/python/set-symlinks.sh 
-# RUN echo "alias python=python3.13" >> ${HOME_ABSPATH}/.bash_aliases
-# RUN . ${HOME_ABSPATH}/.bash_aliases
+# RUN ${BOOTSTRAP_ABSPATH}/python/set-symlinks.sh 
 
-# # Neovim requires manual retrieval of the latest version
-# # as the apt package is quite old
-# RUN wget https://github.com/neovim/neovim/releases/download/$NVIM_VERSION/nvim-linux64.deb \
-#   -O /neovim.deb
-# RUN apt install -y /neovim.deb 
-# RUN rm /neovim.deb
-# ENV EDITOR=nvim
+# RUN ${BOOTSTRAP_ABSPATH}/python/set-venv.sh ${HOME_ABSPATH} ${VENV_PATH}
 
-# RUN echo "root:$ROOT_PASS" | chpasswd
 
-# This doesn't exist in conda containers
-# ENV SHELL=/bin/bash
-
-# RUN useradd -m $USERNAME
-# USER $USERNAME
-
-# Gists
-# ADD --chown=$USERNAME:$GROUP \
-#   https://gist.githubusercontent.com/utkusarioglu/2d4be44dc7707afccd540ad99ba385e6/raw/create-env-example.sh \
-#   /scripts/create-env-example.sh
-
-# ADD --chown=$USERNAME:$GROUP \
-#   https://gist.githubusercontent.com/utkusarioglu/3523b00578807d63b05399fe57a4b2a7/raw/.bashrc \
-#   $HOME/.bashrc
-
-# ADD --chown=$USERNAME:$GROUP \
-#   https://gist.githubusercontent.com/utkusarioglu/d5c216c744460c45bf6260d0de4131b4/raw/.inputrc \
-#   $HOME/.inputrc
-# RUN chmod +x \
-#   /scripts/create-env-example.sh \
-#   $HOME/.bashrc \
-#   $HOME/.inputrc
-
-# Elam
-# RUN git clone https://github.com/utkusarioglu/elam.git $ELAM_ABSPATH
-# RUN echo "alias elam=$ELAM_ABSPATH/elam.sh" >> $HOME/.bash_aliases
-
-# RUN mkdir -p $HOME/.vscode-server/extensions
-# RUN mkdir -p $HOME/.vscode-server-insiders/extensions
-
-# COPY "${SCRIPTS_PATH}" /scripts
-
-# RUN python -m venv ${VENV_PATH}
-# RUN echo "source ${VENV_PATH}/bin/activate" >> ~/.bashrc
-RUN ${BOOTSTRAP_ABSPATH}/python/set-venv.sh ${HOME_ABSPATH} ${VENV_PATH}
-
-COPY ${ENVIRONMENT_NAME}/requirements.txt ${HOME_ABSPATH}/requirements.txt
-
-RUN ${BOOTSTRAP_ABSPATH}/python/install-requirements.sh \
-  ${HOME_ABSPATH} \
-  ${VENV_PATH}
+# RUN ${BOOTSTRAP_ABSPATH}/python/install-requirements.sh \
+#   ${HOME_ABSPATH} \
+#   ${VENV_PATH}
 
 RUN ${BOOTSTRAP_ABSPATH}/linux/set-permissions.sh \
   ${USER_ID} \

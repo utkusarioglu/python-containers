@@ -9,4 +9,3 @@ ARGS=(
 . ${0%/*}/../linux/parse-args.sh
 
 source ${venv_path}/bin/activate
-pip install --require-virtualenv -r "${home_abspath}/requirements.txt"
