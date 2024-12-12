@@ -6,7 +6,6 @@ dependencies:
   - anaconda::numpy=1.26.0
   - anaconda::flake8=6.0.0
 
-  # - conda-forge::conda=23.3.1
   - conda-forge::notebook=7.0.6
   - conda-forge::pip=23.1
   - conda-forge::black=23.10.1
