@@ -3,8 +3,8 @@ ARG BASE_TAG
 
 FROM utkusarioglu/${BASE_IMAGE}:${BASE_TAG}
 
-# ARG ENVIRONMENT_NAME 
 # ARG SCRIPTS_PATH
+ARG ENVIRONMENT_NAME 
 ARG ADDITIONAL_APT_PACKAGES
 
 ARG USERNAME=dev
@@ -88,11 +88,11 @@ RUN ${BOOTSTRAP_ABSPATH}/linux/clean-apt.sh
 
 # RUN python -m venv ${VENV_PATH}
 # RUN echo "source ${VENV_PATH}/bin/activate" >> ~/.bashrc
-RUN ${BOOTSTRAP_ABSPATH}/pyhon/set-venv.sh ${VENV_PATH}
+RUN ${BOOTSTRAP_ABSPATH}/python/set-venv.sh ${VENV_PATH}
 
 COPY ${ENVIRONMENT_NAME}/requirements.txt ${HOME_ABSPATH}/requirements.txt
 
-RUN ${BOOTSTRAP_ABSPATH}/pyhton/install-requirements.sh \
+RUN ${BOOTSTRAP_ABSPATH}/python/install-requirements.sh \
   ${HOME_ABSPATH} \
   ${VENV_PATH}
 
