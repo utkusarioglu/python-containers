@@ -33,7 +33,7 @@ jobs:
             username: python
             group: python
             base_image: ubuntu-devcontainer
-            base_tag: noble-test-3
+            base_tag: noble-test-6
             environmentName: python
             scriptsPath: src/python/scripts
             devcontainerSubfolder: python
@@ -42,7 +42,8 @@ jobs:
             additionalFilesToWatch: |
               src/Dockerfile.python.dev
               src/python/**
-            aptPackages: python ncurses-bin
+            aptPackages: python 
+            aptPackagesSilent: ncurses-bin
 
           #   # econ
           # - enabled: true
@@ -190,6 +191,7 @@ jobs:
             # SCRIPTS_PATH=${{matrix.images.scriptsPath}}
             # ENVIRONMENT_CONFIG=${{ matrix.images.environmentConfigPath }}
             APT_PACKAGES=${{ matrix.images.aptPackages }}
+            APT_PACKAGES_SILENT=${{ matrix.images.aptPackagesSilent }}
             # DEVCONTAINER_SUBFOLDER=${{ matrix.images.devcontainerSubfolder }}
           devcontainer_enabled: "false"
           devcontainer_subfolder: src/${{ matrix.images.devcontainerSubfolder }}

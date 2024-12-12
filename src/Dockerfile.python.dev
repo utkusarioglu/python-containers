@@ -6,6 +6,7 @@ FROM utkusarioglu/${BASE_IMAGE}:${BASE_TAG}
 # ARG SCRIPTS_PATH
 ARG ENVIRONMENT_NAME 
 ARG APT_PACKAGES
+ARG APT_PACKAGES_SILENT
 
 ARG USERNAME=dev
 ARG USER_ID=1000
@@ -38,7 +39,11 @@ COPY home/scripts/ scripts/
 
 RUN ls -alR ${HOME_ABSPATH}
 
+RUN add-apt-repository ppa:deadsnakes/ppa
+
 RUN ${BOOTSTRAP_ABSPATH}/linux/update-apt.sh
+
+RUN ${BOOTSTRAP_ABSPATH}/linux/install-apt.sh --no-check "${APT_PACKAGES_SILENT}"
 
 RUN ${BOOTSTRAP_ABSPATH}/linux/install-apt.sh "${APT_PACKAGES}"
 
