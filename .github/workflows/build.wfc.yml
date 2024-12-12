@@ -26,8 +26,8 @@ jobs:
     name: build-and-push
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        fail-fast: false
         images:
             # Vanilla python
           - enabled: true
