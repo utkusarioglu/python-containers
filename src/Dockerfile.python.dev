@@ -39,6 +39,11 @@ COPY home/scripts/ scripts/
 
 RUN ls -alR ${HOME_ABSPATH}
 
+
+RUN ${BOOTSTRAP_ABSPATH}/linux/update-apt.sh
+
+RUN ${BOOTSTRAP_ABSPATH}/linux/install-apt.sh --no-check "software-properties-common"
+
 RUN add-apt-repository ppa:deadsnakes/ppa
 
 RUN ${BOOTSTRAP_ABSPATH}/linux/update-apt.sh
