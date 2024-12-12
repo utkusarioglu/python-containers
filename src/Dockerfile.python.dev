@@ -30,7 +30,7 @@ USER root
 #   ncurses-bin \
 #   $ADDITIONAL_APT_PACKAGES
 WORKDIR ${HOME_ABSPATH}
-COPY home .
+COPY home/scripts scripts/
 
 RUN ls -alR ${HOME_ABSPATH}
 
