@@ -50,4 +50,6 @@ RUN ${BOOTSTRAP_ABSPATH}/linux/set-permissions.sh \
 
 USER ${USER_ID}
 
-RUN ${BOOTSTRAP_ABSPATH}/conda/install-requirements.sh ${HOME_ABSPATH}
+RUN ${BOOTSTRAP_ABSPATH}/conda/install-requirements.sh \
+  ${HOME_ABSPATH} \
+  ${ENVIRONMENT_NAME}
