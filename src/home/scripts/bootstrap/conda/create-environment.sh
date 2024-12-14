@@ -10,7 +10,7 @@ ARGS=(
 
 
 # COPY ${environment_config} /environment.repo.yml
-RUN yq eval-all \
+yq eval-all \
   '. as $item ireduce ({}; . *+ $item)' \
   "${home_abspath}/environment.common.yml" \
   "${home_abspath}/environment.repo.yml" \
@@ -25,5 +25,5 @@ cat "${home_abspath}/environment.repo.yml"
 echo "Merged:"
 cat "${home_abspath}/environment.merged.yml"
 
-# RUN conda env create --file "/environment.merged.yml"
+#  conda env create --file "/environment.merged.yml"
 micromamba env create --file "${home_abspath}/environment.merged.yml" 
