@@ -26,4 +26,4 @@ echo "Merged:"
 cat "${home_abspath}/environment.merged.yml"
 
 # RUN conda env create --file "/environment.merged.yml"
-RUN micromamba env create --file "${home_abspath}/environment.merged.yml" 
+micromamba env create --file "${home_abspath}/environment.merged.yml" 

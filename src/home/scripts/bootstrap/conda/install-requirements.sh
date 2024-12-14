@@ -9,8 +9,8 @@ ARGS=(
 . ${0%/*}/../linux/parse-args.sh
 
 
-RUN pip install -r ${home_abspath}/requirements.txt
+pip install -r ${home_abspath}/requirements.txt
 
-RUN pip list -v
+pip list -v
 
-RUN micromamba list
+micromamba list
