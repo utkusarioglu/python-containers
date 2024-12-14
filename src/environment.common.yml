@@ -5,6 +5,7 @@ dependencies:
   # - anaconda::jupyter=1.0.0
   - anaconda::numpy
   - anaconda::flake8
+  - anaconda::pip
 
   - conda-forge::python
   - conda-forge::notebook

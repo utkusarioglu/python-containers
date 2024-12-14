@@ -8,6 +8,7 @@ ARGS=(
 )
 . ${0%/*}/../linux/parse-args.sh
 
+source ${home_abspath}/.bashrc
 
 pip install -r ${home_abspath}/requirements.txt
 
