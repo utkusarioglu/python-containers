@@ -42,11 +42,12 @@ RUN ${BOOTSTRAP_ABSPATH}/linux/clean-apt.sh
 
 ENV PATH ${MAMBA_ROOT_PREFIX}/envs/${ENVIRONMENT_NAME}/bin:${PATH}
 
-USER ${USER_ID}
 
 RUN ${BOOTSTRAP_ABSPATH}/linux/set-permissions.sh \
   ${USER_ID} \
   ${GROUP_ID} \
   ${HOME_ABSPATH}
+
+USER ${USER_ID}
 
 RUN ${BOOTSTRAP_ABSPATH}/conda/install-requirements.sh ${HOME_ABSPATH}
