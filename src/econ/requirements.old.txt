@@ -1,0 +1,4 @@
+talipp==1.9.1
+tradingview-ta==3.3.0
+backtesting==0.3.3
+pandas-datareader==0.10.0
