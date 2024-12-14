@@ -71,15 +71,15 @@ jobs:
             dockerhub_readme_path: src/music/DOCKER_README.music.md
             dockerhub_short_description: Devcontainer for music workloads
             apt_packages: >-
-              alsa-utils 
               musescore3 
-              libsdl2-dev 
               pulseaudio 
               lilypond
-            # libjack-dev 
             apt_packages_silent: >-
-              build-essential 
-              pkg-config 
+              build-essential
+              pkg-config
+              libjack-dev
+              libsdl2-dev
+              alsa-utils
 
           #   # math
           # - enabled: true
