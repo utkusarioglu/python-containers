@@ -1,6 +1,10 @@
 dependencies:
-  - conda-forge::music21=8.1.0
-  - conda-forge::librosa=0.10.0
-  - conda-forge::fluidsynth=2.3.2
+  - conda-forge::music21
+  - conda-forge::librosa
+  - conda-forge::fluidsynth
 # These may be enabled later, depending on need
 # - cogsci::pygame
+
+  # - conda-forge::music21=8.1.0
+  # - conda-forge::librosa=0.10.0
+  # - conda-forge::fluidsynth=2.3.2

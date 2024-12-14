@@ -38,23 +38,48 @@ jobs:
           #   apt_packages: ""
           #   apt_packages_silent: ncurses-bin
 
-          #   # econ
+          # #   # econ
+          # - dockerfile: src/Dockerfile.conda.dev
+          #   container_name: conda-econ-devcontainer
+          #   base_image: ubuntu-devcontainer
+          #   image_tag: ${{ inputs.image_tag }}
+          #   base_tag: ${{ inputs.base_tag }}
+          #   # username: dev
+          #   # group: micromamba
+          #   environment_name: econ
+          #   # scriptsPath: src/econ/scripts
+          #   devcontainer_subfolder: econ
+          #   # environmentConfigPath: src/econ/environment.econ.yml
+          #   dockerhub_readme_path: src/econ/DOCKER_README.econ.md
+          #   dockerhub_short_description: Devcontainer for economics workloads
+          #   # additionalAptPackages: ""
+          #   apt_packages: "bzip2"
+          #   apt_packages_silent: ""
+
+            # music
           - dockerfile: src/Dockerfile.conda.dev
-            container_name: conda-econ-devcontainer
+            container_name: conda-music-devcontainer
             base_image: ubuntu-devcontainer
             image_tag: ${{ inputs.image_tag }}
             base_tag: ${{ inputs.base_tag }}
-            # username: dev
+            # username: default
             # group: micromamba
-            environment_name: econ
-            # scriptsPath: src/econ/scripts
-            devcontainer_subfolder: econ
-            # environmentConfigPath: src/econ/environment.econ.yml
-            dockerhub_readme_path: src/econ/DOCKER_README.econ.md
-            dockerhub_short_description: Devcontainer for economics workloads
-            # additionalAptPackages: ""
-            apt_packages: "bzip2"
-            apt_packages_silent: ""
+            environment_name: music
+            # scriptsPath: src/music/scripts
+            devcontainer_subfolder: music
+            # environmentConfigPath: src/music/environment.music.yml
+            dockerhub_readme_path: src/music/DOCKER_README.music.md
+            dockerhub_short_description: Devcontainer for music workloads
+            apt_packages: >-
+              libjack-dev 
+              alsa-utils 
+              musescore3 
+              libsdl2-dev 
+              pulseaudio 
+              lilypond
+            apt_packages_silent: >-
+              build-essential 
+              pkg-config 
 
           #   # math
           # - enabled: true
@@ -70,28 +95,6 @@ jobs:
           #   dockerhub_short_description: Devcontainer for mathematics workloads
           #   # These are required for matplotlib
           #   additionalAptPackages: "libsm6 libxrender1"
-
-          #   # music
-          # - enabled: true
-          #   dockerfile: src/Dockerfile.conda.dev
-          #   container_name: conda-music-devcontainer
-          #   username: default
-          #   group: micromamba
-          #   environment_name: default
-          #   scriptsPath: src/music/scripts
-          #   devcontainer_subfolder: music
-          #   environmentConfigPath: src/music/environment.music.yml
-          #   dockerhub_readme_path: src/music/DOCKER_README.music.md
-          #   dockerhub_short_description: Devcontainer for music workloads
-          #   additionalAptPackages: >-
-          #     build-essential 
-          #     pkg-config 
-          #     libjack-dev 
-          #     alsa-utils 
-          #     musescore3 
-          #     libsdl2-dev 
-          #     pulseaudio 
-          #     lilypond
 
     steps:
       - name: Checkout code
