@@ -6,10 +6,12 @@ bash --version
 ARGS=(
   home_abspath
   environment_name
+  mamba_root_prefix
 )
 . ${0%/*}/../linux/parse-args.sh
 
-micromamba_abspath="${home_abspath}/bin/micromamba"
+# micromamba_abspath="${home_abspath}/bin/micromamba"
+export MAMBA_ROOT_PREFIX=$mamba_root_prefix
 
 wget -O - https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba
 

@@ -33,7 +33,10 @@ RUN ${BOOTSTRAP_ABSPATH}/linux/update-apt.sh
 
 RUN ${BOOTSTRAP_ABSPATH}/linux/install-apt.sh "${APT_PACKAGES}"
 
-RUN ${BOOTSTRAP_ABSPATH}/conda/install-micromamba.sh ${HOME_ABSPATH} ${ENVIRONMENT_NAME}
+RUN ${BOOTSTRAP_ABSPATH}/conda/install-micromamba.sh \
+  ${HOME_ABSPATH} \
+  ${ENVIRONMENT_NAME} \
+  ${MAMBA_ROOT_PREFIX}
 
 RUN ${BOOTSTRAP_ABSPATH}/linux/clean-apt.sh
 
