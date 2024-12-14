@@ -19,18 +19,16 @@ on:
 
 jobs:
   build-and-push:
-    name: build-and-push
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         images:
             # Vanilla python
-          - enabled: true
-            dockerfile: src/Dockerfile.python.dev
+          - dockerfile: src/Dockerfile.python.dev
             container_name: python-devcontainer
-            username: python
-            group: python
+            # username: python
+            # group: python
             base_image: ubuntu-devcontainer
             image_tag: ${{ inputs.image_tag }}
             base_tag: ${{ inputs.base_tag }}
@@ -43,18 +41,22 @@ jobs:
             apt_packages_silent: ncurses-bin
 
           #   # econ
-          # - enabled: true
-          #   dockerfile: src/Dockerfile.conda.dev
-          #   container_name: conda-econ-devcontainer
-          #   username: default
-          #   group: micromamba
-          #   environment_name: default
-          #   scriptsPath: src/econ/scripts
-          #   devcontainer_subfolder: econ
-          #   environmentConfigPath: src/econ/environment.econ.yml
-          #   dockerhub_readme_path: src/econ/DOCKER_README.econ.md
-          #   dockerhub_short_description: Devcontainer for economics workloads
-          #   additionalAptPackages: ""
+          - dockerfile: src/Dockerfile.conda.dev
+            container_name: conda-econ-devcontainer
+            base_image: ubuntu-devcontainer
+            image_tag: ${{ inputs.image_tag }}
+            base_tag: ${{ inputs.base_tag }}
+            # username: dev
+            # group: micromamba
+            environment_name: econ
+            # scriptsPath: src/econ/scripts
+            devcontainer_subfolder: econ
+            # environmentConfigPath: src/econ/environment.econ.yml
+            dockerhub_readme_path: src/econ/DOCKER_README.econ.md
+            dockerhub_short_description: Devcontainer for economics workloads
+            # additionalAptPackages: ""
+            apt_packages: ""
+            apt_packages_silent: ncurses-bin
 
           #   # math
           # - enabled: true
