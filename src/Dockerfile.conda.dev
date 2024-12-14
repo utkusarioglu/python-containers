@@ -16,7 +16,7 @@ ARG USER_ID=1000
 ARG HOME_ABSPATH=/home/${USERNAME}
 ARG BOOTSTRAP_ABSPATH=${HOME_ABSPATH}/scripts/bootstrap
 ARG MAMBA_ROOT_PREFIX=/opt/conda
-ARG ENVIRONMENT_REPO_RELPATH=src/${ENVIRONMENT_NAME}/environment.${ENVIRONMENT_NAME}.yml
+ARG ENVIRONMENT_REPO_RELPATH=${ENVIRONMENT_NAME}/environment.${ENVIRONMENT_NAME}.yml
 ARG DEVCONTAINER_SUBFOLDER
 # ARG SCRIPTS_PATH
 # environment_config_abspath=src/${environment_name}/environment.${environment_name}.yml
@@ -29,9 +29,9 @@ WORKDIR ${HOME_ABSPATH}
 RUN ls -alR ${HOME_ABSPATH}
 
 COPY home/scripts/ scripts/
-COPY src/environment.common.yml environment.common.yml
+COPY environment.common.yml environment.common.yml
 COPY ${ENVIRONMENT_REPO_RELPATH} environment.repo.yml
-COPY src/${ENVIRONMENT_NAME}/requirements.txt requirements.txt
+COPY ${ENVIRONMENT_NAME}/requirements.txt requirements.txt
 
 RUN ls -alR ${HOME_ABSPATH}
 # RUN usermod -l $USERNAME mambauser

@@ -24,21 +24,19 @@ jobs:
       fail-fast: false
       matrix:
         images:
-            # Vanilla python
-          - dockerfile: src/Dockerfile.python.dev
-            container_name: python-devcontainer
-            # username: python
-            # group: python
-            base_image: ubuntu-devcontainer
-            image_tag: ${{ inputs.image_tag }}
-            base_tag: ${{ inputs.base_tag }}
-            python_version: "3.13"
-            environment_name: python
-            devcontainer_subfolder: python
-            dockerhub_readme_path: src/python/DOCKER_README.python.md
-            dockerhub_short_description: Devcontainer for python workloads
-            apt_packages: ""
-            apt_packages_silent: ncurses-bin
+          #   # Vanilla python
+          # - dockerfile: src/Dockerfile.python.dev
+          #   container_name: python-devcontainer
+          #   base_image: ubuntu-devcontainer
+          #   image_tag: ${{ inputs.image_tag }}
+          #   base_tag: ${{ inputs.base_tag }}
+          #   python_version: "3.13"
+          #   environment_name: python
+          #   devcontainer_subfolder: python
+          #   dockerhub_readme_path: src/python/DOCKER_README.python.md
+          #   dockerhub_short_description: Devcontainer for python workloads
+          #   apt_packages: ""
+          #   apt_packages_silent: ncurses-bin
 
           #   # econ
           - dockerfile: src/Dockerfile.conda.dev
