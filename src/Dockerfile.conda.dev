@@ -16,9 +16,10 @@ ARG GROUP_ID=1000
 ARG USER_ID=1000
 ARG HOME_ABSPATH=/home/${USERNAME}
 ARG BOOTSTRAP_ABSPATH=${HOME_ABSPATH}/scripts/bootstrap
-ARG MAMBA_ROOT_PREFIX=/opt/conda
 ARG ENVIRONMENT_REPO_RELPATH=${ENVIRONMENT_NAME}/environment.${ENVIRONMENT_NAME}.yml
 ARG DEVCONTAINER_SUBFOLDER
+
+ENV MAMBA_ROOT_PREFIX=/opt/conda
 # ARG SCRIPTS_PATH
 # environment_config_abspath=src/${environment_name}/environment.${environment_name}.yml
 # ARG NVIM_VERSION=v0.8.3
@@ -93,7 +94,7 @@ RUN ${BOOTSTRAP_ABSPATH}/linux/update-apt.sh
 
 RUN ${BOOTSTRAP_ABSPATH}/linux/install-apt.sh "${APT_PACKAGES}"
 
-RUN ${BOOTSTRAP_ABSPATH}/conda/install-mamba.sh
+RUN ${BOOTSTRAP_ABSPATH}/conda/install-mamba.sh ""
 
 RUN ${BOOTSTRAP_ABSPATH}/conda/create-environment.sh ${HOME_ABSPATH}
 
