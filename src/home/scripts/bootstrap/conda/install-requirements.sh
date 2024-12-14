@@ -11,7 +11,7 @@ ARGS=(
 
 # source ${home_abspath}/.bashrc
 
-micromamba activate ${environment_name}
+./bin/micromamba activate ${environment_name}
 
 which pip
 
