@@ -5,11 +5,11 @@ dependencies:
   # - anaconda::jupyter=1.0.0
   - anaconda::numpy
   - anaconda::flake8
-  # - anaconda::pip
+  - anaconda::pip
 
   - conda-forge::python
   - conda-forge::notebook
-  - conda-forge::pip
+  # - conda-forge::pip
   - conda-forge::black
   - conda-forge::black-jupyter
   - conda-forge::python-dotenv
