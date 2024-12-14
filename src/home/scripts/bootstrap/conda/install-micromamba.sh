@@ -10,23 +10,23 @@ ARGS=(
 )
 . ${0%/*}/../linux/parse-args.sh
 
-# micromamba_abspath="${home_abspath}/bin/micromamba"
 export MAMBA_ROOT_PREFIX=$mamba_root_prefix
 
-# cd ${home_abspath}
+wget -O - https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj /usr/bin/micromamba
 
-wget -O - https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba
+eval "$(/usr/bin/micromamba shell hook -s posix --rc-file ${home_abspath}/.bashrc)"
 
-eval "$(./bin/micromamba shell hook -s posix)"
-
-./bin/micromamba  shell init -s bash -r ${home_abspath}/micromamba  # this writes to your .bashrc file
-# echo "alias mm=${home_abspath}" >> "${home_abspath}/.bash_aliases"
+/usr/bin/micromamba shell init \
+  -s bash \
+  -r /usr/bin/micromamba \
+  --rc-file ${home_abspath}/.bashrc
+echo "alias mm=micromamba" >> "${home_abspath}/.bash_aliases"
 
 source ${home_abspath}/.bashrc
 
 micromamba --version
 # THIS NEEDS TO WORK
-# mm --version
+mm --version
 
 yq eval-all \
   '. as $item ireduce ({}; . *+ $item)' \
