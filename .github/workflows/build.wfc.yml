@@ -73,8 +73,9 @@ jobs:
             apt_packages: >-
               pulseaudio 
               lilypond
+              bzip2
             apt_packages_silent: >-
-              musescore3 
+              musescore3
               build-essential
               pkg-config
               libjack-dev
