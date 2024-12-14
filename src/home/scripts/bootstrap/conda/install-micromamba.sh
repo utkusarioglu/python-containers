@@ -18,7 +18,7 @@ wget -O - https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/m
 eval "$(./bin/micromamba shell hook -s posix)"
 
 ./bin/micromamba  shell init -s bash -r ${home_abspath}/micromamba  # this writes to your .bashrc file
-echo "alias mm=${micromamba_abspath}" >> "${home_abspath}/.bash_aliases"
+# echo "alias mm=${home_abspath}" >> "${home_abspath}/.bash_aliases"
 
 source ${home_abspath}/.bashrc
 
