@@ -45,6 +45,8 @@ cat "${home_abspath}/environment.merged.yml"
 
 micromamba env create --file "${home_abspath}/environment.merged.yml" 
 
+micromamba activate ${environment_name}
+
 which pip
 
 pip install -r ${home_abspath}/requirements.txt
