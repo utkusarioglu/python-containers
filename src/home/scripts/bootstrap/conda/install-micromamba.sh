@@ -12,7 +12,9 @@ ARGS=(
 
 export MAMBA_ROOT_PREFIX=$mamba_root_prefix
 
-wget -O - https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj /usr/bin/micromamba
+wget -O - https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba
+
+mv bin/micromamba /usr/bin/micromamba
 
 eval "$(/usr/bin/micromamba shell hook -s posix --rc-file ${home_abspath}/.bashrc)"
 
