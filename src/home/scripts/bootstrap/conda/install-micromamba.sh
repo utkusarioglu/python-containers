@@ -5,29 +5,31 @@ bash --version
 
 ARGS=(
   home_abspath
+  environment_name
 )
 . ${0%/*}/../linux/parse-args.sh
 
-micromamba_target="${home_abspath}/bin/micromamba"
-wget -O - https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj ${micromamba_target}
+micromamba_relpath=bin/micromamba
+micromamba_abspath="${home_abspath}/${micromamba_relpath}"
+
+wget -O - https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj "./${micromamba_relpath}"
 
 # export MAMBA_ROOT_PREFIX=/some/prefix  # optional, defaults to ~/micromamba
 
-eval "$(./bin/micromamba shell hook -s posix)"
+eval "$(./${micromamba_relpath} shell hook -s posix)"
 
 # Linux/bash:
-${micromamba_target} shell init -s bash -r ${home_abspath}/micromamba  # this writes to your .bashrc file
+${micromamba_abspath} shell init -s bash -r ${home_abspath}/micromamba  # this writes to your .bashrc file
 # sourcing the bashrc file incorporates the changes into the running session.
-# better yet, restart your terminal!
-echo "eval \"\$(micromamba shell hook --shell=bash)\" && micromamba activate ${ENVIRONMENT_NAME}" >> ${HOME_ABSPATH}/.bashrc
-echo "alias mm=${micromamba_target}" >> "${HOME_ABSPATH}/.bash_aliases"
+# better yet, restart your terminal! echo "eval \"\$(micromamba shell hook --shell=bash)\" && micromamba activate ${environment_name}" >> ${home_abspath}/.bashrc
+echo "alias mm=${micromamba_abspath}" >> "${home_abspath}/.bash_aliases"
 
 source ${home_abspath}/.bashrc
 
 # micromamba create -n env_name ${environment_name} -c conda-forge
 micromamba --version
 # THIS NEEDS TO WORK
-# mm --version
+mm --version
 
 # COPY ${environment_config} /environment.repo.yml
 yq eval-all \
