@@ -1,6 +1,5 @@
 scamp
 scamp_extensions
 python-rtmidi
-abjad
 flask
 flask_socketio
