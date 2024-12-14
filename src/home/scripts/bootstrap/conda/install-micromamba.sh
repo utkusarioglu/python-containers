@@ -25,11 +25,11 @@ eval "$(/usr/bin/micromamba shell hook -s posix --rc-file ${home_abspath}/.bashr
 echo "alias mm=micromamba" >> "${home_abspath}/.bash_aliases"
 
 source ${home_abspath}/.bashrc
-source ${home_abspath}/.bash_aliases
+# source ${home_abspath}/.bash_aliases
 
 micromamba --version
 # THIS NEEDS TO WORK
-mm --version
+# mm --version
 
 yq eval-all \
   '. as $item ireduce ({}; . *+ $item)' \
