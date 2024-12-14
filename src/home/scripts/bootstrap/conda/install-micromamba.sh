@@ -13,6 +13,8 @@ ARGS=(
 # micromamba_abspath="${home_abspath}/bin/micromamba"
 export MAMBA_ROOT_PREFIX=$mamba_root_prefix
 
+# cd ${home_abspath}
+
 wget -O - https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba
 
 eval "$(./bin/micromamba shell hook -s posix)"
@@ -42,3 +44,11 @@ echo "Merged:"
 cat "${home_abspath}/environment.merged.yml"
 
 micromamba env create --file "${home_abspath}/environment.merged.yml" 
+
+which pip
+
+pip install -r ${home_abspath}/requirements.txt
+
+pip list -v
+
+micromamba list
