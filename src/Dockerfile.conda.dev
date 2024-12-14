@@ -6,7 +6,8 @@ ARG BASE_TAG
 FROM utkusarioglu/${BASE_IMAGE}:${BASE_TAG}
 
 ARG ENVIRONMENT_NAME 
-ARG ADDITIONAL_APT_PACKAGES
+ARG APT_PACKAGES
+ARG APT_PACKAGES_SILENT
 
 # ARG ROOT_PASS
 ARG USERNAME=dev
@@ -87,9 +88,16 @@ RUN ls -alR ${HOME_ABSPATH}
 # # RUN conda env create --file "/environment.merged.yml"
 # RUN micromamba env create --file "/environment.merged.yml" 
 
+
+RUN ${BOOTSTRAP_ABSPATH}/linux/update-apt.sh
+
+RUN ${BOOTSTRAP_ABSPATH}/linux/install-apt.sh "${APT_PACKAGES}"
+
 RUN ${BOOTSTRAP_ABSPATH}/conda/install-mamba.sh
 
 RUN ${BOOTSTRAP_ABSPATH}/conda/create-environment.sh ${HOME_ABSPATH}
+
+RUN ${BOOTSTRAP_ABSPATH}/linux/clean-apt.sh
 
 # RUN mamba install -n "$ENVIRONMENT_NAME" conda-libmamba-solver
 # RUN conda config --set solver libmamba
@@ -137,5 +145,12 @@ ENV PATH ${MAMBA_ROOT_PREFIX}/envs/${ENVIRONMENT_NAME}/bin:${PATH}
 # RUN echo "eval \"\$(micromamba shell hook --shell=bash)\" && micromamba activate $ENVIRONMENT_NAME" >> ~/.bashrc
 
 # SHELL ["/bin/bash", "--login", "-c"]
+
+USER ${USER_ID}
+
+RUN ${BOOTSTRAP_ABSPATH}/linux/set-permissions.sh \
+  ${USER_ID} \
+  ${GROUP_ID} \
+  ${HOME_ABSPATH}
 
 RUN ${BOOTSTRAP_ABSPATH}/conda/install-requirements.sh ${HOME_ABSPATH}

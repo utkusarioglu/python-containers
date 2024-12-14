@@ -53,8 +53,8 @@ jobs:
             dockerhub_readme_path: src/econ/DOCKER_README.econ.md
             dockerhub_short_description: Devcontainer for economics workloads
             # additionalAptPackages: ""
-            apt_packages: ""
-            apt_packages_silent: ncurses-bin
+            apt_packages: "bzip2"
+            apt_packages_silent: ""
 
           #   # math
           # - enabled: true
