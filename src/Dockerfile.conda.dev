@@ -1,6 +1,3 @@
-# FROM continuumio/miniconda3
-# FROM mambaorg/micromamba:1.4.2-jammy
-
 ARG BASE_IMAGE
 ARG BASE_TAG
 FROM utkusarioglu/${BASE_IMAGE}:${BASE_TAG}
@@ -9,7 +6,6 @@ ARG ENVIRONMENT_NAME
 ARG APT_PACKAGES
 ARG APT_PACKAGES_SILENT
 
-# ARG ROOT_PASS
 ARG USERNAME=dev
 ARG GROUP=g
 ARG GROUP_ID=1000
@@ -20,10 +16,6 @@ ARG ENVIRONMENT_REPO_RELPATH=${ENVIRONMENT_NAME}/environment.${ENVIRONMENT_NAME}
 ARG DEVCONTAINER_SUBFOLDER
 
 ENV MAMBA_ROOT_PREFIX=/opt/conda
-# ARG SCRIPTS_PATH
-# environment_config_abspath=src/${environment_name}/environment.${environment_name}.yml
-# ARG NVIM_VERSION=v0.8.3
-# ARG ELAM_ABSPATH="$HOME/elam"
 
 USER root
 
@@ -36,59 +28,6 @@ COPY ${ENVIRONMENT_REPO_RELPATH} environment.repo.yml
 COPY ${ENVIRONMENT_NAME}/requirements.txt requirements.txt
 
 RUN ls -alR ${HOME_ABSPATH}
-# RUN usermod -l $USERNAME mambauser
-# RUN usermod -d $HOME -m $USERNAME 
-# RUN groupmod -n $GROUP mambauser
-# RUN ls -al "/home"
-# RUN echo "home: $HOME"
-# ENV HOME="/home/$USERNAME"
-# RUN rm -rf "/home/mambauser"
-
-# SHELL ["/bin/bash", "-c"]
-# RUN apt-get update && \
-#   apt-get upgrade -y && \
-#   apt-get install -y --no-install-recommends \
-#   wget \
-#   jq \ 
-#   git \
-#   ${ADDITIONAL_APT_PACKAGES//[$'\t\r\n']}
-# RUN apt-get clean
-
-
-
-# Neovim requires manual retrieval of the latest version
-# as the apt package is quite old
-# RUN wget https://github.com/neovim/neovim/releases/download/$NVIM_VERSION/nvim-linux64.deb \
-#   -O /neovim.deb \
-#   --no-check-certificate
-# RUN apt install -y /neovim.deb 
-# RUN rm /neovim.deb
-# ENV EDITOR=nvim
-
-# yq
-# RUN wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 \
-#   -O /usr/bin/yq \
-#   --no-check-certificate && \
-#   chmod +x /usr/bin/yq
-
-# RUN echo "root:$ROOT_PASS" | chpasswd
-
-# Conda is deliberately installed as user: $USERNAME
-# COPY "src/environment.common.yml" ${HOME_ABSPATH}/environment.common.yml
-# COPY ${ENVIRONMENT_CONFIG} /environment.repo.yml
-# RUN yq eval-all \
-#   '. as $item ireduce ({}; . *+ $item)' \
-#   "/environment.common.yml" \
-#   "/environment.repo.yml" \
-#   > "/environment.merged.yml"
-
-# RUN echo "common:\n" && cat "/environment.common.yml"
-# RUN echo "repo:\n" && cat "/environment.repo.yml"
-# RUN echo "merged:\n" && cat "/environment.merged.yml"
-
-# # RUN conda env create --file "/environment.merged.yml"
-# RUN micromamba env create --file "/environment.merged.yml" 
-
 
 RUN ${BOOTSTRAP_ABSPATH}/linux/update-apt.sh
 
@@ -98,52 +37,7 @@ RUN ${BOOTSTRAP_ABSPATH}/conda/install-micromamba.sh ${HOME_ABSPATH} ${ENVIRONME
 
 RUN ${BOOTSTRAP_ABSPATH}/linux/clean-apt.sh
 
-# RUN mamba install -n "$ENVIRONMENT_NAME" conda-libmamba-solver
-# RUN conda config --set solver libmamba
-
-# RUN useradd -m "$USERNAME"
-# RUN mkdir -p "$HOME/.vscode-server/extensions"
-# RUN mkdir -p "$HOME/.vscode-server-insiders/extensions"
-
-# RUN chown -R "${USERNAME}:${GROUP}" ${HOME_ABSPATH}/environment.*.yml
-# RUN chown -R "$USERNAME:$GROUP" ${HOME_ABSPATH}
-# RUN chown -R "$USERNAME:$GROUP" /opt/conda/envs
-
-# USER $USERNAME
-
-# # Gists
-# ADD --chown=$USERNAME:$GROUP \
-#   https://gist.githubusercontent.com/utkusarioglu/2d4be44dc7707afccd540ad99ba385e6/raw/create-env-example.sh \
-#   /scripts/create-env-example.sh
-
-# ADD --chown=$USERNAME:$GROUP \
-#   https://gist.githubusercontent.com/utkusarioglu/3523b00578807d63b05399fe57a4b2a7/raw/.bashrc \
-#   $HOME/.bashrc
-
-# ADD --chown=$USERNAME:$GROUP \
-#   https://gist.githubusercontent.com/utkusarioglu/d5c216c744460c45bf6260d0de4131b4/raw/.inputrc \
-#   $HOME/.inputrc
-# RUN chmod +x \
-#   /scripts/create-env-example.sh \
-#   $HOME/.bashrc \
-#   $HOME/.inputrc
-
-# Elam
-# RUN git clone https://github.com/utkusarioglu/elam.git $ELAM_ABSPATH
-# RUN echo "alias elam=$ELAM_ABSPATH/elam.sh" >> "${HOME}/.bash_aliases"
-
-# Micromamba Alias
-# RUN echo 'alias mm=micromamba' >> "${HOME_ABSPATH}/.bash_aliases"
-
-# ENV SHELL /bin/bash
 ENV PATH ${MAMBA_ROOT_PREFIX}/envs/${ENVIRONMENT_NAME}/bin:${PATH}
-
-# COPY "${SCRIPTS_PATH}" /scripts
-
-# Pushing into `.bashrc` for environment selection
-# RUN echo "eval \"\$(micromamba shell hook --shell=bash)\" && micromamba activate $ENVIRONMENT_NAME" >> ~/.bashrc
-
-# SHELL ["/bin/bash", "--login", "-c"]
 
 USER ${USER_ID}
 

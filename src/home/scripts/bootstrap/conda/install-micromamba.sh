@@ -9,7 +9,7 @@ ARGS=(
 )
 . ${0%/*}/../linux/parse-args.sh
 
-micromamba_abspath="${home_abspath}/${micromamba_relpath}"
+micromamba_abspath="${home_abspath}/bin/micromamba"
 
 wget -O - https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba
 
