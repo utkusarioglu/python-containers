@@ -56,31 +56,31 @@ jobs:
           #   apt_packages: "bzip2"
           #   apt_packages_silent: ""
 
-          #   # music
-          # - dockerfile: src/Dockerfile.conda.dev
-          #   container_name: conda-music-devcontainer
-          #   base_image: ubuntu-devcontainer
-          #   image_tag: ${{ inputs.image_tag }}
-          #   base_tag: ${{ inputs.base_tag }}
-          #   # username: default
-          #   # group: micromamba
-          #   environment_name: music
-          #   # scriptsPath: src/music/scripts
-          #   devcontainer_subfolder: music
-          #   # environmentConfigPath: src/music/environment.music.yml
-          #   dockerhub_readme_path: src/music/DOCKER_README.music.md
-          #   dockerhub_short_description: Devcontainer for music workloads
-          #   apt_packages: >-
-          #     pulseaudio 
-          #     lilypond
-          #     bzip2
-          #   apt_packages_silent: >-
-          #     musescore3
-          #     build-essential
-          #     pkg-config
-          #     libjack-dev
-          #     libsdl2-dev
-          #     alsa-utils
+            # music
+          - dockerfile: src/Dockerfile.conda.dev
+            container_name: conda-music-devcontainer
+            base_image: ubuntu-devcontainer
+            image_tag: ${{ inputs.image_tag }}
+            base_tag: ${{ inputs.base_tag }}
+            # username: default
+            # group: micromamba
+            environment_name: music
+            # scriptsPath: src/music/scripts
+            devcontainer_subfolder: music
+            # environmentConfigPath: src/music/environment.music.yml
+            dockerhub_readme_path: src/music/DOCKER_README.music.md
+            dockerhub_short_description: Devcontainer for music workloads
+            apt_packages: >-
+              pulseaudio 
+              lilypond
+              bzip2
+            apt_packages_silent: >-
+              musescore3
+              build-essential
+              pkg-config
+              libjack-dev
+              libsdl2-dev
+              alsa-utils
 
           #   # math
           - dockerfile: src/Dockerfile.conda.dev
@@ -96,12 +96,12 @@ jobs:
             # environmentConfigPath: src/math/environment.math.yml
             dockerhub_readme_path: src/math/DOCKER_README.math.md
             dockerhub_short_description: Devcontainer for mathematics workloads
-            apt_packages: ""
+            apt_packages: >-
+              bzip2
             # These are required for matplotlib
             apt_packages_silent: >-
               libsm6 
               libxrender1
-              bzip2
 
     steps:
       - name: Checkout code
