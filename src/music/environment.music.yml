@@ -1,4 +1,4 @@
-name: music
+# name: music
 dependencies:
   - conda-forge::music21
   - conda-forge::librosa

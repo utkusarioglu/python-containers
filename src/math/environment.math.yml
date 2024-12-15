@@ -1,4 +1,4 @@
-name: math
+# name: math
 dependencies:
   # These are in common between econ and math
   - conda-forge::pandas

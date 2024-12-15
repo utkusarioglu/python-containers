@@ -8,6 +8,7 @@ ARGS=(
   user_id
   group_id
   environment_name
+  python_version
   mamba_root_prefix
 )
 . ${0%/*}/../linux/parse-args.sh
@@ -29,7 +30,6 @@ cat /root/.bashrc >> ${bashrc_temp}
 cat ${home_abspath}/.bashrc >> ${bashrc_temp}
 mv ${bashrc_temp} ${home_abspath}/.bashrc
 
-# eval '$(micromamba shell hook -s posix)' >> ${home_abspath}/.bashrc
 echo '# Micromamba activate' >> ${home_abspath}/.bashrc
 echo "micromamba activate ${environment_name}" >> ${home_abspath}/.bashrc
 echo "alias mm=micromamba" >> "${home_abspath}/.bash_aliases"
@@ -37,12 +37,7 @@ echo "alias mm=micromamba" >> "${home_abspath}/.bash_aliases"
 cat ${home_abspath}/.bashrc
 cat ${home_abspath}/.bash_aliases
 
-# source ${home_abspath}/.bashrc
-# source ${home_abspath}/.bash_aliases
-
 micromamba --version
-# THIS NEEDS TO WORK
-# mm --version
 
 yq eval-all \
   '. as $item ireduce ({}; . *+ $item)' \
@@ -59,12 +54,14 @@ cat "${home_abspath}/environment.repo.yml"
 echo "Merged:"
 cat "${home_abspath}/environment.merged.yml"
 
-micromamba env create --file "${home_abspath}/environment.merged.yml" 
-
-# source ${home_abspath}/.bashrc
+micromamba create -n ${environment_name}
 
 eval "$(micromamba shell hook -s posix)"
 micromamba activate ${environment_name}
+
+micromamba install -n ${environment_name} python=${python_version} -c conda-forge
+
+micromamba install --file "${home_abspath}/environment.merged.yml" 
 
 which pip
 
