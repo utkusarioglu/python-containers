@@ -87,6 +87,7 @@ jobs:
             container_name: conda-math-devcontainer
             base_image: ubuntu-devcontainer
             image_tag: ${{ inputs.image_tag }}
+            base_tag: ${{ inputs.base_tag }}
             # username: default
             # group: micromamba
             environment_name: math
