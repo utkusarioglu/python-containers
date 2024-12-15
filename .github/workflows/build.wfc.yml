@@ -52,28 +52,28 @@ jobs:
             apt_packages: bzip2
             apt_packages_silent: ""
 
-          #   # music
-          # - dockerfile: src/Dockerfile.conda.dev
-          #   python_version: "3.13"
-          #   container_name: conda-music-devcontainer
-          #   base_image: ubuntu-devcontainer
-          #   image_tag: ${{ inputs.image_tag }}
-          #   base_tag: ${{ inputs.base_tag }}
-          #   environment_name: music
-          #   devcontainer_subfolder: music
-          #   dockerhub_readme_path: src/music/DOCKER_README.music.md
-          #   dockerhub_short_description: Devcontainer for music workloads
-          #   apt_packages: >-
-          #     pulseaudio 
-          #     lilypond
-          #     bzip2
-          #   apt_packages_silent: >-
-          #     musescore3
-          #     build-essential
-          #     pkg-config
-          #     libjack-dev
-          #     libsdl2-dev
-          #     alsa-utils
+            # music
+          - dockerfile: src/Dockerfile.conda.dev
+            python_version: "3.13"
+            container_name: conda-music-devcontainer
+            base_image: ubuntu-devcontainer
+            image_tag: ${{ inputs.image_tag }}
+            base_tag: ${{ inputs.base_tag }}
+            environment_name: music
+            devcontainer_subfolder: music
+            dockerhub_readme_path: src/music/DOCKER_README.music.md
+            dockerhub_short_description: Devcontainer for music workloads
+            apt_packages: >-
+              pulseaudio 
+              lilypond
+              bzip2
+            apt_packages_silent: >-
+              musescore3
+              build-essential
+              pkg-config
+              libjack-dev
+              libsdl2-dev
+              alsa-utils
 
           #   # math
           - dockerfile: src/Dockerfile.conda.dev
