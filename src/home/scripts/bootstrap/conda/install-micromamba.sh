@@ -23,11 +23,12 @@ mv bin/micromamba /usr/bin/micromamba
 
 # eval "$(/usr/bin/micromamba shell hook -s posix --rc-file ${home_abspath}/.bashrc)"
 
-micromamba shell init \
-  -s bash \
-  -r ${MAMBA_ROOT_PREFIX} \
-  --rc-file ${home_abspath}/.bashrc
+# micromamba shell init \
+#   -s bash \
+#   -r ${MAMBA_ROOT_PREFIX} \
+#   --rc-file ${home_abspath}/.bashrc
 
+eval "$(/usr/bin/micromamba shell hook -s bash)" >> ${home_abspath}/.bashrc
 echo "micromamba activate ${environment_name}" >> ${home_abspath}/.bashrc
 echo "alias mm=micromamba" >> "${home_abspath}/.bash_aliases"
 
@@ -58,9 +59,9 @@ cat "${home_abspath}/environment.merged.yml"
 
 micromamba env create --file "${home_abspath}/environment.merged.yml" 
 
-# source ${home_abspath}/.bashrc
+source ${home_abspath}/.bashrc
 
-micromamba activate ${environment_name}
+# micromamba activate ${environment_name}
 
 which pip
 
