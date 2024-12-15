@@ -21,12 +21,13 @@ wget -O - https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/m
 
 mv bin/micromamba /usr/bin/micromamba
 
-# eval "$(/usr/bin/micromamba shell hook -s posix --rc-file ${home_abspath}/.bashrc)"
-
 micromamba shell init -s bash
 
-echo '# Micromamba shell eval' >> ${home_abspath}/.bashrc
-cat /root/.bashrc >> ${home_abspath}/.bashrc
+bashrc_temp=${home_abspath}/.bashrc-temp
+echo '# Micromamba shell eval' >> /root/.bashrc
+cat /root/.bashrc >> ${bashrc_temp}
+cat ${home_abspath}/.bashrc >> ${bashrc_temp}
+mv ${bashrc_temp} ${home_abspath}/.bashrc
 
 # eval '$(micromamba shell hook -s posix)' >> ${home_abspath}/.bashrc
 echo '# Micromamba activate' >> ${home_abspath}/.bashrc

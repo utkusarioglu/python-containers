@@ -24,19 +24,19 @@ jobs:
       fail-fast: false
       matrix:
         images:
-          #   # Vanilla python
-          # - dockerfile: src/Dockerfile.python.dev
-          #   container_name: python-devcontainer
-          #   base_image: ubuntu-devcontainer
-          #   image_tag: ${{ inputs.image_tag }}
-          #   base_tag: ${{ inputs.base_tag }}
-          #   python_version: "3.13"
-          #   environment_name: python
-          #   devcontainer_subfolder: python
-          #   dockerhub_readme_path: src/python/DOCKER_README.python.md
-          #   dockerhub_short_description: Devcontainer for python workloads
-          #   apt_packages: ""
-          #   apt_packages_silent: ncurses-bin
+            # Vanilla python
+          - dockerfile: src/Dockerfile.python.dev
+            container_name: python-devcontainer
+            base_image: ubuntu-devcontainer
+            image_tag: ${{ inputs.image_tag }}
+            base_tag: ${{ inputs.base_tag }}
+            python_version: "3.13"
+            environment_name: python
+            devcontainer_subfolder: python
+            dockerhub_readme_path: src/python/DOCKER_README.python.md
+            dockerhub_short_description: Devcontainer for python workloads
+            apt_packages: ""
+            apt_packages_silent: ncurses-bin
 
           #   # econ
           - dockerfile: src/Dockerfile.conda.dev
@@ -51,52 +51,43 @@ jobs:
             apt_packages: bzip2
             apt_packages_silent: ""
 
-          #   # music
-          # - dockerfile: src/Dockerfile.conda.dev
-          #   container_name: conda-music-devcontainer
-          #   base_image: ubuntu-devcontainer
-          #   image_tag: ${{ inputs.image_tag }}
-          #   base_tag: ${{ inputs.base_tag }}
-          #   # username: default
-          #   # group: micromamba
-          #   environment_name: music
-          #   # scriptsPath: src/music/scripts
-          #   devcontainer_subfolder: music
-          #   # environmentConfigPath: src/music/environment.music.yml
-          #   dockerhub_readme_path: src/music/DOCKER_README.music.md
-          #   dockerhub_short_description: Devcontainer for music workloads
-          #   apt_packages: >-
-          #     pulseaudio 
-          #     lilypond
-          #     bzip2
-          #   apt_packages_silent: >-
-          #     musescore3
-          #     build-essential
-          #     pkg-config
-          #     libjack-dev
-          #     libsdl2-dev
-          #     alsa-utils
+            # music
+          - dockerfile: src/Dockerfile.conda.dev
+            container_name: conda-music-devcontainer
+            base_image: ubuntu-devcontainer
+            image_tag: ${{ inputs.image_tag }}
+            base_tag: ${{ inputs.base_tag }}
+            environment_name: music
+            devcontainer_subfolder: music
+            dockerhub_readme_path: src/music/DOCKER_README.music.md
+            dockerhub_short_description: Devcontainer for music workloads
+            apt_packages: >-
+              pulseaudio 
+              lilypond
+              bzip2
+            apt_packages_silent: >-
+              musescore3
+              build-essential
+              pkg-config
+              libjack-dev
+              libsdl2-dev
+              alsa-utils
 
-          # #   # math
-          # - dockerfile: src/Dockerfile.conda.dev
-          #   container_name: conda-math-devcontainer
-          #   base_image: ubuntu-devcontainer
-          #   image_tag: ${{ inputs.image_tag }}
-          #   base_tag: ${{ inputs.base_tag }}
-          #   # username: default
-          #   # group: micromamba
-          #   environment_name: math
-          #   # scriptsPath: src/math/scripts
-          #   devcontainer_subfolder: math
-          #   # environmentConfigPath: src/math/environment.math.yml
-          #   dockerhub_readme_path: src/math/DOCKER_README.math.md
-          #   dockerhub_short_description: Devcontainer for mathematics workloads
-          #   apt_packages: >-
-          #     bzip2
-          #   # These are required for matplotlib
-          #   apt_packages_silent: >-
-          #     libsm6 
-          #     libxrender1
+          #   # math
+          - dockerfile: src/Dockerfile.conda.dev
+            container_name: conda-math-devcontainer
+            base_image: ubuntu-devcontainer
+            image_tag: ${{ inputs.image_tag }}
+            base_tag: ${{ inputs.base_tag }}
+            environment_name: math
+            devcontainer_subfolder: math
+            dockerhub_readme_path: src/math/DOCKER_README.math.md
+            dockerhub_short_description: Devcontainer for mathematics workloads
+            apt_packages: >-
+              bzip2
+            apt_packages_silent: >-
+              libsm6 
+              libxrender1
 
     steps:
       - name: Checkout code
