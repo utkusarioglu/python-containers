@@ -6,7 +6,7 @@ dependencies:
   - anaconda::flake8
   - anaconda::pip
 
-  # - conda-forge::python
+  - conda-forge::python
   - conda-forge::notebook
   # - conda-forge::pip
   - conda-forge::black

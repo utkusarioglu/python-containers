@@ -54,7 +54,7 @@ jobs:
 
             # music
           - dockerfile: src/Dockerfile.conda.dev
-            python_version: "3.13"
+            # python_version: "3.13"
             container_name: conda-music-devcontainer
             base_image: ubuntu-devcontainer
             image_tag: ${{ inputs.image_tag }}

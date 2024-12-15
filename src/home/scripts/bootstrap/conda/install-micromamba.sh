@@ -59,7 +59,10 @@ micromamba create -n ${environment_name}
 eval "$(micromamba shell hook -s posix)"
 micromamba activate ${environment_name}
 
-micromamba install -n ${environment_name} python=${python_version} -c conda-forge
+micromamba install \
+  -n ${environment_name} \
+  -c conda-forge \
+  python=${python_version}
 
 micromamba install --file "${home_abspath}/environment.merged.yml" 
 
