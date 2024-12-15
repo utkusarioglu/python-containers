@@ -23,14 +23,13 @@ mv bin/micromamba /usr/bin/micromamba
 
 # eval "$(/usr/bin/micromamba shell hook -s posix --rc-file ${home_abspath}/.bashrc)"
 
-# micromamba shell init \
-#   -s bash \
-#   -r ${MAMBA_ROOT_PREFIX} \
-#   --rc-file ${home_abspath}/.bashrc
+micromamba shell init -s bash
 
-echo 'Micromamba shell eval' >> ${home_abspath}/.bashrc
-eval "\$(micromamba shell hook -s posix)" >> ${home_abspath}/.bashrc
-echo 'Micromamba activate' >> ${home_abspath}/.bashrc
+echo '# Micromamba shell eval' >> ${home_abspath}/.bashrc
+cat /root/.bashrc >> ${home_abspath}/.bashrc
+
+# eval '$(micromamba shell hook -s posix)' >> ${home_abspath}/.bashrc
+echo '# Micromamba activate' >> ${home_abspath}/.bashrc
 echo "micromamba activate ${environment_name}" >> ${home_abspath}/.bashrc
 echo "alias mm=micromamba" >> "${home_abspath}/.bash_aliases"
 
