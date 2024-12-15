@@ -5,12 +5,17 @@ bash --version
 
 ARGS=(
   home_abspath
+  user_id
+  group_id
   environment_name
   mamba_root_prefix
 )
 . ${0%/*}/../linux/parse-args.sh
 
 export MAMBA_ROOT_PREFIX=$mamba_root_prefix
+
+mkdir -p ${MAMBA_ROOT_PREFIX}
+chown -R ${user_id}:${group_id} ${MAMBA_ROOT_PREFIX}
 
 wget -O - https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba
 
@@ -20,7 +25,7 @@ mv bin/micromamba /usr/bin/micromamba
 
 micromamba shell init \
   -s bash \
-  -r /usr/bin/micromamba \
+  -r ${MAMBA_ROOT_PREFIX} \
   --rc-file ${home_abspath}/.bashrc
 
 echo "micromamba activate ${environment_name}" >> ${home_abspath}/.bashrc
@@ -53,7 +58,7 @@ cat "${home_abspath}/environment.merged.yml"
 
 micromamba env create --file "${home_abspath}/environment.merged.yml" 
 
-source ${home_abspath}/.bashrc
+# source ${home_abspath}/.bashrc
 
 micromamba activate ${environment_name}
 
