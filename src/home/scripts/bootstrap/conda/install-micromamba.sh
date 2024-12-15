@@ -53,7 +53,7 @@ cat "${home_abspath}/environment.merged.yml"
 
 micromamba env create --file "${home_abspath}/environment.merged.yml" 
 
-source ${home_abspath}./bashrc
+source ${home_abspath}/.bashrc
 
 micromamba activate ${environment_name}
 
