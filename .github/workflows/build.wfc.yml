@@ -98,7 +98,10 @@ jobs:
             dockerhub_short_description: Devcontainer for mathematics workloads
             apt_packages: ""
             # These are required for matplotlib
-            apt_packages_silent: "libsm6 libxrender1"
+            apt_packages_silent: >-
+              libsm6 
+              libxrender1
+              bzip2
 
     steps:
       - name: Checkout code
