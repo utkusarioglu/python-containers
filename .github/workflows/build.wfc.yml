@@ -68,11 +68,11 @@ jobs:
               lilypond
               bzip2
             # Last 3 are chatgpt suggestions for fixing jupter output
+              # libjack-dev
             apt_packages_silent: >-
               musescore3
               build-essential
               pkg-config
-              libjack-dev
               libsdl2-dev
               alsa-utils
               libpulse0
