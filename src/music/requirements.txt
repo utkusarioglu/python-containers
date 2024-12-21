@@ -4,4 +4,4 @@ python-rtmidi
 flask
 flask_socketio
 
-libasound2-plugins
+# libasound2-plugins
