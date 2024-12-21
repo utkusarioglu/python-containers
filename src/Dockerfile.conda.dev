@@ -28,7 +28,7 @@ RUN ls -alR ${HOME_ABSPATH}
 COPY home/ .
 COPY environment.common.yml environment.common.yml
 COPY ${ENVIRONMENT_REPO_RELPATH} environment.repo.yml
-COPY ${ENVIRONMENT_REPO_RELPATH}/home .
+COPY ${ENVIRONMENT_NAME}/home .
 COPY ${ENVIRONMENT_NAME}/requirements.txt requirements.txt
 
 RUN ls -alR ${HOME_ABSPATH}
