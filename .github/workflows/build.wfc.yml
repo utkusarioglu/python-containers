@@ -80,6 +80,7 @@ jobs:
               libasound2-plugins
               libjack-jackd2-0
               jackd2
+              fluid-soundfont-gm
 
           # #   # math
           # - dockerfile: src/Dockerfile.conda.dev

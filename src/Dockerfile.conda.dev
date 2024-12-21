@@ -61,6 +61,8 @@ RUN ${BOOTSTRAP_ABSPATH}/linux/set-permissions.sh \
   ${GROUP_ID} \
   ${MAMBA_ROOT_PREFIX}
 
+RUN ${BOOTSTRAP_ABSPATH}/${ENVIRONMENT_NAME}/do-image-specific.sh
+
 RUN ${BOOTSTRAP_ABSPATH}/${ENVIRONMENT_NAME}/check-devcontainer.sh
 
 USER ${USER_ID}
