@@ -67,6 +67,7 @@ jobs:
               pulseaudio 
               lilypond
               bzip2
+            # Last 3 are chatgpt suggestions for fixing jupter output
             apt_packages_silent: >-
               musescore3
               build-essential
@@ -74,6 +75,10 @@ jobs:
               libjack-dev
               libsdl2-dev
               alsa-utils
+              libpulse0
+              pulseaudio-utils
+              libasound2-plugins
+              jackd2
 
           #   # math
           - dockerfile: src/Dockerfile.conda.dev
