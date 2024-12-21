@@ -56,10 +56,10 @@ RUN ${BOOTSTRAP_ABSPATH}/linux/set-permissions.sh \
   ${GROUP_ID} \
   ${HOME_ABSPATH}
 
-# RUN ${BOOTSTRAP_ABSPATH}/linux/set-permissions.sh \
-#   ${USER_ID} \
-#   ${GROUP_ID} \
-#   ${MAMBA_ROOT_PREFIX}
+RUN ${BOOTSTRAP_ABSPATH}/linux/set-permissions.sh \
+  ${USER_ID} \
+  ${GROUP_ID} \
+  ${MAMBA_ROOT_PREFIX}
 
 RUN ${BOOTSTRAP_ABSPATH}/${ENVIRONMENT_NAME}/do-image-specific.sh \
   ${ENVIRONMENT_NAME}
