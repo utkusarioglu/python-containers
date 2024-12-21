@@ -3,5 +3,3 @@ pytest
 black
 flake8
 python-dotenv
-
-libasound2-plugins

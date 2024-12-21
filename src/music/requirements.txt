@@ -3,3 +3,5 @@ scamp_extensions
 python-rtmidi
 flask
 flask_socketio
+
+libasound2-plugins
