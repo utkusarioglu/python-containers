@@ -62,13 +62,14 @@ micromamba activate ${environment_name}
 micromamba install \
   -n ${environment_name} \
   -c conda-forge \
-  python=${python_version}
+  python=${python_version} \
+  -y 
 
-micromamba install --file "${home_abspath}/environment.merged.yml" 
+micromamba install --file "${home_abspath}/environment.merged.yml" -y
 
 which pip
 
-pip install -r ${home_abspath}/requirements.txt
+pip install -r ${home_abspath}/requirements.txt --quiet
 
 pip list -v
 
