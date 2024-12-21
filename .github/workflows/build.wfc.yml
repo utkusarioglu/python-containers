@@ -24,33 +24,33 @@ jobs:
       fail-fast: false
       matrix:
         images:
-            # Vanilla python
-          - dockerfile: src/Dockerfile.python.dev
-            container_name: python-devcontainer
-            base_image: ubuntu-devcontainer
-            image_tag: ${{ inputs.image_tag }}
-            base_tag: ${{ inputs.base_tag }}
-            python_version: "3.13"
-            environment_name: python
-            devcontainer_subfolder: python
-            dockerhub_readme_path: src/python/DOCKER_README.python.md
-            dockerhub_short_description: Devcontainer for python workloads
-            apt_packages: ""
-            apt_packages_silent: ncurses-bin
+          #   # Vanilla python
+          # - dockerfile: src/Dockerfile.python.dev
+          #   container_name: python-devcontainer
+          #   base_image: ubuntu-devcontainer
+          #   image_tag: ${{ inputs.image_tag }}
+          #   base_tag: ${{ inputs.base_tag }}
+          #   python_version: "3.13"
+          #   environment_name: python
+          #   devcontainer_subfolder: python
+          #   dockerhub_readme_path: src/python/DOCKER_README.python.md
+          #   dockerhub_short_description: Devcontainer for python workloads
+          #   apt_packages: ""
+          #   apt_packages_silent: ncurses-bin
 
-          #   # econ
-          - dockerfile: src/Dockerfile.conda.dev
-            python_version: "3.13"
-            container_name: conda-econ-devcontainer
-            base_image: ubuntu-devcontainer
-            image_tag: ${{ inputs.image_tag }}
-            base_tag: ${{ inputs.base_tag }}
-            environment_name: econ
-            devcontainer_subfolder: econ
-            dockerhub_readme_path: src/econ/DOCKER_README.econ.md
-            dockerhub_short_description: Devcontainer for economics workloads
-            apt_packages: bzip2
-            apt_packages_silent: ""
+          # #   # econ
+          # - dockerfile: src/Dockerfile.conda.dev
+          #   python_version: "3.13"
+          #   container_name: conda-econ-devcontainer
+          #   base_image: ubuntu-devcontainer
+          #   image_tag: ${{ inputs.image_tag }}
+          #   base_tag: ${{ inputs.base_tag }}
+          #   environment_name: econ
+          #   devcontainer_subfolder: econ
+          #   dockerhub_readme_path: src/econ/DOCKER_README.econ.md
+          #   dockerhub_short_description: Devcontainer for economics workloads
+          #   apt_packages: bzip2
+          #   apt_packages_silent: ""
 
             # music
           - dockerfile: src/Dockerfile.conda.dev
@@ -78,24 +78,25 @@ jobs:
               libpulse0
               pulseaudio-utils
               libasound2-plugins
+              libjack-jackd2-0
               jackd2
 
-          #   # math
-          - dockerfile: src/Dockerfile.conda.dev
-            python_version: "3.13"
-            container_name: conda-math-devcontainer
-            base_image: ubuntu-devcontainer
-            image_tag: ${{ inputs.image_tag }}
-            base_tag: ${{ inputs.base_tag }}
-            environment_name: math
-            devcontainer_subfolder: math
-            dockerhub_readme_path: src/math/DOCKER_README.math.md
-            dockerhub_short_description: Devcontainer for mathematics workloads
-            apt_packages: >-
-              bzip2
-            apt_packages_silent: >-
-              libsm6 
-              libxrender1
+          # #   # math
+          # - dockerfile: src/Dockerfile.conda.dev
+          #   python_version: "3.13"
+          #   container_name: conda-math-devcontainer
+          #   base_image: ubuntu-devcontainer
+          #   image_tag: ${{ inputs.image_tag }}
+          #   base_tag: ${{ inputs.base_tag }}
+          #   environment_name: math
+          #   devcontainer_subfolder: math
+          #   dockerhub_readme_path: src/math/DOCKER_README.math.md
+          #   dockerhub_short_description: Devcontainer for mathematics workloads
+          #   apt_packages: >-
+          #     bzip2
+          #   apt_packages_silent: >-
+          #     libsm6 
+          #     libxrender1
 
     steps:
       - name: Checkout code
