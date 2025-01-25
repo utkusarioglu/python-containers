@@ -1,5 +1,8 @@
 #!/bin/bash
 
+set -euxo pipefail
+bash --version
+
 required_packages="gh python nvim git"
 
 for exec in $required_packages;

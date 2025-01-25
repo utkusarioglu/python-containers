@@ -1,14 +1,14 @@
 #!/bin/bash
 
-set -eux
+set -euxo pipefail
+bash --version
 
 ARGS=(
   home_abspath
   python_version
   venv_path
 )
-
-. ${0%/*}/../linux/parse-args.sh
+. /home/dev/scripts/utils/parse-args.sh
 
 add-apt-repository ppa:deadsnakes/ppa
 apt-get update

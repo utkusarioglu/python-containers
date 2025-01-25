@@ -1,11 +1,12 @@
 #!/bin/bash
 
-set -eux
+set -euxo pipefail
+bash --version
 
 ARGS=(
   home_abspath
   venv_path
 )
-. ${0%/*}/../linux/parse-args.sh
+. /home/dev/scripts/utils/parse-args.sh
 
 source ${venv_path}/bin/activate

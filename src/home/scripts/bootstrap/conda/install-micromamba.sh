@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -eux
+set -euxo pipefail
 bash --version
 
 ARGS=(
@@ -11,7 +11,7 @@ ARGS=(
   python_version
   mamba_root_prefix
 )
-. ${0%/*}/../linux/parse-args.sh
+. /home/dev/scripts/utils/parse-args.sh
 
 export MAMBA_ROOT_PREFIX=$mamba_root_prefix
 
