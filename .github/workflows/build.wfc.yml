@@ -67,7 +67,7 @@ jobs:
               pulseaudio 
               lilypond
               bzip2
-              supercollider-language
+              supercollider
             # Last 3 are chatgpt suggestions for fixing jupter output
               # libjack-dev
             apt_packages_silent: >-
