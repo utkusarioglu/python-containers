@@ -67,7 +67,6 @@ jobs:
               pulseaudio 
               lilypond
               bzip2
-              supercollider
             # Last 3 are chatgpt suggestions for fixing jupter output
               # libjack-dev
             apt_packages_silent: >-
@@ -82,6 +81,7 @@ jobs:
               libjack-jackd2-0
               jackd2
               fluid-soundfont-gm
+              supercollider-language
 
           #   # math
           - dockerfile: src/Dockerfile.conda.dev
