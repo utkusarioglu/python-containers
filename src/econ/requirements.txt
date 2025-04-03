@@ -18,7 +18,8 @@ yfinance
 python-binance
 ccxt
 alpaca-trade-api
-ray
+# THIS FAILED
+#ray
 ta
 pandas_ta
 # python-telegram-bot
