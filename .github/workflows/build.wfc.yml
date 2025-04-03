@@ -50,7 +50,8 @@ jobs:
             dockerhub_readme_path: src/econ/DOCKER_README.econ.md
             dockerhub_short_description: Devcontainer for economics workloads
             apt_packages: bzip2
-            apt_packages_silent: ""
+            apt_packages_silent: >-
+              build-essential
 
           #   # music
           # - dockerfile: src/Dockerfile.conda.dev
