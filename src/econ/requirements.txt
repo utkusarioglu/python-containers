@@ -18,8 +18,6 @@ yfinance
 python-binance
 ccxt
 alpaca-trade-api
-# THIS FAILED
-#ray
 ta
 pandas_ta
 # python-telegram-bot
@@ -30,3 +28,6 @@ vectorbt
 networkx[default]
 
 xlrd
+
+# THIS FAILED
+ray
