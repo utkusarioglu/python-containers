@@ -12,7 +12,10 @@ jobs:
     uses: ./.github/workflows/build.wfc.yml
     with:
       image_tag: 3.13-ubuntu-test-26
-      base_tag: 2404-test-16
+
+      # https://hub.docker.com/repository/docker/utkusarioglu/ubuntu-devcontainer/tags
+      # base_tag: 2404-test-16
+      base_tag: 2510-test-18
     secrets:
       dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
       dockerhub_token: ${{ secrets.DOCKERHUB_TOKEN }}
