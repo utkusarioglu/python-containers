@@ -3,6 +3,7 @@ tradingview-ta
 backtesting
 pandas-datareader
 
+xmltodict
 
 # Normally ships with vectorbt deps
 # tables 3.8.0 requires blosc2~=2.0.0, which is not installed.
@@ -29,5 +30,6 @@ networkx[default]
 
 xlrd
 
-# THIS FAILED
-ray
+# THIS PACKAGE ISN'T READY FOR PY 3.13
+# https://github.com/ray-project/ray/pull/47984
+# ray

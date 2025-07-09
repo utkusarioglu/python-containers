@@ -4,3 +4,5 @@ python-rtmidi
 flask
 flask_socketio
 pynput
+xmltodict
+quart

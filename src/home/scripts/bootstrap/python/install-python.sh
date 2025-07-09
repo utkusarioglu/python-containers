@@ -15,7 +15,7 @@ apt-get update
 
 apt-get install -y python${python_version}
 
-ln -sf $(which python3.13) /usr/bin/python
+ln -sf $(which python${python_version}) /usr/bin/python
 
 python --version
 
