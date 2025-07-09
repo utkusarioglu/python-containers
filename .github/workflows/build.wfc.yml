@@ -126,5 +126,6 @@ jobs:
           devcontainer_enabled: "false"
           devcontainer_subfolder: src/${{ matrix.images.devcontainer_subfolder }}
           devcontainer_run_cmd_path: /home/dev/scripts/bootstrap/python/check-devcontainer.sh
+          dockerhub_repo_description_update: false
           dockerhub_repo_short_description: ${{ matrix.images.dockerhub_short_description }}
           dockerhub_repo_readme_file_path: ${{ matrix.images.dockerhub_readme_path }}
