@@ -16,7 +16,7 @@ jobs:
       # https://hub.docker.com/repository/docker/utkusarioglu/ubuntu-devcontainer/tags
       # base_tag: 2404-test-16
       # base_tag: 2510-test-18
-      base_tag: 2504-test-20
+      base_tag: 2404-test-21
     secrets:
       dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
       dockerhub_token: ${{ secrets.DOCKERHUB_TOKEN }}
