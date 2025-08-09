@@ -2,7 +2,8 @@ talipp
 tradingview-ta
 backtesting
 wbdata
-imfpy
+# this one could be super old
+# imfpy
 
 xmltodict
 
@@ -12,7 +13,7 @@ xmltodict
 tables 
 
 # Resolves issue between jupyter and python-telegram-bot
-tornado>=6.2
+# tornado>=6.2
 
 TA-Lib
 
