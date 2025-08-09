@@ -1,7 +1,8 @@
 talipp
 tradingview-ta
 backtesting
-pandas-datareader
+wbdata
+imfpy
 
 xmltodict
 

@@ -71,6 +71,10 @@ which pip
 
 pip install -r ${home_abspath}/requirements.txt --quiet
 
+# This should fix the issue with mm not being able to install anything
+# unless as root user
+chown -R ${user_id}:${group_id} ${MAMBA_ROOT_PREFIX}
+
 pip list -v
 
 micromamba list

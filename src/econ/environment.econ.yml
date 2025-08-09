@@ -1,7 +1,6 @@
 # name: econ
 dependencies:
   # These are in common between econ and math
-  - conda-forge::pandas
   - conda-forge::xlsxwriter
   - conda-forge::sympy
   - conda-forge::scipy

@@ -17,6 +17,7 @@ dependencies:
   - conda-forge::pytest
   - conda-forge::watchdog
   - conda-forge::more-itertools
+  - conda-forge::pandas
 
   # - anaconda::numpy=1.26.0
   # - anaconda::flake8=6.0.0
