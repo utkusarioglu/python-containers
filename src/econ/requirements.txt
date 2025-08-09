@@ -21,7 +21,7 @@ python-binance
 ccxt
 alpaca-trade-api
 ta
-pandas_ta
+# pandas_ta
 # python-telegram-bot
 quantstats
 
