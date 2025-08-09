@@ -20,8 +20,11 @@ yfinance
 python-binance
 ccxt
 alpaca-trade-api
-ta
+
+# This one is veeery old
+# ta
 # pandas_ta
+
 # python-telegram-bot
 quantstats
 
