@@ -7,6 +7,9 @@ wbdata
 
 xmltodict
 
+# wbdata requires this
+urllib3<2
+
 # Normally ships with vectorbt deps
 # tables 3.8.0 requires blosc2~=2.0.0, which is not installed.
 # tables 3.8.0 requires cython>=0.29.21, which is not installed.

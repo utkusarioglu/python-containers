@@ -39,67 +39,67 @@ jobs:
           #   apt_packages_silent: ncurses-bin
 
           #   # econ
+          - dockerfile: src/Dockerfile.conda.dev
+            python_version: "3.13"
+            container_name: conda-econ-devcontainer
+            base_image: ubuntu-devcontainer
+            image_tag: ${{ inputs.image_tag }}
+            base_tag: ${{ inputs.base_tag }}
+            environment_name: econ
+            devcontainer_subfolder: econ
+            dockerhub_readme_path: src/econ/DOCKER_README.econ.md
+            dockerhub_short_description: Devcontainer for economics workloads
+            apt_packages: bzip2
+            apt_packages_silent: >-
+              build-essential
+
+            # music
           # - dockerfile: src/Dockerfile.conda.dev
           #   python_version: "3.13"
-          #   container_name: conda-econ-devcontainer
+          #   container_name: conda-music-devcontainer
           #   base_image: ubuntu-devcontainer
           #   image_tag: ${{ inputs.image_tag }}
           #   base_tag: ${{ inputs.base_tag }}
-          #   environment_name: econ
-          #   devcontainer_subfolder: econ
-          #   dockerhub_readme_path: src/econ/DOCKER_README.econ.md
-          #   dockerhub_short_description: Devcontainer for economics workloads
-          #   apt_packages: bzip2
+          #   environment_name: music
+          #   devcontainer_subfolder: music
+          #   dockerhub_readme_path: src/music/DOCKER_README.music.md
+          #   dockerhub_short_description: Devcontainer for music workloads
+          #   apt_packages: >-
+          #     pulseaudio 
+          #     lilypond
+          #     bzip2
+          #   # Last 3 are chatgpt suggestions for fixing jupter output
+          #     # libjack-dev
           #   apt_packages_silent: >-
+          #     musescore3
           #     build-essential
-
-            # music
-          - dockerfile: src/Dockerfile.conda.dev
-            python_version: "3.13"
-            container_name: conda-music-devcontainer
-            base_image: ubuntu-devcontainer
-            image_tag: ${{ inputs.image_tag }}
-            base_tag: ${{ inputs.base_tag }}
-            environment_name: music
-            devcontainer_subfolder: music
-            dockerhub_readme_path: src/music/DOCKER_README.music.md
-            dockerhub_short_description: Devcontainer for music workloads
-            apt_packages: >-
-              pulseaudio 
-              lilypond
-              bzip2
-            # Last 3 are chatgpt suggestions for fixing jupter output
-              # libjack-dev
-            apt_packages_silent: >-
-              musescore3
-              build-essential
-              pkg-config
-              libsdl2-dev
-              alsa-utils
-              libpulse0
-              pulseaudio-utils
-              libasound2-plugins
-              libjack-jackd2-0
-              jackd2
-              fluid-soundfont-gm
-              supercollider-language
+          #     pkg-config
+          #     libsdl2-dev
+          #     alsa-utils
+          #     libpulse0
+          #     pulseaudio-utils
+          #     libasound2-plugins
+          #     libjack-jackd2-0
+          #     jackd2
+          #     fluid-soundfont-gm
+          #     supercollider-language
 
           #   # math
-          - dockerfile: src/Dockerfile.conda.dev
-            python_version: "3.13"
-            container_name: conda-math-devcontainer
-            base_image: ubuntu-devcontainer
-            image_tag: ${{ inputs.image_tag }}
-            base_tag: ${{ inputs.base_tag }}
-            environment_name: math
-            devcontainer_subfolder: math
-            dockerhub_readme_path: src/math/DOCKER_README.math.md
-            dockerhub_short_description: Devcontainer for mathematics workloads
-            apt_packages: >-
-              bzip2
-            apt_packages_silent: >-
-              libsm6 
-              libxrender1
+          # - dockerfile: src/Dockerfile.conda.dev
+          #   python_version: "3.13"
+          #   container_name: conda-math-devcontainer
+          #   base_image: ubuntu-devcontainer
+          #   image_tag: ${{ inputs.image_tag }}
+          #   base_tag: ${{ inputs.base_tag }}
+          #   environment_name: math
+          #   devcontainer_subfolder: math
+          #   dockerhub_readme_path: src/math/DOCKER_README.math.md
+          #   dockerhub_short_description: Devcontainer for mathematics workloads
+          #   apt_packages: >-
+          #     bzip2
+          #   apt_packages_silent: >-
+          #     libsm6 
+          #     libxrender1
 
     steps:
       - name: Checkout code
