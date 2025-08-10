@@ -11,7 +11,7 @@ jobs:
   push:
     uses: ./.github/workflows/build.wfc.yml
     with:
-      image_tag: 3.13-ubuntu-test-31
+      image_tag: 3.13-ubuntu-test-32
 
       # https://hub.docker.com/repository/docker/utkusarioglu/ubuntu-devcontainer/tags
       # base_tag: 2404-test-16
