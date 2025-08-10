@@ -69,7 +69,8 @@ micromamba install --file "${home_abspath}/environment.merged.yml" -y
 
 which pip
 
-pip install -r ${home_abspath}/requirements.txt --quiet
+# Force reinstall is added for urllib3<2, which is required by wbdata
+pip install -r ${home_abspath}/requirements.txt --quiet --force-reinstall
 
 # This should fix the issue with mm not being able to install anything
 # unless as root user
