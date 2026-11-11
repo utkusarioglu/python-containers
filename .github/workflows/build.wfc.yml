@@ -39,50 +39,50 @@ jobs:
           #   apt_packages_silent: ncurses-bin
 
           #   # econ
-          - dockerfile: src/Dockerfile.conda.dev
-            python_version: "3.13"
-            container_name: conda-econ-devcontainer
-            base_image: ubuntu-devcontainer
-            image_tag: ${{ inputs.image_tag }}
-            base_tag: ${{ inputs.base_tag }}
-            environment_name: econ
-            devcontainer_subfolder: econ
-            dockerhub_readme_path: src/econ/DOCKER_README.econ.md
-            dockerhub_short_description: Devcontainer for economics workloads
-            apt_packages: bzip2
-            apt_packages_silent: >-
-              build-essential
-
-            # music
           # - dockerfile: src/Dockerfile.conda.dev
           #   python_version: "3.13"
-          #   container_name: conda-music-devcontainer
+          #   container_name: conda-econ-devcontainer
           #   base_image: ubuntu-devcontainer
           #   image_tag: ${{ inputs.image_tag }}
           #   base_tag: ${{ inputs.base_tag }}
-          #   environment_name: music
-          #   devcontainer_subfolder: music
-          #   dockerhub_readme_path: src/music/DOCKER_README.music.md
-          #   dockerhub_short_description: Devcontainer for music workloads
-          #   apt_packages: >-
-          #     pulseaudio 
-          #     lilypond
-          #     bzip2
-          #   # Last 3 are chatgpt suggestions for fixing jupter output
-          #     # libjack-dev
+          #   environment_name: econ
+          #   devcontainer_subfolder: econ
+          #   dockerhub_readme_path: src/econ/DOCKER_README.econ.md
+          #   dockerhub_short_description: Devcontainer for economics workloads
+          #   apt_packages: bzip2
           #   apt_packages_silent: >-
-          #     musescore3
           #     build-essential
-          #     pkg-config
-          #     libsdl2-dev
-          #     alsa-utils
-          #     libpulse0
-          #     pulseaudio-utils
-          #     libasound2-plugins
-          #     libjack-jackd2-0
-          #     jackd2
-          #     fluid-soundfont-gm
-          #     supercollider-language
+
+            # music
+          - dockerfile: src/Dockerfile.conda.dev
+            python_version: "3.13"
+            container_name: conda-music-devcontainer
+            base_image: ubuntu-devcontainer
+            image_tag: ${{ inputs.image_tag }}
+            base_tag: ${{ inputs.base_tag }}
+            environment_name: music
+            devcontainer_subfolder: music
+            dockerhub_readme_path: src/music/DOCKER_README.music.md
+            dockerhub_short_description: Devcontainer for music workloads
+            apt_packages: >-
+              pulseaudio 
+              lilypond
+              bzip2
+            # Last 3 are chatgpt suggestions for fixing jupter output
+              # libjack-dev
+              # alsa-utils
+              # libpulse0
+              # musescore3
+              # pulseaudio-utils
+              # libjack-jackd2-0
+              # jackd2
+              # fluid-soundfont-gm
+              # libasound2-plugins
+              # pkg-config
+            apt_packages_silent: >-
+              build-essential
+              libsdl2-dev
+              supercollider-language
 
           #   # math
           # - dockerfile: src/Dockerfile.conda.dev
