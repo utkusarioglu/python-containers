@@ -15,3 +15,6 @@ ARGS=(
 # mkdir -p /opt/conda/envs/${environment_name}/share/soundfonts
 # ln -s /usr/share/sounds/sf2/FluidR3_GM.sf2 \
 #   /opt/conda/envs/${environment_name}/share/soundfonts/default.sf2
+
+add-apt-repository universe
+apt-get update
