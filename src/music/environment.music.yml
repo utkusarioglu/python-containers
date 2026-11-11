@@ -2,7 +2,7 @@
 dependencies:
   - conda-forge::music21
   - conda-forge::librosa
-  - conda-forge::fluidsynth
+  # - conda-forge::fluidsynth
 # These may be enabled later, depending on need
 # - cogsci::pygame
 

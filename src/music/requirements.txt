@@ -1,8 +1,8 @@
 scamp
 scamp_extensions
-python-rtmidi
+# python-rtmidi
 flask
 flask_socketio
-pynput
+# pynput
 xmltodict
 quart
