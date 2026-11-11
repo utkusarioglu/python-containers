@@ -6,3 +6,6 @@ flask_socketio
 # pynput
 xmltodict
 quart
+
+# this fixes pkg_resources being removed from new versions of setuptools
+setuptools<82
