@@ -65,23 +65,24 @@ jobs:
             dockerhub_readme_path: src/music/DOCKER_README.music.md
             dockerhub_short_description: Devcontainer for music workloads
             apt_packages: >-
-              pulseaudio 
               lilypond
-              bzip2
-            # Last 3 are chatgpt suggestions for fixing jupter output
-              # libjack-dev
-              # alsa-utils
-              # libpulse0
-              # musescore3
-              # pulseaudio-utils
-              # libjack-jackd2-0
-              # jackd2
-              # fluid-soundfont-gm
-              # libasound2-plugins
-              # pkg-config
+          # bzip2
+          # pulseaudio 
+          
+          # Last 3 are chatgpt suggestions for fixing jupter output
+            # libjack-dev
+            # alsa-utils
+            # libpulse0
+            # musescore3
+            # pulseaudio-utils
+            # libjack-jackd2-0
+            # jackd2
+            # fluid-soundfont-gm
+            # libasound2-plugins
+            # pkg-config
+            # libsdl2-dev
             apt_packages_silent: >-
               build-essential
-              libsdl2-dev
               supercollider-language
 
           #   # math
