@@ -81,8 +81,8 @@ jobs:
             # libasound2-plugins
             # pkg-config
             # libsdl2-dev
+              # build-essential
             apt_packages_silent: >-
-              build-essential
               supercollider-language
 
           #   # math
