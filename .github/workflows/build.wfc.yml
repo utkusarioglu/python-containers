@@ -20,6 +20,7 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+    if: ${{ matrix.enabled }}
     strategy:
       fail-fast: true
       matrix:
@@ -38,23 +39,25 @@ jobs:
           #   apt_packages: ""
           #   apt_packages_silent: ncurses-bin
 
-          #   # econ
-          # - dockerfile: src/Dockerfile.conda.dev
-          #   python_version: "3.13"
-          #   container_name: conda-econ-devcontainer
-          #   base_image: ubuntu-devcontainer
-          #   image_tag: ${{ inputs.image_tag }}
-          #   base_tag: ${{ inputs.base_tag }}
-          #   environment_name: econ
-          #   devcontainer_subfolder: econ
-          #   dockerhub_readme_path: src/econ/DOCKER_README.econ.md
-          #   dockerhub_short_description: Devcontainer for economics workloads
-          #   apt_packages: bzip2
-          #   apt_packages_silent: >-
-          #     build-essential
+            # econ
+          - enabled: true
+            dockerfile: src/Dockerfile.conda.dev
+            python_version: "3.13"
+            container_name: conda-econ-devcontainer
+            base_image: ubuntu-devcontainer
+            image_tag: ${{ inputs.image_tag }}
+            base_tag: ${{ inputs.base_tag }}
+            environment_name: econ
+            devcontainer_subfolder: econ
+            dockerhub_readme_path: src/econ/DOCKER_README.econ.md
+            dockerhub_short_description: Devcontainer for economics workloads
+            apt_packages: bzip2
+            apt_packages_silent: >-
+              build-essential
 
             # music
-          - dockerfile: src/Dockerfile.conda.dev
+          - enabled: false
+            dockerfile: src/Dockerfile.conda.dev
             python_version: "3.13"
             container_name: conda-music-devcontainer
             base_image: ubuntu-devcontainer
