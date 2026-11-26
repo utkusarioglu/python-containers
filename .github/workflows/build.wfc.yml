@@ -19,6 +19,7 @@ on:
 
 jobs:
   build-and-push:
+    if: ${{ matrix.enabled }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
@@ -106,13 +107,11 @@ jobs:
 
     steps:
       - name: Checkout code
-        if: ${{ matrix.enabled == "true" }}
         uses: actions/checkout@v4
         with:
           fetch-depth: 2
 
       - name: Build and push ${{ steps.variables.outputs.image_ref }}
-        if: ${{ matrix.enabled == "true" }}
         uses: utkusarioglu/devcontainer-build-action@main
         with:
           docker_context: src
