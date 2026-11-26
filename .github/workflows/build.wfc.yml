@@ -19,7 +19,7 @@ on:
 
 jobs:
   build-and-push:
-    if: ${{ matrix.images.enabled }}
+    # if: ${{ matrix.images.enabled }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
@@ -113,11 +113,11 @@ jobs:
 
       - name: Debug matrix
         run: |
-          echo "enabled: '${{ matrix.enabled }}'"
+          echo "enabled: ${{ matrix.images.enabled }}"
           echo "matrix: ${{ toJSON(matrix) }}"
 
       - name: Build and push ${{ steps.variables.outputs.image_ref }}
-      # if: ${{ matrix.images.enabled }}
+        if: ${{ matrix.images.enabled }}
         uses: utkusarioglu/devcontainer-build-action@main
         with:
           docker_context: src
