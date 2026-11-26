@@ -3,10 +3,12 @@
 set -euxo pipefail
 bash --version
 
-ARGS=(
-  environment_name
-)
-. /home/dev/scripts/utils/parse-args.sh
+# ARGS=(
+#   environment_name
+# )
+# . /home/dev/scripts/utils/parse-args.sh
+
+echo "Nothing to do here"
 
 # mkdir -p /opt/conda/envs/${environment_name}/lib/alsa-lib
 # ln -s /usr/lib/x86_64-linux-gnu/alsa-lib/libasound_module_conf_pulse.so \
@@ -16,5 +18,5 @@ ARGS=(
 # ln -s /usr/share/sounds/sf2/FluidR3_GM.sf2 \
 #   /opt/conda/envs/${environment_name}/share/soundfonts/default.sf2
 
-add-apt-repository universe
-apt-get update
+# add-apt-repository universe
+# apt-get update
