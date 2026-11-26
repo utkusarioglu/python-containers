@@ -19,7 +19,6 @@ on:
 
 jobs:
   build-and-push:
-    # if: ${{ matrix.enabled }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
@@ -40,7 +39,7 @@ jobs:
           #   apt_packages_silent: ncurses-bin
 
             # econ
-          - enabled: true
+          - enabled: "true"
             dockerfile: src/Dockerfile.conda.dev
             python_version: "3.13"
             container_name: conda-econ-devcontainer
@@ -56,7 +55,7 @@ jobs:
               build-essential
 
             # music
-          - enabled: false
+          - enabled: "false"
             dockerfile: src/Dockerfile.conda.dev
             python_version: "3.13"
             container_name: conda-music-devcontainer
@@ -111,7 +110,7 @@ jobs:
         with:
           fetch-depth: 2
 
-      - if: ${{ matrix.enabled }}
+      - if: ${{ matrix.enabled == "true" }}
         name: Build and push ${{ steps.variables.outputs.image_ref }}
         uses: utkusarioglu/devcontainer-build-action@main
         with:
