@@ -114,10 +114,11 @@ jobs:
       - name: Debug matrix
         run: |
           echo "enabled: ${{ matrix.images.enabled }}"
+          echo "enabled: ${{ matrix.images.enabled == 'true' }}"
           echo "matrix: ${{ toJSON(matrix) }}"
 
       - name: Build and push ${{ steps.variables.outputs.image_ref }}
-        if: ${{ matrix.images.enabled }}
+        if: ${{ matrix.images.enabled == 'true' }}
         uses: utkusarioglu/devcontainer-build-action@main
         with:
           docker_context: src
