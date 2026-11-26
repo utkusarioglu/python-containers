@@ -110,7 +110,7 @@ jobs:
         with:
           fetch-depth: 2
 
-      - if: ${{ matrix.enabled == "true" }}
+      - if: ${{ matrix.enabled == 'true' }}
         name: Build and push ${{ steps.variables.outputs.image_ref }}
         uses: utkusarioglu/devcontainer-build-action@main
         with:
