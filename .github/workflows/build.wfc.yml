@@ -106,13 +106,13 @@ jobs:
 
     steps:
       - name: Checkout code
-        if: ${{ matrix.enabled }}
+        if: ${{ matrix.enabled == true }}
         uses: actions/checkout@v4
         with:
           fetch-depth: 2
 
       - name: Build and push ${{ steps.variables.outputs.image_ref }}
-        if: ${{ matrix.enabled }}
+        if: ${{ matrix.enabled == true }}
         uses: utkusarioglu/devcontainer-build-action@main
         with:
           docker_context: src
