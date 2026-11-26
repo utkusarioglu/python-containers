@@ -110,6 +110,11 @@ jobs:
         with:
           fetch-depth: 2
 
+      - name: Debug matrix
+        run: |
+          echo "enabled: '${{ matrix.enabled }}'"
+          echo "matrix: ${{ toJSON(matrix) }}"
+
       - if: ${{ matrix.enabled == 'true' }}
         name: Build and push ${{ steps.variables.outputs.image_ref }}
         uses: utkusarioglu/devcontainer-build-action@main
