@@ -18,8 +18,10 @@ on:
         required: true 
 
 jobs:
-  build-and-push:
+  matrix-prep:
     runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
     strategy:
       fail-fast: true
       matrix:
@@ -105,7 +107,14 @@ jobs:
             apt_packages_silent: >-
               libsm6 
               libxrender1
-
+    steps:
+      - id: output
+        run: echo "matrix=${{ toJSON(matrix) }} >> $GITHUB_OUTPUT" 
+        
+  matrix-run:
+    needs: matrix-prep
+    runs-on: ubuntu-latest
+    if: ${{ needs.matrix-prep.output. }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
