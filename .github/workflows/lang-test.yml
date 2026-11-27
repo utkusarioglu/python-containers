@@ -11,6 +11,4 @@ jobs:
       - uses: actions/checkout@v7
         with:
           depth-level: 1
-      - uses: 
-        with: 
-          args: scripts/test.sh
+      - run: scripts/test.sh
