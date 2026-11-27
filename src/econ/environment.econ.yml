@@ -1,37 +1,17 @@
-# name: econ
-channels:
-  - conda-forge
-channel_priority: strict
-
+name: econ
 dependencies:
   # These are in common between econ and math
-  - xlsxwriter
-  - sympy
-  - scipy
+  - conda-forge::xlsxwriter
+  - conda-forge::sympy
+  - conda-forge::scipy
 
   # These are unique to econ
-  - squarify
-  - openpyxl
-  - requests
-  - psycopg
-  - cmasher
-  - quantecon
-  - scikit-learn
-  - statsmodels
-  - wbgapi
-
-  # # These are in common between econ and math
-  # - conda-forge::xlsxwriter
-  # - conda-forge::sympy
-  # - conda-forge::scipy
-
-  # # These are unique to econ
-  # - conda-forge::squarify
-  # - conda-forge::openpyxl
-  # - conda-forge::requests
-  # - conda-forge::psycopg
-  # - conda-forge::cmasher
-  # - conda-forge::quantecon
-  # - conda-forge::scikit-learn
-  # - conda-forge::statsmodels
-  # - conda-forge::wbgapi
+  - conda-forge::squarify
+  - conda-forge::openpyxl
+  - conda-forge::requests
+  - conda-forge::psycopg
+  - conda-forge::cmasher
+  - conda-forge::quantecon
+  - conda-forge::scikit-learn
+  - conda-forge::statsmodels
+  - conda-forge::wbgapi

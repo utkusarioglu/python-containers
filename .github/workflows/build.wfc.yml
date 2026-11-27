@@ -1,4 +1,4 @@
-name: build-and-push
+name: build-and-push-matrix
 
 on:
   workflow_call:
@@ -19,7 +19,6 @@ on:
 
 jobs:
   build-and-push:
-    # if: ${{ matrix.images.enabled }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
@@ -34,7 +33,7 @@ jobs:
             base_tag: ${{ inputs.base_tag }}
             python_version: "3.13"
             environment_name: python
-            devcontainer_subfolder: python
+            devcontainer_subfolder: src/python
             dockerhub_readme_path: src/python/DOCKER_README.python.md
             dockerhub_short_description: Devcontainer for python workloads
             apt_packages: ""
@@ -49,7 +48,7 @@ jobs:
             image_tag: ${{ inputs.image_tag }}
             base_tag: ${{ inputs.base_tag }}
             environment_name: econ
-            devcontainer_subfolder: econ
+            devcontainer_subfolder: src/econ
             dockerhub_readme_path: src/econ/DOCKER_README.econ.md
             dockerhub_short_description: Devcontainer for economics workloads
             apt_packages: bzip2
@@ -65,7 +64,7 @@ jobs:
             image_tag: ${{ inputs.image_tag }}
             base_tag: ${{ inputs.base_tag }}
             environment_name: music
-            devcontainer_subfolder: music
+            devcontainer_subfolder: src/music
             dockerhub_readme_path: src/music/DOCKER_README.music.md
             dockerhub_short_description: Devcontainer for music workloads
             apt_packages: >-
@@ -98,7 +97,7 @@ jobs:
             image_tag: ${{ inputs.image_tag }}
             base_tag: ${{ inputs.base_tag }}
             environment_name: math
-            devcontainer_subfolder: math
+            devcontainer_subfolder: src/math
             dockerhub_readme_path: src/math/DOCKER_README.math.md
             dockerhub_short_description: Devcontainer for mathematics workloads
             apt_packages: >-
@@ -108,23 +107,10 @@ jobs:
               libxrender1
 
     steps:
-      - name: Debug matrix
-        run: echo "matrix ${{ toJSON(matrix) }}"
-
-      - name: Checkout code
+      - uses: ./.github/workflows/build-single.wfc.yml
         if: ${{ matrix.images.enabled }}
-        uses: actions/checkout@v7
-        with:
-          fetch-depth: 2
-
-      - name: Build and push ${{ steps.variables.outputs.image_ref }}
-        if: ${{ matrix.images.enabled }}
-        uses: utkusarioglu/devcontainer-build-action@main
-        with:
-          docker_context: src
-          dockerhub_username: ${{ secrets.dockerhub_username }}
-          dockerhub_token: ${{ secrets.dockerhub_token }}
-          image_name: ${{ matrix.images.container_name }}
+        with: 
+          container_name: ${{ matrix.images.container_name }}
           image_tag: ${{ matrix.images.image_tag }}
           dockerfile_path: ${{ matrix.images.dockerfile }}
           build_args: |
@@ -134,9 +120,42 @@ jobs:
             PYTHON_VERSION=${{ matrix.images.python_version }}
             APT_PACKAGES=${{ matrix.images.apt_packages }}
             APT_PACKAGES_SILENT=${{ matrix.images.apt_packages_silent }}
-          devcontainer_enabled: "false"
-          devcontainer_subfolder: src/${{ matrix.images.devcontainer_subfolder }}
+          devcontainer_enabled: false
+          devcontainer_subfolder: ${{ matrix.images.devcontainer_subfolder }}
           devcontainer_run_cmd_path: /home/dev/scripts/bootstrap/python/check-devcontainer.sh
           dockerhub_repo_description_update: false
           dockerhub_repo_short_description: ${{ matrix.images.dockerhub_short_description }}
           dockerhub_repo_readme_file_path: ${{ matrix.images.dockerhub_readme_path }}
+          
+      # - name: Debug matrix
+      #   run: echo "matrix ${{ toJSON(matrix) }}"
+
+      # - name: Checkout code
+      #   if: ${{ matrix.images.enabled }}
+      #   uses: actions/checkout@v7
+      #   with:
+      #     fetch-depth: 2
+
+      # - name: Build and push ${{ steps.variables.outputs.image_ref }}
+      #   if: ${{ matrix.images.enabled }}
+      #   uses: utkusarioglu/devcontainer-build-action@main
+      #   with:
+      #     docker_context: src
+      #     dockerhub_username: ${{ secrets.dockerhub_username }}
+      #     dockerhub_token: ${{ secrets.dockerhub_token }}
+      #     image_name: ${{ matrix.images.container_name }}
+      #     image_tag: ${{ matrix.images.image_tag }}
+      #     dockerfile_path: ${{ matrix.images.dockerfile }}
+      #     build_args: |
+      #       BASE_TAG=${{ matrix.images.base_tag }}
+      #       BASE_IMAGE=${{ matrix.images.base_image }}
+      #       ENVIRONMENT_NAME=${{ matrix.images.environment_name }}
+      #       PYTHON_VERSION=${{ matrix.images.python_version }}
+      #       APT_PACKAGES=${{ matrix.images.apt_packages }}
+      #       APT_PACKAGES_SILENT=${{ matrix.images.apt_packages_silent }}
+      #     devcontainer_enabled: "false"
+      #     devcontainer_subfolder: src/${{ matrix.images.devcontainer_subfolder }}
+      #     devcontainer_run_cmd_path: /home/dev/scripts/bootstrap/python/check-devcontainer.sh
+      #     dockerhub_repo_description_update: false
+      #     dockerhub_repo_short_description: ${{ matrix.images.dockerhub_short_description }}
+      #     dockerhub_repo_readme_file_path: ${{ matrix.images.dockerhub_readme_path }}

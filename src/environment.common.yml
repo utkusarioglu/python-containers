@@ -1,35 +1,18 @@
-channels:
-  - conda-forge
 channel_priority: strict
 dependencies:
-  - numpy
-  - flake8
-  - pip
-  - python
-  - notebook
-  - black
-  - black-jupyter
-  - python-dotenv
-  - scipy
-  - matplotlib
-  - pytest
-  - watchdog
-  - more-itertools
-  - pandas
-  #
   # These have been just dsabled
-  # - anaconda::numpy
-  # - anaconda::flake8
-  # - anaconda::pip
+  - anaconda::numpy
+  - anaconda::flake8
+  - anaconda::pip
 
-  # - conda-forge::python
-  # - conda-forge::notebook
-  # - conda-forge::black
-  # - conda-forge::black-jupyter
-  # - conda-forge::python-dotenv
-  # - conda-forge::scipy
-  # - conda-forge::matplotlib
-  # - conda-forge::pytest
-  # - conda-forge::watchdog
-  # - conda-forge::more-itertools
-  # - conda-forge::pandas
+  - conda-forge::python
+  - conda-forge::notebook
+  - conda-forge::black
+  - conda-forge::black-jupyter
+  - conda-forge::python-dotenv
+  - conda-forge::scipy
+  - conda-forge::matplotlib
+  - conda-forge::pytest
+  - conda-forge::watchdog
+  - conda-forge::more-itertools
+  - conda-forge::pandas

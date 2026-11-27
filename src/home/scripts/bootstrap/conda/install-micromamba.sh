@@ -79,6 +79,12 @@ micromamba activate ${environment_name}
   which pip
   python -m pip install --upgrade pip
   which pip
+  
+  echo "Build constaints:"
+  cat "${home_abspath}/build-constraints.txt"
+
+  echo "Requirements:"
+  cat "${home_abspath}/requirements.txt"
 
   # Force reinstall is added for urllib3<2, which is required by wbdata
   pip install \
