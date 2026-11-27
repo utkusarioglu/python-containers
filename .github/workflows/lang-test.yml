@@ -6,7 +6,11 @@ on:
 jobs:
   lang-test:
     runs-on: ubuntu-latest
+    container: docker://utkusarioglu/conda-music-devcontainer:3.13-ubuntu-test-36
     steps:
-      - uses: docker://utkusarioglu/conda-music-devcontainer:3.13-ubuntu-test-36
+      - uses: actions/checkout@v7
+        with:
+          depth-level: 1
+      - uses: 
         with: 
-          args: -c "echo $LANG && mm activate music && echo $LANG"
+          args: scripts/test.sh
