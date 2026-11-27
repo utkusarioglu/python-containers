@@ -59,14 +59,13 @@ micromamba create -n ${environment_name}
 eval "$(micromamba shell hook -s posix)"
 micromamba activate ${environment_name}
 
-# This prevents set -u from complaining about CPATH not being defined
-export CPATH="${CPATH:-}"
-
+set +u
 micromamba install \
   -n ${environment_name} \
   -c conda-forge \
   python=${python_version} \
-  -y 
+  -y
+set -u
 
 micromamba install --file "${home_abspath}/environment.merged.yml" -y
 
