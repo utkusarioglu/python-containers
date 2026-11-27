@@ -42,7 +42,7 @@ jobs:
             apt_packages_silent: ncurses-bin
 
             # econ
-          - enabled: true
+          - enabled: false
             dockerfile: src/Dockerfile.conda.dev
             python_version: "3.14"
             container_name: conda-econ-devcontainer
@@ -58,7 +58,7 @@ jobs:
               build-essential
 
             # music
-          - enabled: false
+          - enabled: true
             dockerfile: src/Dockerfile.conda.dev
             python_version: "3.14"
             container_name: conda-music-devcontainer
