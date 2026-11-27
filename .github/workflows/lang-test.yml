@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
-          depth-level: 1
+          fetch-depth: 1
       - uses: docker://utkusarioglu/conda-music-devcontainer:3.13-ubuntu-test-36
         with: 
           args: -c "\
