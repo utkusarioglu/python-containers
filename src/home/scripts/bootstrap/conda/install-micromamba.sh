@@ -63,6 +63,8 @@ micromamba activate ${environment_name}
 export CPATH="${CPATH:-}"
 export CPATH_ADDED_BY_MKL="${CPATH_ADDED_BY_MKL:-}"
 export C_INCLUDE_PATH="${C_INCLUDE_PATH:-}"
+export C_INCLUDE_PATH_ADDED_BY_MKL="${C_INCLUDE_PATH_ADDED_BY_MKL:-}"
+
 
 micromamba install \
   -n ${environment_name} \
