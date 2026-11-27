@@ -9,4 +9,4 @@ jobs:
     steps:
       - uses: docker://utkusarioglu/conda-music-devcontainer:3.13-ubuntu-test-36
         with: 
-          args: -c 'echo "$LANG" && mm activate music && echo "$LANG"'
+          args: -c "echo $LANG && mm activate music && echo $LANG"
