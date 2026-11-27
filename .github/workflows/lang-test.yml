@@ -1,7 +1,6 @@
 name: LangTest
 
 on:
-  push:
   workflow_dispatch:
 
 jobs:
@@ -10,4 +9,4 @@ jobs:
     steps:
       - uses: docker://utkusarioglu/conda-music-devcontainer:3.13-ubuntu-test-36
         with: 
-          args: bash -c "echo $LANG"
+          args: -c "echo $LANG"
