@@ -41,3 +41,6 @@ xlrd
 # THIS PACKAGE ISN'T READY FOR PY 3.13
 # https://github.com/ray-project/ray/pull/47984
 # ray
+
+# BUG some dependency needs setuptools to be old
+setuptools<82
