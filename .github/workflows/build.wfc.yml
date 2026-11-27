@@ -107,6 +107,10 @@ jobs:
               libxrender1
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 1
       - uses: ./.github/workflows/build-single.wfc.yml
         if: ${{ matrix.images.enabled }}
         with: 
@@ -126,6 +130,9 @@ jobs:
           dockerhub_repo_description_update: false
           dockerhub_repo_short_description: ${{ matrix.images.dockerhub_short_description }}
           dockerhub_repo_readme_file_path: ${{ matrix.images.dockerhub_readme_path }}
+        secrets:
+          dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
+          dockerhub_token: ${{ secrets.DOCKERHUB_TOKEN }}
           
       # - name: Debug matrix
       #   run: echo "matrix ${{ toJSON(matrix) }}"
