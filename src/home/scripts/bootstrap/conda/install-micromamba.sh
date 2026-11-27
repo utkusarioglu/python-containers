@@ -84,8 +84,9 @@ micromamba activate ${environment_name}
   pip install \
     --build-constraint "${home_abspath}/build-constraints.txt" \
     -r ${home_abspath}/requirements.txt \
-    --quiet \
-    --force-reinstall
+    --quiet 
+    # \
+    # --force-reinstall
 )
 
 # This should fix the issue with mm not being able to install anything
