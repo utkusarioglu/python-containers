@@ -62,6 +62,7 @@ micromamba activate ${environment_name}
 # This prevents set -u from complaining about CPATH not being defined
 export CPATH="${CPATH:-}"
 export CPATH_ADDED_BY_MKL="${CPATH_ADDED_BY_MKL:-}"
+export C_INCLUDE_PATH="${C_INCLUDE_PATH:-}"
 
 micromamba install \
   -n ${environment_name} \
