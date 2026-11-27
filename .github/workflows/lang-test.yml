@@ -1,8 +1,8 @@
 name: LangTest
 
 on:
+  push:
   workflow_dispatch:
-    
 
 jobs:
   lang-test:
