@@ -13,6 +13,3 @@ rm $talib_filename
 # echo 'See if ta-lib has been installed here:'
 # dpkg -l | grep talib
 # echo "--"
-
-# This prevents set -u from complaining about CPATH not being defined
-export CPATH="${CPATH:-}"

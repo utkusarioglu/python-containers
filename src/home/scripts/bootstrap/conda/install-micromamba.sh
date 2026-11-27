@@ -59,6 +59,9 @@ micromamba create -n ${environment_name}
 eval "$(micromamba shell hook -s posix)"
 micromamba activate ${environment_name}
 
+# This prevents set -u from complaining about CPATH not being defined
+export CPATH="${CPATH:-}"
+
 micromamba install \
   -n ${environment_name} \
   -c conda-forge \
