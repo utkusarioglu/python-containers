@@ -43,4 +43,4 @@ xlrd
 # ray
 
 # BUG some dependency needs setuptools to be old
-setuptools<82
+# setuptools<82

@@ -43,7 +43,7 @@ jobs:
             # econ
           - enabled: true
             dockerfile: src/Dockerfile.conda.dev
-            python_version: "3.13"
+            python_version: "3.14"
             container_name: conda-econ-devcontainer
             base_image: ubuntu-devcontainer
             image_tag: ${{ inputs.image_tag }}
