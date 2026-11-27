@@ -93,11 +93,14 @@ micromamba activate ${environment_name}
     --quiet 
     # \
     # --force-reinstall
+
+  micromamba config set auto_activate_base true
 )
 
 # This should fix the issue with mm not being able to install anything
 # unless as root user
 chown -R ${user_id}:${group_id} ${MAMBA_ROOT_PREFIX}
+
 
 pip list -v
 

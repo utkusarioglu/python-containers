@@ -20,7 +20,7 @@ ln -sf $(which python${python_version}) /usr/bin/python
 python --version
 
 python -m venv --without-pip ${venv_path}
-echo "source ${venv_path}/bin/activate" >> ${home_abspath}/.bashrc
+# echo "source ${venv_path}/bin/activate" >> ${home_abspath}/.bashrc
 
 source ${venv_path}/bin/activate
 

@@ -42,7 +42,7 @@ jobs:
             apt_packages_silent: ncurses-bin
 
             # econ
-          - enabled: false
+          - enabled: true
             dockerfile: src/Dockerfile.conda.dev
             python_version: "3.14"
             container_name: conda-econ-devcontainer
@@ -58,7 +58,7 @@ jobs:
               build-essential
 
             # music
-          - enabled: true
+          - enabled: false
             dockerfile: src/Dockerfile.conda.dev
             python_version: "3.14"
             container_name: conda-music-devcontainer
@@ -71,29 +71,13 @@ jobs:
             dockerhub_short_description: Devcontainer for music workloads
             apt_packages: >-
               lilypond
-          # bzip2
-          # pulseaudio 
-          
-          # Last 3 are chatgpt suggestions for fixing jupter output
-            # libjack-dev
-            # alsa-utils
-            # libpulse0
-            # musescore3
-            # pulseaudio-utils
-            # libjack-jackd2-0
-            # jackd2
-            # fluid-soundfont-gm
-            # libasound2-plugins
-            # pkg-config
-            # libsdl2-dev
-              # build-essential
             apt_packages_silent: >-
               supercollider-language
 
             # math
           - enabled: false
             dockerfile: src/Dockerfile.conda.dev
-            python_version: "3.13"
+            python_version: "3.14"
             container_name: conda-math-devcontainer
             base_image: ubuntu-devcontainer
             image_tag: ${{ inputs.image_tag }}
