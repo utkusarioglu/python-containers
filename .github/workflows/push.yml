@@ -1,7 +1,7 @@
 name: Push
 
-on:
-  push
+# on:
+#   push
 
 concurrency:
   cancel-in-progress: true
