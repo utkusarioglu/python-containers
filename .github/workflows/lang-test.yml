@@ -6,9 +6,13 @@ on:
 jobs:
   lang-test:
     runs-on: ubuntu-latest
-    container: docker://utkusarioglu/conda-music-devcontainer:3.13-ubuntu-test-36
     steps:
       - uses: actions/checkout@v7
         with:
           depth-level: 1
-      - run: scripts/test.sh
+      - uses: docker://utkusarioglu/conda-music-devcontainer:3.13-ubuntu-test-36
+        with: 
+          args: -c "\
+            echo $LANG \
+            && micromamba activate music \
+            && echo $LANG"
