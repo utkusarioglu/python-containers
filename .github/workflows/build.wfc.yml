@@ -108,22 +108,23 @@ jobs:
               libsm6 
               libxrender1
     steps:
-      - id: output
-        run: echo "matrix=${{ toJSON(matrix) }} >> $GITHUB_OUTPUT" 
-        
-  matrix-run:
-    needs: matrix-prep
-    runs-on: ubuntu-latest
-    if: ${{ needs.matrix-prep.output. }}
-    steps:
+      - name: Debug matrix
+        run: echo "matrix ${{ toJSON(matrix) }}"
+
       - name: Checkout code
+        if: ${{ matrix.images.enabled }}
         uses: actions/checkout@v7
         with:
-          fetch-depth: 1
-      - uses: ./.github/workflows/build-single.wfc.yml
+          fetch-depth: 2
+
+      - name: Build and push ${{ steps.variables.outputs.image_ref }}
         if: ${{ matrix.images.enabled }}
-        with: 
-          container_name: ${{ matrix.images.container_name }}
+        uses: utkusarioglu/devcontainer-build-action@main
+        with:
+          docker_context: src
+          dockerhub_username: ${{ secrets.dockerhub_username }}
+          dockerhub_token: ${{ secrets.dockerhub_token }}
+          image_name: ${{ matrix.images.container_name }}
           image_tag: ${{ matrix.images.image_tag }}
           dockerfile_path: ${{ matrix.images.dockerfile }}
           build_args: |
@@ -133,45 +134,9 @@ jobs:
             PYTHON_VERSION=${{ matrix.images.python_version }}
             APT_PACKAGES=${{ matrix.images.apt_packages }}
             APT_PACKAGES_SILENT=${{ matrix.images.apt_packages_silent }}
-          devcontainer_enabled: false
-          devcontainer_subfolder: ${{ matrix.images.devcontainer_subfolder }}
+          devcontainer_enabled: "false"
+          devcontainer_subfolder: src/${{ matrix.images.devcontainer_subfolder }}
           devcontainer_run_cmd_path: /home/dev/scripts/bootstrap/python/check-devcontainer.sh
           dockerhub_repo_description_update: false
           dockerhub_repo_short_description: ${{ matrix.images.dockerhub_short_description }}
           dockerhub_repo_readme_file_path: ${{ matrix.images.dockerhub_readme_path }}
-        secrets:
-          dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
-          dockerhub_token: ${{ secrets.DOCKERHUB_TOKEN }}
-          
-      # - name: Debug matrix
-      #   run: echo "matrix ${{ toJSON(matrix) }}"
-
-      # - name: Checkout code
-      #   if: ${{ matrix.images.enabled }}
-      #   uses: actions/checkout@v7
-      #   with:
-      #     fetch-depth: 2
-
-      # - name: Build and push ${{ steps.variables.outputs.image_ref }}
-      #   if: ${{ matrix.images.enabled }}
-      #   uses: utkusarioglu/devcontainer-build-action@main
-      #   with:
-      #     docker_context: src
-      #     dockerhub_username: ${{ secrets.dockerhub_username }}
-      #     dockerhub_token: ${{ secrets.dockerhub_token }}
-      #     image_name: ${{ matrix.images.container_name }}
-      #     image_tag: ${{ matrix.images.image_tag }}
-      #     dockerfile_path: ${{ matrix.images.dockerfile }}
-      #     build_args: |
-      #       BASE_TAG=${{ matrix.images.base_tag }}
-      #       BASE_IMAGE=${{ matrix.images.base_image }}
-      #       ENVIRONMENT_NAME=${{ matrix.images.environment_name }}
-      #       PYTHON_VERSION=${{ matrix.images.python_version }}
-      #       APT_PACKAGES=${{ matrix.images.apt_packages }}
-      #       APT_PACKAGES_SILENT=${{ matrix.images.apt_packages_silent }}
-      #     devcontainer_enabled: "false"
-      #     devcontainer_subfolder: src/${{ matrix.images.devcontainer_subfolder }}
-      #     devcontainer_run_cmd_path: /home/dev/scripts/bootstrap/python/check-devcontainer.sh
-      #     dockerhub_repo_description_update: false
-      #     dockerhub_repo_short_description: ${{ matrix.images.dockerhub_short_description }}
-      #     dockerhub_repo_readme_file_path: ${{ matrix.images.dockerhub_readme_path }}
