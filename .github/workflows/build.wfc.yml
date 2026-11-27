@@ -18,10 +18,8 @@ on:
         required: true 
 
 jobs:
-  matrix-prep:
+  build-and-push:
     runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
     strategy:
       fail-fast: true
       matrix:
@@ -107,14 +105,7 @@ jobs:
             apt_packages_silent: >-
               libsm6 
               libxrender1
-    steps:
-      - id: output
-        run: echo "matrix=${{ toJSON(matrix) }} >> $GITHUB_OUTPUT" 
-        
-  matrix-run:
-    needs: matrix-prep
-    runs-on: ubuntu-latest
-    if: ${{ needs.matrix-prep.output. }}
+
     steps:
       - uses: ./.github/workflows/build-single.wfc.yml
         if: ${{ matrix.images.enabled }}
