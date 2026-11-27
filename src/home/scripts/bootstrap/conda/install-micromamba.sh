@@ -60,24 +60,27 @@ eval "$(micromamba shell hook -s posix)"
 micromamba activate ${environment_name}
 
 # This prevents set -u from complaining about CPATH not being defined
-export CPATH="${CPATH:-}"
-export CPATH_ADDED_BY_MKL="${CPATH_ADDED_BY_MKL:-}"
-export C_INCLUDE_PATH="${C_INCLUDE_PATH:-}"
-export C_INCLUDE_PATH_ADDED_BY_MKL="${C_INCLUDE_PATH_ADDED_BY_MKL:-}"
+# export CPATH="${CPATH:-}"
+# export CPATH_ADDED_BY_MKL="${CPATH_ADDED_BY_MKL:-}"
+# export C_INCLUDE_PATH="${C_INCLUDE_PATH:-}"
+# export C_INCLUDE_PATH_ADDED_BY_MKL="${C_INCLUDE_PATH_ADDED_BY_MKL:-}"
+# export CPLUS_INCLUDE_PATH="${CPLUS_INCLUDE_PATH:-}"
 
+(
+  set +u
+  micromamba install \
+    -n ${environment_name} \
+    -c conda-forge \
+    python=${python_version} \
+    -y 
 
-micromamba install \
-  -n ${environment_name} \
-  -c conda-forge \
-  python=${python_version} \
-  -y 
+  micromamba install --file "${home_abspath}/environment.merged.yml" -y
 
-micromamba install --file "${home_abspath}/environment.merged.yml" -y
+  which pip
 
-which pip
-
-# Force reinstall is added for urllib3<2, which is required by wbdata
-pip install -r ${home_abspath}/requirements.txt --quiet --force-reinstall
+  # Force reinstall is added for urllib3<2, which is required by wbdata
+  pip install -r ${home_abspath}/requirements.txt --quiet --force-reinstall
+)
 
 # This should fix the issue with mm not being able to install anything
 # unless as root user
