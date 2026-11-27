@@ -1,0 +1,12 @@
+name: lang-test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  lang-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: docker://utkusarioglu/conda-music-devcontainer:3.13-ubuntu-test-36
+        with: 
+          args: bash -c "echo $LANG"
