@@ -109,7 +109,7 @@ jobs:
 
     steps:
       - name: Debug matrix
-        run: echo "matrix: ${{ toJSON(matrix) }}"
+        run: echo "matrix ${{ toJSON(matrix) }}"
 
       - name: Checkout code
         if: ${{ matrix.images.enabled }}
