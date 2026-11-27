@@ -1,7 +1,7 @@
 name: lang-test
 
 on:
-  workflow_dispatch:
+  workflow_dispatch
 
 jobs:
   lang-test:
